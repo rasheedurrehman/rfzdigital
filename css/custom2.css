@@ -1,0 +1,391 @@
+/* ========== /*Contact us page*/  ============= */
+
+.contact-us-page-margin-top-150 {
+  margin-top: 150px !IMPORTANT;
+  padding-top: 150px !IMPORTANT;
+}
+
+
+  
+
+.services-page-service-section{
+    background-color: #a5c7eb;
+}
+
+/*section-4*/
+    .service-page-custom-box {
+      border: 1px solid #ddd; /* Border color */
+      border-radius: 8px; /* Rounded corners */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow effect */
+      padding: 28px;
+      background-color: #fff; /* White background */
+      /*text-align: center;*/
+      transition: transform 0.3s ease; /* Smooth hover effect */
+    }
+
+    .service-page-custom-box:hover {
+      transform: translateY(-5px); /* Hover animation */
+    }
+
+    .service-page-custom-box .icon {
+      font-size: 40px; /* Icon size */
+      color: #4a4a4a; /* Icon color */
+      margin-bottom: 15px; /* Space below icon */
+    }
+
+    .service-page-custom-box h3 {
+        font-size: 20px;
+      font-weight: bold !important;
+      color: #333;
+      margin-bottom: 10px; /* Space below heading */
+    }
+
+    .service-page-custom-box p {
+      color: #555; /* Text color */
+    }
+    
+    
+    
+/*New section tabs*/
+/* Ensure the row respects container width */
+.new-section-tabs .row {
+  width: 100%;
+  margin: 0 auto; /* Center the row */
+}
+
+/* Override the default bootstrap spacing for the grid columns */
+.new-section-tabs .col-md-6.content-section {
+  flex: 0 0 auto; /* Allow content to shrink naturally */
+  max-width: 50%; /* Adjust to align with the border (matches 80% container) */
+}
+
+.new-section-tabs .content-section p {
+  margin-bottom: 20px; /* Add even spacing below each element */
+}
+.new-section-tabs .content-section h3,
+.new-section-tabs .content-section h5 {
+  margin-bottom: 10px; /* Add even spacing below each element */
+}
+/*New section tabs*/
+
+.new-section-tabs h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #333;
+}
+
+.new-section-tabs .nav-tabs {
+    border-bottom: none;
+    justify-content: center;
+}
+
+.new-section-tabs .nav-tabs .nav-link {
+    /*border: 1px solid #ddd;*/
+    border-radius: 12px;
+    margin: 0 10px;
+    /*background-color: #f8f9fa;*/
+    color: #495057;
+    padding: 14px 20px;
+    font-weight: 600;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.new-section-tabs .nav-tabs .nav-link.active {
+    background-color: #F2F2F2;
+    color: #146ef5;
+}
+
+/*.new-section-tabs .nav-tabs .nav-link:hover {*/
+/*    background-color: #e9ecef;*/
+/*}*/
+
+.new-section-tabs .text-section {
+    padding: 20px;
+}
+
+.new-section-tabs .text-section h5 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+    color: #0056b3;
+}
+
+.new-section-tabs .text-section p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #666;
+}
+
+.new-section-tabs .image-section img {
+    max-width: 100%;
+    /*border: 2px solid #ddd;*/
+    /*border-radius: 8px;*/
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.new-section-tabs .tab-pane {
+    padding-top: 10px;
+}
+
+.tabs-border {
+    border-top: 1px solid #ddd;
+    margin-top: 20px;
+    width: 80%; /* Set the width of the border */
+    margin-left: auto; /* Center align */
+    margin-right: auto; /* Center align */
+    
+}
+
+/* Fade-in animation for tab content */
+/*.tab-pane {*/
+/*    opacity: 0;*/
+/*    transition: opacity 0.5s ease-in-out;*/
+/*}*/
+
+.tab-pane.active.show {
+    opacity: 1;
+}
+.new-section-tabs .content-section {
+  width: 50%; /* Text section occupies 60% */
+  margin-right: auto;
+}
+
+.new-section-tabs .image-section {
+  width: 40%; /* Image section occupies 40% */
+  margin-left: auto;
+  text-align: right; /* Ensure image aligns to the right */
+}
+
+.new-section-tabs img {
+  max-width: 100%; /* Ensure images are responsive */
+  height: 380px;
+}
+
+
+.tab-pane {
+  animation: fadeIn 0.5s; /* Fade-in animation */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.new-section-tabs h3 {
+    font-size: 34px;
+    font-weight: 700;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #333;
+}
+.new-section-tabs h5 {
+    font-size: 21px;
+    font-weight: 600;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #333;
+}
+
+
+
+
+
+    
+/*Additional Services Section*/
+
+.Additional-Services-Section{
+    background-color: #a5c7eb;
+}
+
+.ass-custom-box{
+    border: 1px solid #ddd; /* Border color */
+      border-radius: 8px; /* Rounded corners */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow effect */
+      padding: 20px;
+      background-color: #fff; /* White background */
+      /*text-align: center;*/
+      transition: transform 0.3s ease; /* Smooth hover effect */
+}
+.ass-custom-box:hover {
+      transform: translateY(-5px); /* Hover animation */
+    }
+
+    .ass-custom-box .icon {
+      font-size: 40px; /* Icon size */
+      color: #4a4a4a; /* Icon color */
+      margin-bottom: 15px; /* Space below icon */
+    }
+
+    .ass-custom-box h4 {
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px; /* Space below heading */
+    }
+
+    .ass-custom-box p {
+      color: #555; /* Text color */
+    }
+    
+/*ireland Section*/
+
+.Ireland-section{
+    background-color: #f5feff;
+}
+
+.Ireland-section h2{
+    font-weight: bold;
+      color: #333;
+      
+}
+.Ireland-section h5{
+    font-weight: bold;
+      color: #333;
+      
+}
+.list-unstyled {
+    margin-top: 10px;    
+}
+    
+    
+/*section 11*/
+
+.services-page-section-11 {
+    padding-top: 60px;
+}
+    
+    
+    
+/* ========== /*Service Section*/  ============= */
+/* Full-width section gradient background */
+    .section-service-gradient-bg {
+        background: linear-gradient(to top, #f8f9fa, #eaf2fd); 
+        padding: 70px 0;
+        text-align: center;
+    }
+
+    /* Section Heading */
+    .section-headingg {
+        font-family: "General Sans";
+        font-size: 38px;
+        font-weight: 700;
+        margin-bottom: 50px !important;
+        color: #002855; /* Deep navy blue */
+        text-transform: capitalize;
+        margin: 0 auto;
+        line-height: 1.3;
+        max-width: 600px; /* Set width for two-line text on laptops */
+    }
+
+    /* Cards Container */
+    .card {
+        background: #ffffff;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: 0 0 8px 2px rgba(0, 123, 255, 0.4); /* Glow effect */
+/*            transition: box-shadow 0.3s ease-in-out;*/
+    }
+
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 0 12px 3px rgba(0, 123, 255, 0.6);
+    }
+
+    /* Card Title */
+    .card-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #004080; /* Subtle blue for headings */
+        margin: 20px 0 10px;
+        padding: 7px;
+    }
+
+    /* Card Text */
+    .card-text {
+        font-size: 15px;
+        color: #555555;
+        line-height: 1.6;
+        padding: 0 15px 0px; /* Added padding bottom for better spacing */
+    }
+
+    /* Card Images */
+    .card-img-bottom {
+    width: calc(100% - 20px); /* Adjust width to account for spacing */
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px; /* Apply 20px corner radius */
+    margin: 0 10px 20px 10px; /* Add spacing: 10px left, right, 20px bottom */
+}
+/* Button Styling */
+.read-more-btn {
+    display: inline-block;
+    text-align: center;
+    margin: 10px auto 15px; /* Space above and below the button */
+    padding: 8px 16px;
+    background-color: #004080; /* Button color */
+    color: #ffffff; /* Text color */
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.read-more-btn:hover {
+    background-color: #002855; /* Darker blue on hover */
+}
+.read-more-link {
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 600;
+    color: #004080; /* Professional blue color */
+    text-decoration: none;
+    margin: 10px auto; /* Add space above and below */
+    transition: color 0.3s ease-in-out;
+}
+
+.read-more-link:hover {
+    color: #002855; /* Darker shade of blue on hover */
+    text-decoration: underline; /* Underline effect on hover */
+}
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .section-heading {
+            font-size: 26px;
+            max-width: 100%;
+        }
+        .card-title {
+            font-size: 20px;
+        }
+        .card-text {
+            font-size: 14px;
+        }
+    } 
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

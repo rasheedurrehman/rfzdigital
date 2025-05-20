@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+Disallow: /signin
+Disallow: /signup
+Disallow: /comments
+Disallow: /add-new-blog-category
+Disallow: /all-blogs
+Disallow: /add-new-blog
+Disallow: /registered-admins
+Disallow: /logout
+Disallow: /*?
+Disallow: /*.html$
+
+
+
+Sitemap: https://rfzdigital.co.uk/sitemap.xml

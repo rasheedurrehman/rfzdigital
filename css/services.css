@@ -1,0 +1,85 @@
+/*Hero Section*/
+
+.services-heading-h1 {
+    font-size: 18px;
+    font-weight: 500;
+}
+.service-hero-section-bg {
+  padding-top: 100px;
+  padding-bottom: 20px;
+  background: #e3f7fe;
+  
+}
+.service-hero-section-bg .text-muted{
+  padding-bottom: 5px;
+}
+.service-hero-section-bg .img-fluid {
+    max-width: 100%;
+    max-height: 448px;
+}
+.service-hero-h1{
+    letter-spacing: -0.24px;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #1463FF !important;
+}
+.service-hero-heading{
+  font-family: "Lexend", Sans-serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: #000000;
+  letter-spacing: -2.5px;
+  
+}
+.services-hero-text{
+    font-size: 16px;
+}
+.service-hero-section-btn{
+
+    padding: 10px 20px; /* Padding for size */
+    border-radius: 6px; /* Rounded corners */
+
+}
+
+
+
+/* About Us Section */
+.services-page-aboutus-section-button {
+    margin-top: 20px;
+}
+
+/* Social icons slider */
+.social-icon-heading-button{
+    align-items: center !important;
+}
+
+
+@media (max-width: 600px) {
+  .services-page-hero-button {
+    display: none;
+}
+.services-page-aboutus-section-button {
+    display: flex;
+    justify-content: center; /* Horizontally center the button */
+    align-items: center; /* Vertically center the button (if needed) */
+    text-align: center; /* Ensure text alignment */
+}
+}
+
+
+
+/*======= About Us Page ========*/
+
+/*Hero Section*/
+.about-us-hero-heading{
+
+    font-family: "Lexend", Sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: #000000;
+    letter-spacing: -2.5px;
+}
+
+.about-us-hero-text{
+    font-size: 16px;
+}

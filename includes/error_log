@@ -1,0 +1,7 @@
+[19-Dec-2024 11:42:10 UTC] PHP Warning:  include(includes/header.php): Failed to open stream: No such file or directory in /home/talrpvhx/rfzdigital.co.uk/includes/index-hero-section.php on line 3
+[19-Dec-2024 11:42:10 UTC] PHP Warning:  include(): Failed opening 'includes/header.php' for inclusion (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/talrpvhx/rfzdigital.co.uk/includes/index-hero-section.php on line 3
+[19-Dec-2024 11:42:10 UTC] PHP Warning:  require(rfzwebdb.php): Failed to open stream: No such file or directory in /home/talrpvhx/rfzdigital.co.uk/includes/index-hero-section.php on line 5
+[19-Dec-2024 11:42:10 UTC] PHP Fatal error:  Uncaught Error: Failed opening required 'rfzwebdb.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/talrpvhx/rfzdigital.co.uk/includes/index-hero-section.php:5
+Stack trace:
+#0 {main}
+  thrown in /home/talrpvhx/rfzdigital.co.uk/includes/index-hero-section.php on line 5

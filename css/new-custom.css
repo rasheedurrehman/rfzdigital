@@ -1,0 +1,146 @@
+
+
+
+/* ****TopBar**** */
+@media (max-width: 768px) {
+  .topbar .col-4 {
+    display: none; /* Hide the right-side content in mobile */
+  }
+  .main-top-heading{
+ font-size: 12px !important;
+}
+}
+
+@media (max-width: 768px) {
+  .topbar .col-12 {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center horizontally */
+    text-align: center;
+  }
+}
+
+
+
+.main-top-heading{
+ font-size: 14px;
+}
+/* Make the topbar sticky only for mobile devices */
+@media (max-width: 768px) {
+  .top-for-sticky {
+    
+    position: sticky;
+    top: 0;
+    z-index: 1030; 
+    background-color: #17203a;
+    color: #fff;
+  }
+  .mobile-heading {
+    font-size: 18px;
+    font-weight: 600;
+    text-align: left; /* Center horizontally */
+    /*padding-left: 4px;*/
+  }
+
+  .mobile-price {
+    background-color: #ffad57;
+    color: #000;
+    font-size: 25px !important;
+    font-weight: 700;
+    padding: 5px 5px;
+    line-height: 0.9;
+    transform: rotate(-3deg) !important;
+    display: inline-block;
+  }
+
+  .top-bar-contact-btn {
+    border-radius: 20px; /* Round button */
+    font-size: 14px; /* Adjust font size */
+    padding: 6px 12px; /* Adjust padding for better aesthetics */
+  }
+}
+
+/* Topbar General Styling */
+.topbar {
+  background-color: #17203a;
+  color: #fff;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* Email Icon and Text Styling */
+.right-style {
+  color: #fff;
+}
+
+.right-style i {
+  color: #fff; /* Icon Color */
+}
+
+.right-style a {
+  color: #fff; /* Email Text Color */
+  text-decoration: none; /* Optional: remove underline */
+}
+
+.right-style a:hover {
+  text-decoration: underline; /* Optional: add underline on hover */
+}
+
+
+/* ******** */
+/* ****Brand Logo Section**** */
+/* ******** */
+.custom-slider-wrapper {
+    display: flex;
+    /*width: 750px;*/
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 2.5rem;
+    position: relative;
+}
+
+.custom-slider-inner-wrapper {
+    display: flex;
+    min-width: 200%;
+    position: absolute;
+    animation: scroll 20s linear infinite;
+}
+@media (max-width: 600px) {
+  .custom-slider-wrapper {
+    overflow: visible;
+}
+}
+
+.custom-slider-item {
+    min-width: 150px;
+    padding: 0 20px;
+}
+
+.custom-slider-inner-wrapper img {
+    max-width: 100%;
+    height: auto;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 767px) {
+    .custom-slider-wrapper {
+        width: 95%;
+        padding: 0;
+    }
+}
+
+/*Above FAQ Section*/
+
+@media (max-width: 600px) {
+    .faq-above-section {
+        font-size: 25px!important;
+    }
+}

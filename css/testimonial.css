@@ -1,0 +1,119 @@
+/* General Slider Styling */
+.testimonial-heading-md{
+    font-size: 36px !IMPORTANT;
+}
+.testimonial-slider {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background-color: #fafafa;
+  padding: 20px 0;
+}
+
+.slider-wrapper {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  animation: slide-left 30s linear infinite; /* Default animation */
+}
+
+.testimonial-card {
+  flex: 0 0 calc(33.33% - 20px); /* Responsive cards, 3 per row */
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+  min-width: 300px; /* Prevent cards from shrinking */
+  transition: transform 0.5s ease;
+}
+
+.testimonial-card__star {
+  width: 60px;
+  margin-bottom: 10px;
+}
+
+.testimonial-card__title {
+  font-size: 1.5rem;
+  margin: 10px 0;
+  color: #333;
+}
+
+.testimonial-card__author {
+  display: flex; /* Flexbox for alignment */
+  justify-content: space-between; /* Push left and right elements apart */
+  align-items: center; /* Vertically center items */
+  margin-top: 15px; /* Add some spacing from content */
+}
+
+.testimonial-card__author-image img {
+  width: 40px; /* User image size */
+  height: 40px;
+  border-radius: 50%; /* Circular image */
+  object-fit: cover;
+}
+
+.testimonial-card__author-name {
+  margin-left: 5px; /* Small gap between image and name */
+  font-size: 1rem; /* Adjust font size */
+  color: #333; /* Text color */
+}
+
+.testimonial-card__star {
+  width: 70px; /* Adjust star size */
+  height: auto;
+}
+.testimonial-card__author-info h4 {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+/* Animation for Sliders */
+.slider-left {
+  animation: slide-left 50s linear infinite; /* Speed adjusted */
+}
+
+@keyframes slide-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%); /* Move only half since it's duplicated */
+  }
+}
+
+.slider-right {
+  animation: slide-right 50s linear infinite; /* Speed adjusted */
+}
+
+@keyframes slide-right {
+  0% {
+    transform: translateX(-100%); /* Move only half since it's duplicated */
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .testimonial-card {
+    flex: 0 0 calc(50% - 20px); /* Show 2 cards per row on smaller screens */
+  }
+}
+
+@media (max-width: 600px) {
+  .testimonial-heading-md{
+    font-size: 26px !IMPORTANT;
+}
+.slider-left {
+  animation: slide-left 20s linear infinite; /* Speed adjusted */
+}
+.slider-right {
+  animation: slide-right 20s linear infinite; /* Speed adjusted */
+}
+}

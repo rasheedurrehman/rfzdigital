@@ -1,0 +1,75 @@
+RewriteEngine On
+
+# Redirect direct access to .php URLs to clean URLs
+RewriteCond %{THE_REQUEST} \s/([^.]+)\.php [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+
+RewriteRule ^blog/404$ /404.php [L]
+
+# Ensure "/blog" loads blog.php
+RewriteRule ^blog?$ blog.php [L]
+
+# Fix Read More links - Ensure "/blog/{slug}" loads blog-detail.php
+RewriteRule ^blog/([a-zA-Z0-9-]+)/?$ blog-detail.php?slug=$1 [QSA,L]
+
+# Auto-map requests to PHP files (except directories)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)/?$ $1.php [L]
+
+# Redirect index.php to root
+RewriteRule ^index(\.php)?$ / [R=301,L]
+
+# Redirect trailing slashes for non-directories
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} (.+)/$
+RewriteRule ^ %1 [R=301,L]
+
+# Set default file
+DirectoryIndex index.php
+
+# Custom 404 Error Page
+ErrorDocument 404 /404.php
+
+
+
+
+
+# SECURITY SETTINGS
+
+# Prevent access to sensitive files
+<FilesMatch "\.(htaccess|htpasswd|env|ini|log|sh|bak|sql)$">
+    Require all denied
+</FilesMatch>
+
+# Restrict access to config.php
+<Files config.php>
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Prevent directory browsing
+Options -Indexes
+
+# Disable server signature (hide Apache version info)
+ServerSignature Off
+
+# Enable HTTPS redirection only on live server
+RewriteCond %{HTTP_HOST} !localhost
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+Header set X-Content-Type-Options "nosniff"
+
+Header set X-Frame-Options "SAMEORIGIN"
+
+Header set X-XSS-Protection "1; mode=block"
+
+Header set Referrer-Policy "no-referrer-when-downgrade"
+
+Header set Strict-Transport-Security "max-age=31536000; preload"

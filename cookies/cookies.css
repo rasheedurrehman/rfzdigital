@@ -1,0 +1,235 @@
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+
+#cookie-popup {
+    position: fixed;
+    bottom: 20px;
+    left: 15%;
+    transform: translateX(-50%);
+    width: 400px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: none;
+    z-index: 1000;
+}
+
+#cookie-popup h4 {
+    font-size: 23px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #000;
+}
+#manage-cookies {
+    text-decoration: underline;
+    cursor: pointer;
+}
+#cookie-popup p {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 15px;
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    font-size: 0.875rem;
+    line-height: 1.375rem;
+    letter-spacing: -0.00438rem;
+}
+
+.cookie-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cookie-buttons button {
+    padding: 12px;
+    border-radius: 30px;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: 600;
+    width: 100%;
+    border: none;
+}
+
+#accept-all {
+    background: #000;
+    color: white;
+}
+
+#reject-non-essential {
+    background: #f8f8f8;
+    border: 2px solid #ccc;
+    color: #000;
+}
+.sidebar-popup-heading{
+    font-size: 1.5rem !important;
+    margin-bottom: 10px !important;
+    font-weight: 500;
+    letter-spacing: -0.015rem;
+    margin-top: 10px;
+}
+.two-p p {
+  margin-bottom: 16px; /* Adjust the value as needed */
+  font-family: Inter, sans-serif;
+    font-weight: 400;
+    font-size: 0.875rem;
+    line-height: 1.375rem;
+    letter-spacing: -0.00438rem;
+}
+#cookie-sidebar {
+    position: fixed;
+    top: 0;
+    left: -450px;
+    width: 450px;
+    height: 100%;
+    background: #ffffff;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    padding: 16px;
+    transition: left 0.3s ease-in-out;
+    z-index: 1001;
+    overflow-y: auto;
+}
+.sidebar-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 60px;
+}
+
+.sidebar-buttons button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    width: 48%;
+    transition: background 0.3s ease-in-out;
+}
+#confirm-choices {
+    background: #000;
+    color: white;
+}
+
+#confirm-choices:hover {
+    background: #333;
+}
+
+#accept-all-sidebar {
+    background: #f8f8f8;
+    border: 2px solid #ccc;
+    color: #000;
+}
+
+#accept-all-sidebar:hover {
+    background: #e6e6e6;
+}
+
+#close-sidebar {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    float: right;
+}
+/**/
+.cookie-category {
+    margin-top: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  .category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+/*     padding: 10px 0;*/
+    transition: padding 0.3s ease-in-out;
+}
+
+.category-header span {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between + icon and text */
+}
+
+.toggle-icon {
+    font-weight: bold;
+    width: 15px; /* Fix width to prevent movement */
+    display: inline-block;
+    text-align: center;
+}
+  .category-description {
+    display: block; /* Change from 'none' to 'block' for animation to work */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+    font-size: 14px;
+    color: #555;
+    margin-top: 5px;
+    margin-
+    padding: 0; /* Ensures smooth transition */
+}
+
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 20px;
+  }
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 20px;
+  }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  input:checked + .slider:before {
+    transform: translateX(14px);
+  }
+
+@media (max-width: 768px) {
+    #cookie-popup {
+        width: 90%;  /* Make it take 90% of screen width */
+        max-width: 400px; /* Prevent it from getting too large */
+        left: 50%;
+        transform: translateX(-50%); /* Centers it properly */
+        padding: 15px;
+        bottom: 10px;
+    }
+    #cookie-sidebar {
+        width: 100%;
+        left: -100%;
+    }
+}
+
