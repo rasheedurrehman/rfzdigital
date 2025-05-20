@@ -43,7 +43,7 @@ if (!isset($meta_description)) {
     $meta_description = 'Default description.';
 }
 if (!isset($canonical_url)) {
-    $canonical_url = 'https://rfzdigital.co.uk';  // Default canonical URL
+    $canonical_url = 'http://localhost/rfzdigital2.0/';  // Default canonical URL
 }
 
 // Check if it's a blog detail page based on slug
@@ -137,7 +137,7 @@ if (isset($_GET['slug'])) { // Slug is passed in URL
     // Check if on localhost or live server
     if ($host == 'localhost') {
         // For local server
-        $projectFolder = '/rfzdigitaluk/'; // Local folder
+        $projectFolder = '/rfzdigital2.0/'; // Local folder
     } else {
         // For live server (assuming it's in the root or specific folder)
         $projectFolder = '/';  // Use '/' if it's in the root directory
