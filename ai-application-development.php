@@ -233,44 +233,47 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="container">
         <div class="row row--custom change-order ">
             <div class="col-xl-5 col-lg-5 col-auto" data-aos-duration="1000" data-aos="fade-right">
-                <div class="home-1_content-image-2 content-image--mobile-width">
-                    <img src="./image/home-1/Home-Section-7.webp" alt="alternative text">
+                <div class="inquiry-form-section">
+                    <div class="form-container">
+                        <h2 style="color: black;">Get in Touch</h2>
 
+                        <form class="inquiry-form" method="POST" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
+                            <input type="hidden" name="form_type" value="top_form">
+                            <div class="form-group">
+                                <input type="text" name="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" name="email" placeholder="Your Email" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" name="phone" placeholder="Your Phone Number" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea placeholder="Your Message" name="message" rows="4" required></textarea>
+                            </div>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div class="offset-xl-1 col-xl-6 col-lg-7 col-md-11" data-aos-duration="1000" data-aos="fade-left">
+            <div class="offset-xl-0 col-xl-6 col-lg-7 col-md-11" data-aos-duration="1000" data-aos="fade-left">
                 <div class="content">
                     <div class="content-text-block">
+                        <h2 class="about-subheading-comservices">About Us</h2>
                         <h2 class="content-title heading-md text-black">
-                            Discover the latest digital strategies &
-                            emerging ideas for business growth
+                            Intelligent Solutions. Future-Ready Technology
                         </h2>
                         <p>
-                            Our brand tenders and marketing mixologists always serve up unique,
-                            design-forward websites coded with today’s modern technologies
+                            At RFZ Digital, we specialise in AI application development services that utilise the power
+                            of artificial intelligence to transform your business. Our expert team designs and builds
+                            custom AI solutions tailored to your brand’s specific needs, enhancing efficiency and
+                            driving innovation. From machine learning algorithms to intelligent automation, we create
+                            applications that streamline processes and provide valuable insights.
                         </p>
+                        <p>By combining cutting-edge technology with strategic vision, RFZ Digital ensures your AI
+                            applications are
+                            scalable, user-friendly, and impactful.</p>
                     </div>
-                    <!--<div class="content-list-block">-->
-                    <!--  <ul class="content-list">-->
-                    <!--    <li class="content-list-item">-->
-                    <!--      <img src="./image/icons/icon-check-blue.svg" alt="alternative text">-->
-                    <!--      Reach new business opportunities or test your product ideas.-->
-                    <!--    </li>-->
-                    <!--    <li class="content-list-item">-->
-                    <!--      <img src="./image/icons/icon-check-blue.svg" alt="alternative text">-->
-                    <!--      Automate your processes and get data-driven business insights.-->
-                    <!--    </li>-->
-                    <!--    <li class="content-list-item">-->
-                    <!--      <img src="./image/icons/icon-check-blue.svg" alt="alternative text">-->
-                    <!--      Create lightweight, scalable, and easly accessible cloud solution.-->
-                    <!--    </li>-->
-                    <!--  </ul>-->
-                    <!--</div>-->
-                </div>
-                <div>
-                    <a href="<?php echo BASE_URL; ?>contact-us"
-                        class="btn-masco btn-masco--header rounded-pill btn-fill--up">
-                        <span>Contact Us</span></a>
                 </div>
             </div>
         </div>
@@ -291,11 +294,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="home-5_feature-section-wrapper">
             <!-- Section Heading -->
             <div class="row justify-content-center text-center">
-                <div class="col-xxl-6 col-lg-7 col-md-9 col-sm-12 col-xs-11">
+                <div class="col-xxl-8 col-lg-9 col-md-9 col-sm-12 col-xs-11">
                     <div class="section-heading">
                         <h2 class="section-heading__title heading-md heading-md--general-sans text-l5-secondary">
-                            Contains modem features
-                            for better experience</h2>
+                            Transform Your Ideas into Reality with Custom Software Development Services</h2>
                     </div>
                 </div>
             </div>
@@ -308,9 +310,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <img src="./image/home-1/feature-1.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">📈</div>  -->
-                            <h5>Highly secured</h5> <!-- Heading -->
-                            <p>We prioritise your business website security with robust measures to protect it from
-                                threats, ensuring that your business and customer data remain safe and secure.</p>
+                            <h5>Accelerate Your Business with Custom SaaS Development</h5> <!-- Heading -->
+                            <p>Our SaaS development services create scalable, secure, cloud-based solutions that deliver
+                                seamless functionality, enhance user experience, and drive efficient business growth.
+                            </p>
                         </div>
                     </div>
 
@@ -321,9 +324,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <img src="./image/home-5/feature-2.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">🌐</div>  -->
-                            <h5>Creative Solutions</h5> <!-- Heading -->
-                            <p>We provide creative solutions that combine innovative design with smart strategies,
-                                helping your business stand out in the digital world.</p>
+                            <h5>End-to-End SaaS Development for Innovative Cloud Solutions</h5> <!-- Heading -->
+                            <p>We design, develop, and deploy secure SaaS applications that support your business goals,
+                                improve efficiency, and provide users with a reliable cloud experience.</p>
                         </div>
                     </div>
 
@@ -334,51 +337,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <img src="./image/home-5/feature-3.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">💼</div>  -->
-                            <h5>No Hidden Charges</h5> <!-- Heading -->
-                            <p>With our services, you can expect complete transparency. We believe in honesty, so there
-                                are no hidden charges, the price we quote is the price you pay.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row row2">
-                <div class="row g-4">
-                    <!-- Box 1 -->
-                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
-                        <div class="service-page-custom-box">
-                            <div class="feature-widget-2__icon">
-                                <img src="./image/home-1/feature-1.png" alt="feature icon">
-                            </div>
-                            <!-- <div class="icon">📈</div>  -->
-                            <h5>Highly secured</h5> <!-- Heading -->
-                            <p>We prioritise your business website security with robust measures to protect it from
-                                threats, ensuring that your business and customer data remain safe and secure.</p>
-                        </div>
-                    </div>
-
-                    <!-- Box 2 -->
-                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-                        <div class="service-page-custom-box">
-                            <div class="feature-widget-2__icon">
-                                <img src="./image/home-5/feature-2.png" alt="feature icon">
-                            </div>
-                            <!-- <div class="icon">🌐</div>  -->
-                            <h5>Creative Solutions</h5> <!-- Heading -->
-                            <p>We provide creative solutions that combine innovative design with smart strategies,
-                                helping your business stand out in the digital world.</p>
-                        </div>
-                    </div>
-
-                    <!-- Box 3 -->
-                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
-                        <div class="service-page-custom-box">
-                            <div class="feature-widget-2__icon">
-                                <img src="./image/home-5/feature-3.png" alt="feature icon">
-                            </div>
-                            <!-- <div class="icon">💼</div>  -->
-                            <h5>No Hidden Charges</h5> <!-- Heading -->
-                            <p>With our services, you can expect complete transparency. We believe in honesty, so there
-                                are no hidden charges, the price we quote is the price you pay.</p>
+                            <h5>Build Powerful SaaS Platforms for Sustainable Growth</h5> <!-- Heading -->
+                            <p>Our expert SaaS development services offer flexible, subscription-based applications that
+                                streamline processes, reduce costs, and support continuous business expansion.</p>
                         </div>
                     </div>
                 </div>
@@ -406,10 +367,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="container">
         <div class="home-5_process-devider">
             <div class="row justify-content-center text-center">
-                <div class="col-xxl-7 col-xl-8 col-lg-8 col-md-10">
+                <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-10">
                     <div class="section-heading">
                         <h2 class="section-heading__title fw-600 heading-md heading-md--general-sans text-l5-secondary">
-                            We follow a simple, yet effective SEO ranking process</h2>
+                            We follow a Professional and efficient website design and development process</h2>
                     </div>
                 </div>
             </div>
@@ -420,8 +381,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <span>1</span>
                         </div>
                         <div class="process-widget__body">
-                            <h3 class="process-widget__title">Keyword Research</h3>
-                            <p>Keyword research is the process of discovering valuable search queries</p>
+                            <h3 class="process-widget__title">Discovery Call</h3>
+                            <p>Analyzing your business needs and audience to create a tailored web design strategy that
+                                drives results.</p>
                         </div>
                     </div>
                 </div>
@@ -431,8 +393,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <span>2</span>
                         </div>
                         <div class="process-widget__body">
-                            <h3 class="process-widget__title">Link Building</h3>
-                            <p>Link building is a SEO technique that increases your search engine ranking</p>
+                            <h3 class="process-widget__title">Design & Development</h3>
+                            <p>Building a stunning, responsive website with top-notch functionality and seamless
+                                navigation for a better user experience.</p>
                         </div>
                     </div>
                 </div>
@@ -442,8 +405,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <span>3</span>
                         </div>
                         <div class="process-widget__body">
-                            <h3 class="process-widget__title">Ranking</h3>
-                            <p>It helps a website&#39;s 1st position in the search engine results page</p>
+                            <h3 class="process-widget__title">Testing & Deployment</h3>
+                            <p>Optimising your website for speed and performance, ensuring it's fully functional before
+                                going live.</p>
                         </div>
                     </div>
                 </div>
@@ -453,134 +417,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </div>
 
 
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Home 5  : Pricing Section
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-<div class="home-5_pricing-section bg-offwhite section-padding-120 bg-offwhite-3">
-    <div class="container">
-        <div class="row text-center justify-content-center">
-            <div class="col-xxl-6 col-xl-7 col-lg-8 col-md-9">
-                <div class="section-heading section-heading-margin">
-                    <h2 class="section-heading__title heading-md heading-md--general-sans text-l5-secondary">Explore our
-                        SEO service plans and choose your plan</h2>
-                    <div class="home-5_pricing-control-block">
-                        <div class="pricing-control-2">
-                            <span data-pricing-trigger="pricing-1" data-target="monthly">Business Website</span>
-                            <span data-pricing-trigger="pricing-1" data-target="yearly"
-                                class="pricing-control-2__indicator toggle"></span>
-                            <span data-pricing-trigger="pricing-1" data-target="yearly">E-Commerce</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row row--custom" data-plan-id="pricing-1" data-plan-active="monthly">
-            <div class="col-xl-4 col-md-6" data-aos-duration="1000" data-aos="fade-up">
-                <div class="pricing-card-2 h-100">
-                    <div class="pricing-card-2__head">
-                        <img src="./image/home-5/pricing-card-icon-1.svg" alt="icon" class="pricing-card-2__icon">
-                        <h3 class="pricing-card-2__plan">Small Business Package</h3>
-                        <h3 class="pricing-card-2__price-block"><span class="pricing-card-2__price dynamic-value"
-                                data-yearly="£499" data-monthly="£499">£499</span></h3>
-                    </div>
-                    <div class="pricing-card-2__body">
-                        <ul class="pricing-card-2__list">
-                            <li><img src="./image/icons/icon-check-black.svg" alt="icon check black"><span
-                                    class=" dynamic-value" data-yearly="Website Design (10 Products)"
-                                    data-monthly="Website Design (5 Pages)">Website Design (5 Pages)</span> </li>
-                            <li><img src="./image/icons/icon-check-black.svg" alt="icon check black"> <span
-                                    class=" dynamic-value" data-yearly="Website Development (10 Products)"
-                                    data-monthly="Website Development (5 Pages)">Website Development (5 Pages)</span>
-                            </li>
-                            <li><img src="./image/icons/icon-check-black.svg" alt="icon check black"> <span
-                                    class=" dynamic-value" data-yearly="Website Content (10 Products)"
-                                    data-monthly="Website Content (5 Pages)">Website Content (5 Pages)</span></li>
-                            <li><img src="./image/icons/icon-check-black.svg" alt="icon check black"><span
-                                    class=" dynamic-value" data-yearly="Copywriting (10 Products)"
-                                    data-monthly="Copywriting (5 Pages)">Copywriting (5 Pages)</span> </li>
-                            <li><img src="./image/icons/icon-check-black.svg" alt="icon check black"><span
-                                    class=" dynamic-value" data-yearly="Maintenance & Support* (2 Months Free)"
-                                    data-monthly="Maintenance & Support* (2 Months Free)">Maintenance & Support* (2
-                                    Months Free)</span> </li>
-                        </ul>
-                        <div class="pricing-card-2__button">
-                            <a href="./pricing.html" class="btn-masco btn-secondary-l05 w-100">Choose Plan</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-md-6" data-aos-duration="1000" data-aos="fade-up">
-                <div class="pricing-card-2 h-100">
-                    <div class="pricing-card-2__head">
-                        <img src="./image/home-5/pricing-card-icon-2.svg" alt="icon" class="pricing-card-2__icon">
-                        <h3 class="pricing-card-2__plan">Mid Size Business Package</h3>
-                        <h3 class="pricing-card-2__price-block"><span class="pricing-card-2__price dynamic-value"
-                                data-yearly="£699" data-monthly="£699">£699</span></h3>
-                    </div>
-                    <div class="pricing-card-2__body">
-                        <ul class="pricing-card-2__list">
-                            <li><img src="./image/icons/icon-check-black.svg" alt="icon check black"><span
-                                    class=" dynamic-value" data-yearly="Website Design (20 Products)"
-                                    data-monthly="Website Design (10 Pages)">Website Design (10 Pages)</span> </li>
-                            <li><img src="./image/icons/icon-check-black.svg" alt="icon check black"> <span
-                                    class=" dynamic-value" data-yearly="Website Development (20 Products)"
-                                    data-monthly="Website Development (10 Pages)">Website Development (10 Pages)</span>
-                            </li>
-                            <li><img src="./image/icons/icon-check-black.svg" alt="icon check black"> <span
-                                    class=" dynamic-value" data-yearly="Website Content (20 Products)"
-                                    data-monthly="Website Content (10 Pages)">Website Content (10 Pages)</span></li>
-                            <li><img src="./image/icons/icon-check-black.svg" alt="icon check black"><span
-                                    class=" dynamic-value" data-yearly="Copywriting (20 Products)"
-                                    data-monthly="Copywriting (10 Pages)">Copywriting (10 Pages)</span> </li>
-                            <li><img src="./image/icons/icon-check-black.svg" alt="icon check black"><span
-                                    class=" dynamic-value" data-yearly="Maintenance & Support* (2 Months Free)"
-                                    data-monthly="Maintenance & Support* (2 Months Free)">Maintenance & Support* (2
-                                    Months Free)</span> </li>
-                        </ul>
-                        <div class="pricing-card-2__button">
-                            <a href="./pricing.html" class="btn-masco btn-primary-l05 btn-hvr-black w-100">Choose
-                                Plan</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-md-6" data-aos-duration="1000" data-aos="fade-up">
-                <div class="pricing-card-2 h-100">
-                    <div class="pricing-card-2__head">
-                        <img src="./image/web-dev/pricing-card-icon-3.png" alt="icon" class="pricing-card-2__icon">
-                        <h3 class="pricing-card-2__plan">Large company Package</h3>
-                        <h3 class="pricing-card-2__price-block"><span class="pricing-card-2__price dynamic-value"
-                                data-yearly="£999" data-monthly="£999">£999</span></h3>
-                    </div>
-                    <div class="pricing-card-2__body">
-                        <ul class="pricing-card-2__list">
-                            <li><img src="./image/icons/icon-check-black.svg" alt="icon check black"><span
-                                    class=" dynamic-value" data-yearly="Website Design (30 Products)"
-                                    data-monthly="Website Design (10 Pages)">Website Design (10 Pages)</span> </li>
-                            <li><img src="./image/icons/icon-check-black.svg" alt="icon check black"> <span
-                                    class=" dynamic-value" data-yearly="Website Development (30 Products)"
-                                    data-monthly="Website Development (10 Pages)">Website Development (10 Pages)</span>
-                            </li>
-                            <li><img src="./image/icons/icon-check-black.svg" alt="icon check black"> <span
-                                    class=" dynamic-value" data-yearly="Website Content (30 Products)"
-                                    data-monthly="Website Content (10 Pages)">Website Content (10 Pages)</span></li>
-                            <li><img src="./image/icons/icon-check-black.svg" alt="icon check black"><span
-                                    class=" dynamic-value" data-yearly="Copywriting (30 Products)"
-                                    data-monthly="Copywriting (10 Pages)">Copywriting (10 Pages)</span> </li>
-                            <li><img src="./image/icons/icon-check-black.svg" alt="icon check black"><span
-                                    class=" dynamic-value" data-yearly="Maintenance & Support* (2 Months Free)"
-                                    data-monthly="Maintenance & Support* (2 Months Free)">Maintenance & Support* (2
-                                    Months Free)</span> </li>
-                        </ul>
-                        <div class="pricing-card-2__button">
-                            <a href="./pricing.html" class="btn-masco btn-secondary-l05 w-100">Choose Plan</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -590,286 +426,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <?php include 'includes/testimonial2.php'; ?>
 <!-- testimonial us Section -->
 
-
-
-
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Home 1  : New section tabs
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-<div class="container py-5 new-section-tabs">
-    <h2 class="text-center mb-4">WebPring to Transform your Website.</h2>
-    <ul class="nav nav-tabs justify-content-center" id="tabs" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="highly-secured-tab" data-bs-toggle="tab"
-                data-bs-target="#highly-secured" type="button" role="tab" aria-controls="highly-secured"
-                aria-selected="true">
-                Highly Secured
-            </button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="innovative-solution-tab" data-bs-toggle="tab"
-                data-bs-target="#innovative-solution" type="button" role="tab" aria-controls="innovative-solution"
-                aria-selected="false">
-                Innovative Solution
-            </button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="no-hidden-charge-tab" data-bs-toggle="tab" data-bs-target="#no-hidden-charge"
-                type="button" role="tab" aria-controls="no-hidden-charge" aria-selected="false">
-                No Hidden Charge
-            </button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="client-centric-tab" data-bs-toggle="tab" data-bs-target="#client-centric"
-                type="button" role="tab" aria-controls="client-centric" aria-selected="false">
-                Client-Centric Approach
-            </button>
-        </li>
-    </ul>
-
-    <div class="tabs-border"></div> <!-- Border below tabs -->
-
-    <div class="tab-content mt-4" id="tabsContent">
-        <!-- Highly Secured Tab Content -->
-        <div class="tab-pane fade show active" id="highly-secured" role="tabpanel" aria-labelledby="highly-secured-tab">
-            <div class="row align-items-center">
-                <div class="col-md-1"></div>
-                <div class="col-md-6 content-section">
-                    <h3>Your data is secured with us!</h3>
-                    <p>At WebPring, we implement robust security measures that ensure the confidentiality and integrity
-                        of your data, providing you with peace of mind as we build and maintain your digital presence.
-                    </p>
-
-                    <h5>Strong Encryption:</h3>
-                        <p>With strong encryption for web development services, we guarantee the security of your
-                            Customer data.</p>
-                        <h5>Secure Protocol:</h3>
-                            <p>Secure protocols are vital components of web development. We ensure safe communication
-                                between users and websites, safeguarding against cyber threats.</p>
-                </div>
-                <div class="col-md-5 image-section">
-                    <img src="./image/home-1/Section-Three.webp" alt="Highly Secured" class="img-fluid">
-                </div>
-            </div>
-        </div>
-
-        <!-- Innovative Solution Tab Content -->
-        <div class="tab-pane fade" id="innovative-solution" role="tabpanel" aria-labelledby="innovative-solution-tab">
-            <div class="row align-items-center">
-                <div class="col-md-1"></div>
-                <div class="col-md-6 content-section">
-                    <h3>Innovative Solutions</h3>
-                    <p>We bring unique and forward-thinking solutions to meet all your business needs.</p>
-                    <ul>
-                        <li>Cutting-edge technology</li>
-                        <li>Customized strategies</li>
-                        <li>Expert team</li>
-                    </ul>
-                </div>
-                <div class="col-md-5 image-section">
-                    <img src="./image/home-1/Web-Dev-Section3.webp" alt="Innovative Solution" class="img-fluid">
-                </div>
-            </div>
-        </div>
-
-        <!-- No Hidden Charge Tab Content -->
-        <div class="tab-pane fade" id="no-hidden-charge" role="tabpanel" aria-labelledby="no-hidden-charge-tab">
-            <div class="row align-items-center">
-                <div class="col-md-1"></div>
-                <div class="col-md-6 content-section">
-                    <h3>No Hidden Charges</h3>
-                    <p>Transparent pricing ensures you know exactly what you're paying for.</p>
-                    <ul>
-                        <li>Clear breakdowns</li>
-                        <li>No unexpected fees</li>
-                        <li>Honest service</li>
-                    </ul>
-                </div>
-                <div class="col-md-5 image-section">
-                    <img src="./image/home-1/Home-Section-7.webp" alt="No Hidden Charge" class="img-fluid">
-                </div>
-            </div>
-        </div>
-
-        <!-- Client-Centric Approach Tab Content -->
-        <div class="tab-pane fade" id="client-centric" role="tabpanel" aria-labelledby="client-centric-tab">
-            <div class="row align-items-center">
-                <div class="col-md-1"></div>
-                <div class="col-md-6 content-section">
-                    <h3>Client-Centric Approach</h3>
-                    <p>We prioritize your goals and work closely with you to ensure success.</p>
-                    <ul>
-                        <li>Personalized service</li>
-                        <li>Ongoing support</li>
-                        <li>Goal-oriented strategies</li>
-                    </ul>
-                </div>
-                <div class="col-md-5 image-section">
-                    <img src="./image/home-1/Web-Dev-Section3.webp" alt="Client-Centric Approach" class="img-fluid">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Home 1  : Additional Services
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-<div class="home-5_feature-section padding-bottom-120 Additional-Services-Section">
-    <div class="container my-0 ">
-        <div class="home-5_feature-section-wrapper">
-            <!-- Section Heading -->
-            <div class="row justify-content-center text-center">
-                <div class="col-xxl-6 col-lg-7 col-md-9 col-sm-12 col-xs-11">
-                    <div class="section-heading">
-                        <h2
-                            class="section-heading__title heading-md heading-md--general-sans text-l5-secondary section-3-heading">
-                            Additional Services To support your new business</h2>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row g-4">
-                <!-- Box 1 -->
-                <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
-                    <div class="ass-custom-box">
-
-                        <h4>Registered Office </h4> <!-- Heading -->
-                        <p>We provide creative digital marketing solutions that are designed to meet your unique
-                            business needs and drive impactful results.</p>
-                    </div>
-                </div>
-
-                <!-- Box 2 -->
-                <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
-                    <div class="ass-custom-box">
-
-                        <h4>Company secretary</h4> <!-- Heading -->
-                        <p>We provide creative digital marketing solutions that are designed to meet your unique
-                            business needs and drive impactful results.</p>
-                    </div>
-                </div>
-
-                <!-- Box 3 -->
-                <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
-                    <div class="ass-custom-box">
-
-                        <h4>Admin Support</h4> <!-- Heading -->
-                        <p>We provide creative digital marketing solutions that are designed to meet your unique
-                            business needs and drive impactful results.</p>
-                    </div>
-                </div>
-
-                <!-- Box 4 -->
-                <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
-                    <div class="ass-custom-box">
-
-                        <h4>Bookkeeping Services</h4> <!-- Heading -->
-                        <p>We provide creative digital marketing solutions that are designed to meet your unique
-                            business needs and drive impactful results.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Home 2  : Content Section 2
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-<div class="home-2_content-section-2 padding-bottom-150 services-page-section-11">
-    <div class="container">
-        <div class="row row--custom">
-            <div class="col-xl-auto col-lg-5 col-auto" data-aos-duration="1000" data-aos="fade-left">
-                <div class="home-2_content-image-2 content-image--mobile-width">
-                    <img src="./image/services-page/services-page-section-11.png" alt="alternative text">
-                </div>
-            </div>
-            <div class="col-xl-6 col-lg-7 col-md-10 col-auto" data-aos-duration="1000" data-aos="fade-right">
-                <div class="content">
-                    <div class="content-text-block">
-                        <h2 class="content-title heading-md text-black">
-                            Perfect interface for quick support and with no coding
-                        </h2>
-                        <p>Visual Builder empowers you to create the perfect AI chatbot quickly
-                            and without any coding. Drag and drop conversational elements and test
-                            them in real-time to design engaging clients.</p>
-                        <p>It is a modern messaging platform that combines everything you need
-                            for effective support, sales, and engagement, all in a simple
-                            interface.</p>
-                    </div>
-                    <div class="content-button-block">
-                        <a href=" about.html" class="btn-masco btn-masco btn-secondary-l02 btn-fill--up"><span>Learn
-                                more</span></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Home 1  : Ireland 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-
-<section class="Ireland-section">
-    <div class="container py-5 ">
-        <div class="row align-items-center">
-            <!-- Image Section -->
-            <div class="col-md-5">
-                <img src="./image/home-1/Web-Dev-Section3.webp" alt="Register a Company" class="img-fluid">
-            </div>
-
-            <!-- Text Section -->
-            <div class="col-md-7">
-                <h2 class="mb-4">What You Need To Register A Limited Company In Ireland</h2>
-                <p>
-                    When registering a business, you'll only need a few details to hand. Our online application wizard
-                    will make it a breeze and guide you through the registration process, from starting a business to
-                    registering your company name and forming a limited company.
-                </p>
-
-                <ul class="list-unstyled">
-                    <li class="d-flex align-items-start mb-4">
-                        <i class="fas fa-check-circle text-success me-3" style="font-size: 1.5rem;"></i>
-                        <div>
-                            <h5>Registered Office Address</h5>
-                            <p>
-                                It is mandatory in Ireland to have an Irish registered office address. If you don’t have
-                                one, you can opt for our registered office address service.
-                            </p>
-                        </div>
-                    </li>
-                    <li class="d-flex align-items-start mb-4">
-                        <i class="fas fa-check-circle text-success me-3" style="font-size: 1.5rem;"></i>
-                        <div>
-                            <h5>Director and Secretary Information</h5>
-                            <p>
-                                The names, nationalities, dates of birth, occupations, and residential addresses of your
-                                directors and secretary are required.
-                            </p>
-                        </div>
-                    </li>
-                    <li class="d-flex align-items-start mb-4">
-                        <i class="fas fa-check-circle text-success me-3" style="font-size: 1.5rem;"></i>
-                        <div>
-                            <h5>Shareholders/Share Information</h5>
-                            <p>
-                                The names of each of your shareholders, along with the number of shares held and the
-                                value of those shares.
-                            </p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~
     Home 1 : social-apps Section
@@ -891,114 +447,172 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="row justify-content-center">
             <div class="col-xxl-6 col-lg-8 col-md-9">
                 <div class="section-heading section-heading text-center">
-                    <h2 class="section-heading__title heading-md text-black">Frequently asked questions about our
-                        digital agency</h2>
+                    <h2 class="section-heading__title heading-md text-black">Frequently Asked Questions </h2>
                 </div>
             </div>
         </div>
-        <div class="row row--custom">
+        <div class="row row--custom faq-comservices">
             <div class="col-lg-10">
                 <div class="accordion-style-1" id="home-1-faq">
                     <div class="accordion-item">
                         <button class="accordion-button " type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item" aria-expanded="true" aria-controls="home-1-faq-item">
-                            What is included in your website design package?
+                            What is AI application development?
                         </button>
                         <div id="home-1-faq-item" class="accordion-collapse collapse show" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                Our website design package includes custom design, mobile responsiveness, user-friendly
-                                navigation, SEO optimisation, and integration of your business identity.
-                                We also provide initial setup and basic training for easy content management.
+                                AI application development refers to creating software solutions that integrate
+                                artificial intelligence (AI) technologies to automate tasks, analyse data, and make
+                                intelligent decisions. These applications use machine learning, deep learning, natural
+                                language processing (NLP), computer vision, and other AI techniques to mimic human-like
+                                capabilities and improve operational efficiency.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-2" aria-expanded="false" aria-controls="home-1-faq-item-2">
-                            How much does a website cost?
+                            What types of AI applications do you develop?
                         </button>
                         <div id="home-1-faq-item-2" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                The cost of a website depends on its complexity and the features you need. We offer
-                                flexible packages starting from £499,
-                                and we can provide a solution that fits your specific requirements and budget.
+                                We develop a wide range of AI applications, including:
+                                <ul>
+                                    <li>Chatbots & Virtual Assistants: Automated customer support tools that interact
+                                        with users in real time.</li>
+                                    <li>Predictive Analytics Solutions: AI-powered tools for forecasting trends, market
+                                        behaviours, and customer preferences.</li>
+                                    <li>Natural Language Processing (NLP) Apps: These are applications that process and
+                                        analyse human language, including sentiment analysis, text classification, and
+                                        language translation.</li>
+                                    <li>Computer Vision Applications: AI solutions that analyse and interpret visual
+                                        data, such as image recognition and object detection.</li>
+                                    <li>Recommendation Systems: Personalised content and product recommendations using
+                                        machine learning.</li>
+                                </ul>
+                                Speech Recognition Apps: AI-driven applications that convert spoken language into text
+                                for transcription and command processing.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-3" aria-expanded="false" aria-controls="home-1-faq-item-3">
-                            How long does it take to build a website?
+                            How do you develop AI applications?
                         </button>
                         <div id="home-1-faq-item-3" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                The timeline for website development varies depending on the complexity and size of the
-                                project.
-                                On average, it takes 2-4 weeks from the initial design phase to the final launch.
+                                Our AI application development process includes the following:
+                                <ul>
+                                    <li>Requirement Analysis: Understanding your business needs and identifying AI use
+                                        cases.</li>
+                                    <li>Data Collection & Preparation: Gathering and cleaning data for training machine
+                                        learning models.</li>
+                                    <li>Model Development: Selecting and training machine learning models based on your
+                                        needs.</li>
+                                    <li>Algorithm Design: Developing algorithms that can process data and make
+                                        intelligent predictions.</li>
+                                    <li>Application Development: Integrating AI models into a user-friendly application
+                                        interface.</li>
+                                    <li>Testing & Optimisation: Validating the AI model and optimising its performance.
+                                    </li>
+                                </ul>
+                                Deployment & Monitoring: Launch the AI application and continuously monitor its
+                                performance for improvements.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-4" aria-expanded="false" aria-controls="home-1-faq-item-4">
-                            Do you offer website redesign services?
+                            What are the benefits of using AI in applications?
                         </button>
                         <div id="home-1-faq-item-4" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                Yes, we offer comprehensive website redesign services. We focus on improving user
-                                experience,
-                                modernising design, and enhancing functionality to better serve your business goals.
+                                AI enhances applications by:
+                                <ul>
+                                    <li>Automating Repetitive Tasks: Reduces the need for manual intervention, freeing
+                                        up resources for more complex tasks.</li>
+                                    <li>Improving Decision Making: AI systems analyse vast amounts of data and provide
+                                        insights that lead to better business decisions.</li>
+                                    <li>Personalizing User Experiences: AI-driven apps can offer personalised content,
+                                        recommendations, and services.</li>
+                                    <li>Increasing Efficiency: AI can optimise processes, making applications faster and
+                                        more cost-effective.</li>
+                                </ul>
+                                Predictive Insights: AI apps can predict trends, identify patterns, and forecast future
+                                events.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-5" aria-expanded="false" aria-controls="home-1-faq-item-5">
-                            Will my website be mobile-friendly?
+                            How long does it take to develop an AI application?
                         </button>
                         <div id="home-1-faq-item-5" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                Absolutely! All our websites are fully mobile-responsive, ensuring they look
-                                great and function smoothly on all devices, including smartphones and tablets.
+                                The time to develop an AI application varies based on project complexity, data
+                                availability, and the type of AI technology involved. Generally, the process can take a
+                                few weeks to several months. After an initial consultation, we will provide a timeline
+                                estimate based on your project’s specific requirements.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-6" aria-expanded="false" aria-controls="home-1-faq-item-6">
-                            Can I update my website after it’s developed?
+                            What types of businesses can benefit from AI applications?
                         </button>
                         <div id="home-1-faq-item-6" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                vYes, we provide user-friendly content management systems (CMS) like WordPress, allowing
-                                you to easily update text,
-                                images, and other content on your website without technical knowledge.
+                                AI applications are beneficial for a wide range of industries, including:
+                                <ul>
+                                    <li>E-commerce: Personalisation, recommendation engines, inventory management.</li>
+                                    <li>Healthcare: Diagnostic tools, predictive analytics, and patient monitoring
+                                        systems.</li>
+                                    <li>Finance: Fraud detection, algorithmic trading, and customer service automation.
+                                    </li>
+                                    <li>Manufacturing: Predictive maintenance, quality control, and supply chain
+                                        optimisation.</li>
+                                    <li>Retail: AI-driven marketing, demand forecasting, and customer insights.</li>
+                                </ul>
+                                Education: Personalised learning experiences, student performance prediction.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-7" aria-expanded="false" aria-controls="home-1-faq-item-7">
-                            Do you offer e-commerce website development?
+                            Do you provide support after deploying the AI application?
                         </button>
                         <div id="home-1-faq-item-7" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                Yes, we specialise in creating e-commerce websites with secure payment gateways, easy
-                                product management, and a smooth customer shopping experience.
-                                We can build your online store using platforms like WooCommerce or Shopify.
+                                Yes, we offer ongoing support and maintenance after deploying your AI application. Our
+                                support includes monitoring the performance of AI models, improving algorithms, fixing
+                                bugs, and making adjustments as your business needs evolve. We also offer regular
+                                updates to ensure the application remains current with advancements in AI technologies.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-8" aria-expanded="false" aria-controls="home-1-faq-item-8">
-                            Will my website be secure from cyber threats?
+                            What technologies do you use for AI application development?
                         </button>
                         <div id="home-1-faq-item-8" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                Yes, security is a top priority. To ensure your website safety, we implement best
-                                practices for website security, including SSL certificates,
-                                regular security updates, and protection against hacking attempts.
+                                We use a variety of cutting-edge technologies to develop AI applications, including:
+                                <ul>
+                                    <li>Machine Learning Libraries: TensorFlow, PyTorch, Keras, Scikit-learn.</li>
+                                    <li>Natural Language Processing Tools: SpaCy, NLTK, GPT models, BERT.</li>
+                                    <li>Computer Vision Frameworks: OpenCV, TensorFlow, Keras, PyTorch.
+                                    </li>
+                                    <li>Data Processing Tools: Pandas, NumPy, Apache Spark.</li>
+                                    <li>Cloud AI Services: AWS AI, Google Cloud AI, Microsoft Azure AI.</li>
+                                </ul>
+                                Programming Languages: Python, R, Java, C++. We select the most appropriate technologies
+                                based on your specific requirements to ensure optimal performance.
                             </div>
                         </div>
                     </div>
