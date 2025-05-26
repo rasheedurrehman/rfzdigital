@@ -1,7 +1,104 @@
+/* Services Hero Section 1 */
+
 .com-services {
     font-family: "Lexend", Sans-serif;
     font-size: 42px !important;
     font-weight: 700;
     color: #000000;
     letter-spacing: -2.5px;
+}
+
+
+
+/* Services section 3 About Us */
+
+.about-subheading-comservices {
+    font-size: 18px;
+    color: #007BFF;
+}
+
+/* Inquiry Form Styling */
+.inquiry-form-section {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.form-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(3px);
+    padding: 40px;
+    border-radius: 15px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+    font-size: 32px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.form-container p {
+    font-size: 16px;
+    color: #eee;
+    margin-bottom: 30px;
+}
+
+.inquiry-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.99);
+    color: #000;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #000;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #007BFF;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.inquiry-form-section button {
+    padding: 12px;
+    background: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.inquiry-form-section button:hover {
+    background: #0056b3;
+}
+
+
+/* FAQ's */
+.faq-comservices ul {
+    list-style: disc;
+    padding-left: 40px;
 }
