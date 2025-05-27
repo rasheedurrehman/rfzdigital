@@ -120,7 +120,7 @@
   <script src="./plugins/isotope/packery.pkgd.min.js"></script>
   <script src="./plugins/isotope/image.loaded.js"></script>
   <script src="plugins/slick/slick.min.js"></script>
-  <script src="./plugins/countdown/jquery.countdown.js" defer></script>
+  <!-- <script src="./plugins/countdown/jquery.countdown.js" defer></script> -->
   <script src="js/menu.js"></script>
   <script src="js/custom.js"></script>
   <!-- Activation Script -->
