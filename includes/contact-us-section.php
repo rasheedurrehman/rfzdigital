@@ -22,12 +22,14 @@ include $templateFilePathAdmin;
 $adminEmailTemplate = ob_get_clean();
 
 // Sanitize helper
-function sanitize_input($data) {
+function sanitize_input($data)
+{
     return htmlspecialchars(strip_tags(trim($data)));
 }
 
 // Validate phone (basic)
-function is_valid_phone($phone) {
+function is_valid_phone($phone)
+{
     return preg_match('/^\+?[0-9\s\-\(\)]+$/', $phone);
 }
 
@@ -35,14 +37,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
     // CAPTCHA verification
     $secretKey = '6Lc-9N0qAAAAAGmzU7g9e2eJAtcDctOrDtUG6cnB';
     $captchaResponse = $_POST['g-recaptcha-response'] ?? '';
-    
+
     // Verify the reCAPTCHA response
     $url = 'https://www.google.com/recaptcha/api/siteverify';
     $data = [
         'secret' => $secretKey,
         'response' => $captchaResponse,
     ];
-    
+
     $options = [
         'http' => [
             'method' => 'POST',
@@ -73,8 +75,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
                 $stmt->bindParam(':message', $messageContent, PDO::PARAM_STR);
 
                 if ($stmt->execute()) {
-                    $adminEmail = 'info@rfzdigital.co.uk';
-                    $adminPassword = 'f)yWpd$)c6f~';
+                    $adminEmail = 'yasirhassan@rfzdigital.co.uk';
+                    $adminPassword = 'ZuHjZ6H7PQES';
                     $page_url = $_SERVER['HTTP_REFERER'] ?? 'Unknown';
 
                     // === SEND ADMIN EMAIL ===
@@ -102,7 +104,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
                         $mail->Subject = 'New Contact Form Submission';
                         $mail->Body = $adminEmailContent;
                         $mail->send();
-
                     } catch (Exception $e) {
                         error_log("Admin Email Error: " . $mail->ErrorInfo);
                     }
@@ -138,11 +139,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
                         error_log("User Email Error: " . $userMail->ErrorInfo);
                         $message = "<div class='error-message'>Form submitted, but confirmation email failed. Please try later.</div>";
                     }
-
                 } else {
                     $message = "<div class='error-message'>Form submission failed. Please try again.</div>";
                 }
-
             } catch (PDOException $e) {
                 error_log("DB Error: " . $e->getMessage());
                 $message = "<div class='error-message'>Error saving data. Please try again later.</div>";
@@ -158,29 +157,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
 
 <!-- Add this script for CAPTCHA -->
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
- 
+
 <style>
-/* Hides the "mobile-hide" class only on mobile devices (max-width: 600px) */
-@media (max-width: 600px) {
-  .mobile-hide {
-    display: none;
-  }
-}
+    /* Hides the "mobile-hide" class only on mobile devices (max-width: 600px) */
+    @media (max-width: 600px) {
+        .mobile-hide {
+            display: none;
+        }
+    }
 
-/* Shows the "mobile-heading" class only on mobile devices (max-width: 600px) */
-@media (max-width: 600px) {
-  .contactus-mobile-heading {
-    display: block;
-    letter-spacing: -1px;
-  }
-}
+    /* Shows the "mobile-heading" class only on mobile devices (max-width: 600px) */
+    @media (max-width: 600px) {
+        .contactus-mobile-heading {
+            display: block;
+            letter-spacing: -1px;
+        }
+    }
 
-/* Hides the "mobile-heading" class on all devices larger than 600px */
-@media (min-width: 601px) {
-  .contactus-mobile-heading {
-    display: none;
-  }
-}
+    /* Hides the "mobile-heading" class on all devices larger than 600px */
+    @media (min-width: 601px) {
+        .contactus-mobile-heading {
+            display: none;
+        }
+    }
 </style>
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -196,7 +195,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
                             <h2 class="heading-md mobile-hide">Fill out this form, We 'll quickly get back to you</h2>
                             <h2 class="heading-md contactus-mobile-heading">Feel Free to Contact Us</h2>
                             <p>
-                                We are here to help you. Our expert team will get in touch within 24 hours. Let's solve your challenges together!
+                                We are here to help you. Our expert team will get in touch within 24 hours. Let's solve
+                                your challenges together!
                             </p>
                             <div class="content-divider"></div>
                         </div>
@@ -204,10 +204,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
                     <div class="content_main-testimonial mobile-hide">
                         <div class="testimonial-widget-4" data-aos="fade-left" data-aos-delay="NaN">
                             <div class="testimonial-widget-4__rating">
-                                <img src="./image/icons/star-five-yellow.svg" class="testimonial-widget-4__star" alt="image alt">
+                                <img src="./image/icons/star-five-yellow.svg" class="testimonial-widget-4__star"
+                                    alt="image alt">
                             </div>
                             <p>
-                                "RFZ Digital did an exceptional job for us. Keep up the excellent digital work! The quality and results continue to impress as I explore more of their services. I've received at least 50 times the value from RFZ Digital—it's worth far more than I paid!"
+                                "RFZ Digital did an exceptional job for us. Keep up the excellent digital work! The
+                                quality and results continue to impress as I explore more of their services. I've
+                                received at least 50 times the value from RFZ Digital—it's worth far more than I paid!"
                             </p>
                             <div class="testimonial-widget-4__body">
                                 <div class="testimonial-widget-4__user-image">
@@ -229,23 +232,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
                         <div class="form-box-style__form-inner">
                             <div class="form-box-style__form-input">
                                 <h3 class="form-box-style-title">Your name</h3>
-                                <input class="form-control bg-white" name="name" type="text" pattern="^[a-zA-Z\s]+$" title="Only letters and spaces allowed" placeholder="Enter your full name" required>
+                                <input class="form-control bg-white" name="name" type="text" pattern="^[a-zA-Z\s]+$"
+                                    title="Only letters and spaces allowed" placeholder="Enter your full name" required>
                             </div>
                             <div class="form-box-style__form-input">
                                 <h3 class="form-box-style-title">Email address</h3>
-                                <input class="form-control bg-white" name="email" type="email" placeholder="Enter your email" required>
+                                <input class="form-control bg-white" name="email" type="email"
+                                    placeholder="Enter your email" required>
                             </div>
                             <div class="form-box-style__form-input">
                                 <h3 class="form-box-style-title">Phone Number</h3>
-                                <input class="form-control bg-white" name="phone" type="tel" placeholder="Enter your phone number" required>
+                                <input class="form-control bg-white" name="phone" type="tel"
+                                    placeholder="Enter your phone number" required>
                             </div>
                             <div class="form-box-style__form-input">
                                 <h3 class="form-box-style-title">Write your message</h3>
-                                <textarea class="form-control bg-white textarea" name="message" placeholder="Write us your question here..." required></textarea>
+                                <textarea class="form-control bg-white textarea" name="message"
+                                    placeholder="Write us your question here..." required></textarea>
                             </div>
                             <!-- Added CAPTCHA field here -->
                             <div class="form-box-style__form-input">
-                                <div class="g-recaptcha mb-3" data-sitekey="6Lc-9N0qAAAAAPqT-iqpOodgdx8VgaJq03ckWoLe"></div>
+                                <div class="g-recaptcha mb-3" data-sitekey="6Lc-9N0qAAAAAPqT-iqpOodgdx8VgaJq03ckWoLe">
+                                </div>
                             </div>
                             <div class="form-box-style__form-input-button">
                                 <button type="submit" class="btn-masco rounded-pill w-100">Submit</button>
