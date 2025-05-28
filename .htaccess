@@ -37,11 +37,6 @@ DirectoryIndex index.php
 ErrorDocument 404 /404.php
 
 
-
-
-
-# SECURITY SETTINGS
-
 # Prevent access to sensitive files
 <FilesMatch "\.(htaccess|htpasswd|env|ini|log|sh|bak|sql)$">
     Require all denied

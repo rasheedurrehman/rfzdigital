@@ -10,4 +10,8 @@ define('DB_HOST', 'localhost');           // Typically 'localhost' for live serv
 define('DB_NAME', 'rfzdigital2.0');             // Updated with live database name
 define('DB_USER', 'root');        // Updated with live database username
 define('DB_PASS', '');        // Updated with live database password
+
+
+
 ?>
+
