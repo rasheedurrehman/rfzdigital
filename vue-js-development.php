@@ -23,19 +23,29 @@
 </style>
 <?php
 $noindex = true;
-// Include database connection and PHPMailer files
-require 'PHPMailer/src/Exception.php';
-require 'PHPMailer/src/PHPMailer.php';
-require 'PHPMailer/src/SMTP.php';
-include 'includes/header.php';
 
-// Use PHPMailer namespace
+include 'includes/header.php';
+include_once 'includes/mail-config.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+
 $message = ""; // Feedback message for the form
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+// Load the user email template
+$templateFilePathUser = 'user-email-template.php';
+ob_start();
+include $templateFilePathUser;
+$userEmailTemplate = ob_get_clean();
+
+// Load the admin email template
+$templateFilePathAdmin = 'user-admin-email-template.php';
+ob_start();
+include $templateFilePathAdmin;
+$adminEmailTemplate = ob_get_clean();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST['form_type'] == "top_form") {
     // Sanitize and validate input data
     function sanitize_input($data)
     {
@@ -43,11 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     $name = sanitize_input($_POST['name']);
-    $email = sanitize_input($_POST['email']);
+    $email = filter_var(sanitize_input($_POST['email']), FILTER_VALIDATE_EMAIL);
     $phone = sanitize_input($_POST['phone']);
     $messageContent = sanitize_input($_POST['message']); // Avoid conflict with $message variable
 
-    // Check if all fields are filled
+    // Check if all fields are filled and email is valid
     if (!empty($name) && !empty($email) && !empty($phone) && !empty($messageContent)) {
         // Database insertion logic
         try {
@@ -61,12 +71,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if ($stmt->execute()) {
                 // PHPMailer Setup
-                $adminEmail = 'info@rfzdigital.co.uk'; // Replace with admin email
-                $adminPassword = 'h1qzjO(&t$ci'; // Replace with admin password
-
-                $mail = new PHPMailer(true);
-
+                $adminEmail = 'yasirhassan@rfzdigital.co.uk'; // Replace with admin email
+                $adminPassword = 'ZuHjZ6H7PQES'; // Replace with secure credentials
+                // Capture the form submission URL
+                $page_url = $_SERVER['HTTP_REFERER'];
+                // === SEND EMAIL TO ADMIN ===
                 try {
+                    $mail = new PHPMailer(true);
+
                     // Server settings
                     $mail->isSMTP();
                     $mail->Host = 'premium55.web-hosting.com'; // Replace with your SMTP server
@@ -76,51 +88,73 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
                     $mail->Port = 465;
 
-                    // Admin email settings
-                    $mail->setFrom($adminEmail, 'Website Contact Form');
-                    $mail->addAddress($adminEmail); // Send to admin
-                    $mail->addReplyTo($email, $name); // Reply-to user
+                    // Debugging (Enable for troubleshooting)
+                    // $mail->SMTPDebug = 2;
+
+                    // Common Settings
+                    $mail->isHTML(true);
+                    $mail->setFrom($adminEmail, 'RFZ Digital');
+                    $mail->addAddress($adminEmail); // Admin's email
+                    $mail->addReplyTo($email, $name); // User's email for reply
+
+                    // Replace placeholders in the admin template
+                    $adminEmailContent = str_replace(
+                        ['{{name}}', '{{email}}', '{{phone}}', '{{message}}', '{{page_url}}'],
+                        [$name, $email, $phone, $messageContent, $page_url],
+                        $adminEmailTemplate
+                    );
 
                     // Admin email content
                     $mail->isHTML(true);
                     $mail->Subject = 'New Contact Form Submission';
-                    $mail->Body = "
-                        <h3>New Contact Form Submission</h3>
-                        <p><strong>Name:</strong> $name</p>
-                        <p><strong>Email:</strong> $email</p>
-                        <p><strong>Phone:</strong> $phone</p>
-                        <p><strong>Message:</strong><br>$messageContent</p>
-                    ";
+                    $mail->Body = $adminEmailContent;
                     $mail->send(); // Send admin email
 
-                    // User confirmation email
-                    $mail->clearAddresses(); // Clear admin email address
-                    $mail->addAddress($email); // Send to user
-                    $mail->Subject = 'Thank You for Contacting Us';
-                    $mail->Body = "
-                        <h3>Thank you for contacting us!</h3>
-                        <p>Dear $name,</p>
-                        <p>Thank you for your message. We have received your form submission and will get back to you shortly.</p>
-                        <p><strong>Your Message:</strong><br>$messageContent</p>
-                        <p>Best regards,</p>
-                        <p>Support Team</p>
-                    ";
-                    $mail->send(); // Send user email
-
-                    $message = "<div class='success-message'>Form submitted successfully!</div>";
                 } catch (Exception $e) {
-                    error_log("Mail Error: " . $e->getMessage());
-                    $message = "<div class='error-message'>Form submitted, but email could not be sent. Error: {$mail->ErrorInfo}</div>";
+                    error_log("Admin Mail Error: " . $mail->ErrorInfo);
+                }
+
+                // === SEND CONFIRMATION EMAIL TO USER ===
+                try {
+                    $userMail = new PHPMailer(true);
+                    $userMail->isSMTP();
+                    $userMail->Host = 'premium55.web-hosting.com';
+                    $userMail->SMTPAuth = true;
+                    $userMail->Username = $adminEmail;
+                    $userMail->Password = $adminPassword;
+                    $userMail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+                    $userMail->Port = 465;
+
+                    $userMail->isHTML(true);
+                    $userMail->setFrom($adminEmail, 'RFZ Digital');
+                    $userMail->addAddress($email); // Send to User
+                    $userMail->addReplyTo($adminEmail, 'RFZ Digital');
+
+                    $userEmailContent = str_replace(
+                        ['{{name}}', '{{message}}'],
+                        [$name, $messageContent],
+                        $userEmailTemplate
+                    );
+
+                    // Email Content
+                    $userMail->Subject = 'Thank You for Contacting Us';
+                    $userMail->Body = $userEmailContent;
+
+                    $userMail->send(); // Send to User
+                    $message = "<div class='success-message'>Form submitted successfully! A confirmation email has been sent to your inbox.</div>";
+                } catch (Exception $e) {
+                    error_log("User Mail Error: " . $userMail->ErrorInfo);
+                    $message = "<div class='error-message'>Form submitted, but email could not be sent. Please try again later.</div>";
                 }
             } else {
                 $message = "<div class='error-message'>Failed to submit the form. Please try again.</div>";
             }
         } catch (PDOException $e) {
             error_log("Database Error: " . $e->getMessage());
-            $message = "<div class='error-message'>An error occurred while submitting the form to the database.</div>";
+            $message = "<div class='error-message'>An error occurred while saving your details. Please try again later.</div>";
         }
     } else {
-        $message = "<div class='error-message'>Please fill in all the fields.</div>";
+        $message = "<div class='error-message'>Please fill in all fields with valid information.</div>";
     }
 }
 ?>
@@ -133,8 +167,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         padding-bottom: 0px;
         background: linear-gradient(to right,
                 white 30%,
-                #ffebde 75%,
-                #ffab68 100%);
+                #fbc7e0 75%,
+                #639ffc 100%);
 
     }
 
@@ -197,23 +231,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="row align-items-center">
             <!-- Left Column -->
             <div class="col-md-7">
-                <h6 class="text-uppercase" style="color: #EC7D63;">Python Development Service</h6>
-                <h2 class="mb-3 com-services">Delivering Robust Python Development Services That Create Efficient,
-                    Scalable
-                    <span style="color:#1463FF; white-space:normal;">Solutions for Your Business Needs</span>
+                <h6 class="text-uppercase" style="color: #EC7D63;">Vue JS Development service</h6>
+                <h2 class="mb-3 com-services">Developing Interactive and High-Performance Web Applications with
+                    <span style="color:#1463FF; white-space:normal;">
+                        Vue JS to Deliver Engaging User Experiences
+                    </span>
                 </h2>
-                <p class="mb-4 ">Leverage the power and versatility of Python with our expert Python Development
-                    Service. Our team specialises in creating scalable, efficient, and custom applications using Python,
-                    one of the most popular programming languages for web development, data analysis, and automation.
-                    From building robust web applications and APIs to implementing machine learning models and data
-                    processing solutions, we deliver Python-based solutions that meet your business needs. With a focus
-                    on clean code, performance optimisation, and security, we ensure your Python application is
-                    reliable, fast.</p>
+                <p class="mb-4 ">Enhance your web applications with our expert JavaScript Development Service, which
+                    specialises in creating dynamic, interactive, high-performance user experiences. JavaScript is the
+                    backbone of modern web development, enabling rich front-end functionality, seamless user
+                    interactions, and enhanced performance. Our team of skilled developers use the latest JavaScript
+                    frameworks and libraries, such as React, Angular, Vue.js, and Node.js, to build responsive,
+                    scalable, and secure web applications tailored to your business needs. From custom web solutions to
+                    e-commerce platforms, mobile applications, and real-time features, we deliver reliable and optimised
+                    JavaScript-based applications that work across all devices. With a focus on clean code, performance
+                    optimisation, </p>
                 <a href="<?php echo BASE_URL; ?>contact-us" class="btn btn-primary">Get Started</a>
             </div>
             <!-- Right Column -->
             <div class="col-md-5 d-flex justify-content-center">
-                <img src="./image/sds/Python-Developmen.webp" alt="Python Development Service"
+                <img src="./image/fed/Vue-JS-Development.webp" alt="Vue JS Development service"
                     class="img-fluid rounded  ">
             </div>
         </div>
@@ -238,7 +275,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="form-container">
                         <h2 style="color: black;">Get in Touch</h2>
 
-                        <form class="inquiry-form" method="POST" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
+                        <form class="inquiry-form" method="POST"
+                            action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
                             <input type="hidden" name="form_type" value="top_form">
                             <div class="form-group">
                                 <input type="text" name="name" placeholder="Your Name" required>
@@ -262,15 +300,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="content-text-block">
                         <h2 class="about-subheading-comservices">About Us</h2>
                         <h2 class="content-title heading-md text-black">
-                            Efficient Code, Powerful Solutions
+                            Smooth Interfaces, Powerful Performance
                         </h2>
                         <p>
-                            At RFZ Digital, we offer specialised Python development services that deliver solid and
-                            scalable solutions tailored to your business needs. Our expert team of Python developers
-                            utilises Python’s versatility to create high quality web applications, automation tools, and
-                            data analytics solutions. Committed to quality and innovation, RFZ Digital ensures that your
-                            projects are completed on time and aligned with your goals, driving growth and efficiency.
-                            Learn More
+                            At RFZ Digital, we specialise in developing elegant and efficient web applications using Vue
+                            JS, one of the most progressive JavaScript frameworks. Our experienced Vue JS developers
+                            harness Vue JS flexibility and simplicity to create interactive user interfaces that enhance
+                            user engagement and satisfaction. With a focus on scalability and performance, we build
+                            applications that are fast and easy to maintain and update, Partner with us to leverage the
+                            power of Vue JS and transform your digital vision into reality.
                         </p>
 
                     </div>
@@ -297,7 +335,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="col-xxl-8 col-lg-9 col-md-9 col-sm-12 col-xs-11">
                     <div class="section-heading">
                         <h2 class="section-heading__title heading-md heading-md--general-sans text-l5-secondary">
-                            Build Scalable SaaS Solutions to Drive Business Growth with Expert Development Services</h2>
+                            Create Dynamic, High-Performance Web Applications with Expert Angular JS Development
+                            Services</h2>
                     </div>
                 </div>
             </div>
@@ -310,9 +349,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <img src="./image/home-1/feature-1.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">📈</div>  -->
-                            <h5>Efficient and Scalable Python Development Services</h5> <!-- Heading -->
-                            <p>Our Python development services deliver robust, scalable solutions for web applications,
-                                data analysis, and automation, tailored to meet your business needs.
+                            <h5>Custom Vue JS Development for Fast, Scalable Web Applications</h5> <!-- Heading -->
+                            <p>Our Vue JS development services deliver lightweight, high-performance web applications,
+                                ensuring fast load times, seamless user experiences, and scalable solutions tailored to
+                                your business needs.
                             </p>
                         </div>
                     </div>
@@ -324,9 +364,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <img src="./image/home-5/feature-2.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">🌐</div>  -->
-                            <h5>Custom Python Solutions for High-Performance Applications</h5> <!-- Heading -->
-                            <p>We specialise in Python development, creating efficient, secure applications that enhance
-                                productivity, streamline workflows, and support your digital transformation goals.</p>
+                            <h5>Expert Vue JS Development for Interactive and Responsive UIs</h5> <!-- Heading -->
+                            <p>We specialise in Vue JS development to create dynamic, interactive user interfaces that
+                                enhance user engagement, streamline performance, and optimise website functionality
+                                across all devices.
+                            </p>
                         </div>
                     </div>
 
@@ -337,9 +379,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <img src="./image/home-5/feature-3.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">💼</div>  -->
-                            <h5>Expert Python Development for Advanced Business Solutions</h5> <!-- Heading -->
-                            <p>Our Python developers build customised applications, leveraging Python's versatility to
-                                deliver reliable, high-performance solutions for data-driven and web-based projects.</p>
+                            <h5>Scalable Vue JS Development for Modern Web Solutions</h5>
+                            <!-- Heading -->
+                            <p>Our Vue JS development services offer scalable solutions for building modern, responsive
+                                websites, providing a smooth user experience and enhanced performance for your online
+                                presence.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -457,162 +502,144 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="accordion-item">
                         <button class="accordion-button " type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item" aria-expanded="true" aria-controls="home-1-faq-item">
-                            What is Python development?
+                            What is Vue JS?
                         </button>
                         <div id="home-1-faq-item" class="accordion-collapse collapse show" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                Python development refers to building software applications, websites, data analysis
-                                tools, and more using Python. Python is known for its simplicity, readability, and
-                                versatility. It is popular for web development, machine learning, data science,
-                                automation, and artificial intelligence projects.
+                                Vue JS is a progressive JavaScript framework used for building user interfaces,
+                                primarily for single-page applications. It is designed to be incrementally adoptable,
+                                meaning you can use it to enhance parts of an existing project or build a full-fledged
+                                application. Vue is known for its simplicity, flexibility, and performance, making it an
+                                excellent choice for beginners and experienced developers.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-2" aria-expanded="false" aria-controls="home-1-faq-item-2">
-                            What are the advantages of using Python for development?
+                            Why should I choose Vue JS for my project?
                         </button>
                         <div id="home-1-faq-item-2" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                Python offers several benefits for developers, including:
+                                Vue JS offers several compelling reasons for developers to choose it:
                                 <ul>
-                                    <li>Ease of Use: Python’s syntax is simple and easy to learn, making it ideal for
-                                        both beginners and experienced developers.</li>
-                                    <li>Extensive Libraries: Python has a rich ecosystem of libraries and frameworks,
-                                        such as Django, Flask, Pandas, and NumPy, that make development faster and more
-                                        efficient.</li>
-                                    <li>Cross-Platform Compatibility: Python can run on different platforms (Windows,
-                                        macOS, Linux), making it highly versatile.</li>
-                                    <li>Integration: Python easily integrates with other languages and technologies,
-                                        which is helpful for complex systems.</li>
-
+                                    <li>Simplicity: Vue has a straightforward API and easy-to-understand documentation,
+                                        making it accessible for beginners and experienced developers.
+                                    </li>
+                                    <li>Reactivity: Vue’s reactivity system efficiently updates the DOM when data
+                                        changes, providing a seamless and interactive user experience.</li>
+                                    <li>Component-based Architecture: Vue uses a component-based architecture, which
+                                        makes it easier to manage and scale applications by dividing the UI into
+                                        smaller, reusable components.</li>
+                                    <li>Lightweight: Vue is lightweight, meaning it has a small file size, leading to
+                                        faster loading times for your web applications.</li>
                                 </ul>
-                                Community Support: Python has a large and active community with plenty of resources,
-                                documentation, and third-party tools.
+                                Flexibility: Vue can be integrated with other libraries or used as a full-fledged
+                                framework for building complex applications.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-3" aria-expanded="false" aria-controls="home-1-faq-item-3">
-                            What types of applications can be developed with Python?
+                            What is Vue's reactivity system?
                         </button>
                         <div id="home-1-faq-item-3" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                Python can be used to develop a wide range of applications, including:
-                                <ul>
-                                    <li>Web Development: Websites and web applications using frameworks like Django and
-                                        Flask.</li>
-                                    <li>Data Science and Analytics: Data analysis, visualisation, and machine learning
-                                        with libraries like Pandas, NumPy, and Matplotlib.</li>
-                                    <li>Automation: Scripting and automating repetitive tasks or workflows.</li>
-                                    <li>Artificial Intelligence and Machine Learning: Developing AI models and
-                                        algorithms using TensorFlow, Keras, and Scikit-learn.</li>
-                                    <li>Desktop Applications: Graphical user interface (GUI) applications using Tkinter
-                                        or PyQt.</li>
-
-                                </ul>
-                                Game Development: Creating simple games using frameworks like Pygame.
+                                Vue’s reactivity system is a core feature that ensures your application responds
+                                instantly to changes in data. Thanks to a mechanism that tracks data dependencies, it
+                                automatically updates the DOM whenever a model’s state changes. This allows developers
+                                to focus on business logic rather than manually manipulating the DOM, leading to cleaner
+                                and more maintainable code.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-4" aria-expanded="false" aria-controls="home-1-faq-item-4">
-                            How long does it take to develop a Python-based application?
+                            How does Vue JS compare to other JavaScript frameworks like Angular or React?
                         </button>
                         <div id="home-1-faq-item-4" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                The development timeline for a Python-based application depends on factors such as
-                                complexity, scope, and functionality. Simple applications or scripts can be developed in
-                                a few weeks, while more complex systems, such as AI-powered applications or large-scale
-                                web platforms, may take several months. After assessing your project requirements, we
-                                can provide a more accurate timeline.
+                                Vue JS, Angular, and React each have their strengths, but Vue is often praised for its:
+                                <ul>
+                                    <li>Simplicity: Vue has a less steep learning curve than Angular, providing more
+                                        structure than React for managing an application’s components.</li>
+                                    <li>Flexibility: Vue is more flexible than Angular, allowing developers to use it as
+                                        a library or a full-fledged framework, depending on project needs.</li>
+                                    <li>Ease of Integration: Vue can be integrated into existing projects with minimal
+                                        effort, unlike Angular, which requires a complete application restructuring.
+                                    </li>
+                                    <li>Size: Vue is generally smaller than Angular, leading to better performance and
+                                        faster loading times.</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-5" aria-expanded="false" aria-controls="home-1-faq-item-5">
-                            Is Python suitable for enterprise-level applications?
+                            What is Vue's component-based architecture?
                         </button>
                         <div id="home-1-faq-item-5" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                Yes, Python is highly scalable and can be used for enterprise-level applications. Its
-                                rich set of libraries and frameworks, such as Django and Flask for web development, make
-                                it suitable for building secure, robust, and scalable enterprise applications. Python’s
-                                ability to integrate with other technologies and its strong community support further
-                                enhance its suitability for large-scale projects.
+                                Vue follows a component-based architecture, where the user interface is divided into
+                                smaller, reusable, and self-contained components. Each component is responsible for
+                                rendering a portion of the UI and managing its own state. Components can be nested
+                                inside other components, making it easier to organise and manage complex user
+                                interfaces. This modular approach helps in building scalable, maintainable, and testable
+                                applications.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-6" aria-expanded="false" aria-controls="home-1-faq-item-6">
-                            What frameworks and tools do you use for Python development?
+                            What are Vue Directives?
                         </button>
                         <div id="home-1-faq-item-6" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                For Python development, we utilise a variety of frameworks and tools to enhance
-                                productivity and application quality, including:
+                                Vue Directives are unique tokens in the markup that provide functionality to the DOM.
+                                They are prefixed with v-, indicating that they are special attributes. Directives are
+                                used to handle events, control DOM elements, and more. Common Vue directives include:
                                 <ul>
-                                    <li>Web Frameworks: Django, Flask, Pyramid.</li>
-                                    <li>Machine Learning Libraries: TensorFlow, Keras, Scikit-learn, PyTorch.</li>
-                                    <li>Data Analysis Libraries: Pandas, NumPy, Matplotlib.</li>
-                                    <li>Task Automation: Celery, PyAutoGUI.</li>
-                                    <li>Testing Tools: PyTest, UnitTest, and Selenium for automated testing.</li>
+                                    <li>v-bind: Dynamically binds an attribute or class to a component.</li>
+                                    <li>v-if: Conditionally renders an element.</li>
+                                    <li>v-for: Loops through a list to render items.</li>
+
                                 </ul>
-                                Database: PostgreSQL, MySQL, SQLite, MongoDB for back-end data storage.
+                                v-model: Creates two-way data binding on form elements.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-7" aria-expanded="false" aria-controls="home-1-faq-item-7">
-                            How do you ensure the quality of Python applications?
+                            How does Vue JS handle routing?
                         </button>
                         <div id="home-1-faq-item-7" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                We ensure the quality of Python applications through a combination of:
-                                <ul>
-                                    <li>Code Reviews: Regular code reviews to maintain readability, consistency, and
-                                        best practices.</li>
-                                    <li>Unit Testing: Writing unit tests to check individual components’ functionality
-                                        and accuracy.</li>
-                                    <li>Integration Testing: Ensuring different modules of the application work well
-                                        together.</li>
-                                    <li>Continuous Integration/Continuous Deployment (CI/CD): Using CI/CD pipelines for
-                                        automated testing and deployment to ensure faster and more reliable delivery.
-                                    </li>
-
-                                </ul>
-                                Performance Optimisation: Identifying and optimising bottlenecks in the application to
-                                ensure efficient performance.
+                                Vue uses the Vue Router to handle routing in single-page applications. The Vue Router
+                                allows you to define routes in your application and associate them with specific
+                                components. When a user navigates to a route, the related component is dynamically
+                                loaded, and the URL updates accordingly without reloading the entire page. Vue Router
+                                supports features like nested routes, dynamic route matching, and history mode for clean
+                                URLs.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-8" aria-expanded="false" aria-controls="home-1-faq-item-8">
-                            Do you provide ongoing support and maintenance for Python applications?
+                            Can Vue JS be used for mobile app development?
                         </button>
                         <div id="home-1-faq-item-8" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                Yes, we provide comprehensive support and maintenance for Python applications. This
-                                includes:
-                                <ul>
-                                    <li>Bug Fixes and Updates: Regular updates to fix bugs and improve functionality.
-                                    </li>
-                                    <li>Performance Monitoring: Ongoing monitoring of application performance to ensure
-                                        it runs smoothly.</li>
-                                    <li>Scalability: Making improvements to accommodate growing users or increased data
-                                        volumes.</li>
-                                    <li>Security Patches: Implementing security patches and updates to keep your
-                                        application secure.</li>
-                                </ul>
-                                Feature Enhancements: Adding new features and improving existing ones per evolving
-                                business needs.
+                                Vue JS can be used for mobile app development through Vue Native or NativeScript and Vue
+                                CLI. Vue Native allows you to build cross-platform mobile applications using Vue syntax.
+                                At the same time, NativeScript lets you build native mobile apps for iOS and Android.
+                                Both tools allow you to leverage your Vue JS knowledge to create mobile apps, providing
+                                a unified development experience for web and mobile applications.
                             </div>
                         </div>
                     </div>
@@ -624,89 +651,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </div>
 
 
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Conatct : Main Section 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-<div class="contact_main-section padding-bottom-120 padding-top-120">
-    <div class="container">
-        <div class="row row--cuatom">
-            <div class="col-xl-5 col-lg-6 col-md-8 col-sm-11">
-                <div class="contact_main-content contact-content-space">
-                    <div class="content">
-                        <div class="content-text-block">
-                            <h2 class="heading-md">Fill out this form, We ‘ll quickly get back to you </h2>
-                            <p>
-                                We are here to help you! Tell us how we can help and we’ll get in touch within next
-                                24hrs with expert
-                            </p>
-                            <div class="content-divider"></div>
-                        </div>
-                    </div>
-                    <div class="content_main-testimonial">
-                        <div class="testimonial-widget-4" data-aos="fade-left" data-aos-delay="NaN">
-                            <div class="testimonial-widget-4__rating">
-                                <img src="./image/icons/star-five-yellow.svg" class="testimonial-widget-4__star"
-                                    alt="image alt">
-                            </div>
-                            <p>
-                                "Snaga did an exceptional job for us.
-                                keep up the excellent digital work. Man,
-                                this thing is getting better and better as
-                                I learn more about it. I have gotten at
-                                least 50 times the value from Snaga.
-                                It is worth much more than I paid."
-                            </p>
-                            <div class="testimonial-widget-4__body">
-                                <div class="testimonial-widget-4__user-image">
-                                    <img src="./image/contact/contact-user-image.png" alt="image alt">
-                                </div>
-                                <div class="testimonial-widget-4__user-metadeta">
-                                    <h4 class="testimonial-widget-4__user">Brooklyn Simmons</h4>
-                                    <span class="testimonial-widget-4__user-position">CEO & Co-founder @ Company</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="offset-xl-1 col-lg-6 col-md-10">
-                <div class="form-box-style__form-wrapper bg-light-2">
-                    <form class="form-box-style" id="contact-form" method="POST" action="Website-Development.php">
-                        <div class="form-box-style__form-inner">
-                            <div class="form-box-style__form-input">
-                                <h3 class="form-box-style-title">Your name</h3>
-                                <input class="form-control bg-white" name="name" type="text"
-                                    placeholder="Enter your full name">
-                            </div>
-                            <div class="form-box-style__form-input">
-                                <h3 class="form-box-style-title">Email address</h3>
-                                <input class="form-control bg-white" name="email" type="text"
-                                    placeholder="Enter your email">
-                            </div>
-                            <div class="form-box-style__form-input">
-                                <h3 class="form-box-style-title">Phone Number</h3>
-                                <input id="phone" class="form-control bg-white" name="phone" type="tel"
-                                    placeholder="Enter your phone number" required>
-                            </div>
-                            <div class="form-box-style__form-input">
-                                <h3 class="form-box-style-title">Write your message</h3>
-                                <textarea class="form-control bg-white textarea" name="message"
-                                    placeholder="Write us your question here..."></textarea>
-                            </div>
-                            <div class="form-box-style__form-input-button">
-                                <button type="submit" class="btn-masco rounded-pill w-100">Submit</button>
-                            </div>
-                            <?php echo $message; ?>
-                        </div>
-                    </form>
 
-                </div>
+<!-- Contact Us Section -->
+<?php require_once 'includes/contact-us-section.php'; ?>
 
-            </div>
-        </div>
-    </div>
-</div>
-
+<!-- Contact us Section -->
 
 
 
