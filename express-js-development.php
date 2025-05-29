@@ -23,19 +23,29 @@
 </style>
 <?php
 $noindex = true;
-// Include database connection and PHPMailer files
-require 'PHPMailer/src/Exception.php';
-require 'PHPMailer/src/PHPMailer.php';
-require 'PHPMailer/src/SMTP.php';
-include 'includes/header.php';
 
-// Use PHPMailer namespace
+include 'includes/header.php';
+include_once 'includes/mail-config.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+
 $message = ""; // Feedback message for the form
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+// Load the user email template
+$templateFilePathUser = 'user-email-template.php';
+ob_start();
+include $templateFilePathUser;
+$userEmailTemplate = ob_get_clean();
+
+// Load the admin email template
+$templateFilePathAdmin = 'user-admin-email-template.php';
+ob_start();
+include $templateFilePathAdmin;
+$adminEmailTemplate = ob_get_clean();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST['form_type'] == "top_form") {
     // Sanitize and validate input data
     function sanitize_input($data)
     {
@@ -43,11 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     $name = sanitize_input($_POST['name']);
-    $email = sanitize_input($_POST['email']);
+    $email = filter_var(sanitize_input($_POST['email']), FILTER_VALIDATE_EMAIL);
     $phone = sanitize_input($_POST['phone']);
     $messageContent = sanitize_input($_POST['message']); // Avoid conflict with $message variable
 
-    // Check if all fields are filled
+    // Check if all fields are filled and email is valid
     if (!empty($name) && !empty($email) && !empty($phone) && !empty($messageContent)) {
         // Database insertion logic
         try {
@@ -61,12 +71,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if ($stmt->execute()) {
                 // PHPMailer Setup
-                $adminEmail = 'info@rfzdigital.co.uk'; // Replace with admin email
-                $adminPassword = 'h1qzjO(&t$ci'; // Replace with admin password
-
-                $mail = new PHPMailer(true);
-
+                $adminEmail = 'yasirhassan@rfzdigital.co.uk'; // Replace with admin email
+                $adminPassword = 'ZuHjZ6H7PQES'; // Replace with secure credentials
+                // Capture the form submission URL
+                $page_url = $_SERVER['HTTP_REFERER'];
+                // === SEND EMAIL TO ADMIN ===
                 try {
+                    $mail = new PHPMailer(true);
+
                     // Server settings
                     $mail->isSMTP();
                     $mail->Host = 'premium55.web-hosting.com'; // Replace with your SMTP server
@@ -76,51 +88,73 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
                     $mail->Port = 465;
 
-                    // Admin email settings
-                    $mail->setFrom($adminEmail, 'Website Contact Form');
-                    $mail->addAddress($adminEmail); // Send to admin
-                    $mail->addReplyTo($email, $name); // Reply-to user
+                    // Debugging (Enable for troubleshooting)
+                    // $mail->SMTPDebug = 2;
+
+                    // Common Settings
+                    $mail->isHTML(true);
+                    $mail->setFrom($adminEmail, 'RFZ Digital');
+                    $mail->addAddress($adminEmail); // Admin's email
+                    $mail->addReplyTo($email, $name); // User's email for reply
+
+                    // Replace placeholders in the admin template
+                    $adminEmailContent = str_replace(
+                        ['{{name}}', '{{email}}', '{{phone}}', '{{message}}', '{{page_url}}'],
+                        [$name, $email, $phone, $messageContent, $page_url],
+                        $adminEmailTemplate
+                    );
 
                     // Admin email content
                     $mail->isHTML(true);
                     $mail->Subject = 'New Contact Form Submission';
-                    $mail->Body = "
-                        <h3>New Contact Form Submission</h3>
-                        <p><strong>Name:</strong> $name</p>
-                        <p><strong>Email:</strong> $email</p>
-                        <p><strong>Phone:</strong> $phone</p>
-                        <p><strong>Message:</strong><br>$messageContent</p>
-                    ";
+                    $mail->Body = $adminEmailContent;
                     $mail->send(); // Send admin email
 
-                    // User confirmation email
-                    $mail->clearAddresses(); // Clear admin email address
-                    $mail->addAddress($email); // Send to user
-                    $mail->Subject = 'Thank You for Contacting Us';
-                    $mail->Body = "
-                        <h3>Thank you for contacting us!</h3>
-                        <p>Dear $name,</p>
-                        <p>Thank you for your message. We have received your form submission and will get back to you shortly.</p>
-                        <p><strong>Your Message:</strong><br>$messageContent</p>
-                        <p>Best regards,</p>
-                        <p>Support Team</p>
-                    ";
-                    $mail->send(); // Send user email
-
-                    $message = "<div class='success-message'>Form submitted successfully!</div>";
                 } catch (Exception $e) {
-                    error_log("Mail Error: " . $e->getMessage());
-                    $message = "<div class='error-message'>Form submitted, but email could not be sent. Error: {$mail->ErrorInfo}</div>";
+                    error_log("Admin Mail Error: " . $mail->ErrorInfo);
+                }
+
+                // === SEND CONFIRMATION EMAIL TO USER ===
+                try {
+                    $userMail = new PHPMailer(true);
+                    $userMail->isSMTP();
+                    $userMail->Host = 'premium55.web-hosting.com';
+                    $userMail->SMTPAuth = true;
+                    $userMail->Username = $adminEmail;
+                    $userMail->Password = $adminPassword;
+                    $userMail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+                    $userMail->Port = 465;
+
+                    $userMail->isHTML(true);
+                    $userMail->setFrom($adminEmail, 'RFZ Digital');
+                    $userMail->addAddress($email); // Send to User
+                    $userMail->addReplyTo($adminEmail, 'RFZ Digital');
+
+                    $userEmailContent = str_replace(
+                        ['{{name}}', '{{message}}'],
+                        [$name, $messageContent],
+                        $userEmailTemplate
+                    );
+
+                    // Email Content
+                    $userMail->Subject = 'Thank You for Contacting Us';
+                    $userMail->Body = $userEmailContent;
+
+                    $userMail->send(); // Send to User
+                    $message = "<div class='success-message'>Form submitted successfully! A confirmation email has been sent to your inbox.</div>";
+                } catch (Exception $e) {
+                    error_log("User Mail Error: " . $userMail->ErrorInfo);
+                    $message = "<div class='error-message'>Form submitted, but email could not be sent. Please try again later.</div>";
                 }
             } else {
                 $message = "<div class='error-message'>Failed to submit the form. Please try again.</div>";
             }
         } catch (PDOException $e) {
             error_log("Database Error: " . $e->getMessage());
-            $message = "<div class='error-message'>An error occurred while submitting the form to the database.</div>";
+            $message = "<div class='error-message'>An error occurred while saving your details. Please try again later.</div>";
         }
     } else {
-        $message = "<div class='error-message'>Please fill in all the fields.</div>";
+        $message = "<div class='error-message'>Please fill in all fields with valid information.</div>";
     }
 }
 ?>
@@ -133,8 +167,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         padding-bottom: 0px;
         background: linear-gradient(to right,
                 white 30%,
-                #ffebde 75%,
-                #ffab68 100%);
+                #d4e8dd 75%,
+                #faf07a 100%);
 
     }
 
@@ -197,23 +231,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="row align-items-center">
             <!-- Left Column -->
             <div class="col-md-7">
-                <h6 class="text-uppercase" style="color: #EC7D63;">Python Development Service</h6>
-                <h2 class="mb-3 com-services">Delivering Robust Python Development Services That Create Efficient,
-                    Scalable
-                    <span style="color:#1463FF; white-space:normal;">Solutions for Your Business Needs</span>
+                <h6 class="text-uppercase" style="color: #075425;">Express JS Development service</h6>
+                <h2 class="mb-3 com-services">Delivering High-Performance, Scalable Applications with
+                    <span style="color:#1463FF; white-space:normal;">
+                        Express JS Development for Enhanced Efficiency and Reliability
+                    </span>
                 </h2>
-                <p class="mb-4 ">Leverage the power and versatility of Python with our expert Python Development
-                    Service. Our team specialises in creating scalable, efficient, and custom applications using Python,
-                    one of the most popular programming languages for web development, data analysis, and automation.
-                    From building robust web applications and APIs to implementing machine learning models and data
-                    processing solutions, we deliver Python-based solutions that meet your business needs. With a focus
-                    on clean code, performance optimisation, and security, we ensure your Python application is
-                    reliable, fast.</p>
+                <p class="mb-4 ">Streamline your server-side development with our Express.js Development Service,
+                    providing fast, scalable, and highly flexible back-end solutions. As a minimalist, efficient
+                    framework for Node.js, Express.js enables the rapid creation of robust APIs and web applications,
+                    making it ideal for building real-time features, e-commerce platforms, and single-page applications.
+                    Our experienced developers leverage Express.js to deliver applications with seamless routing,
+                    improved performance, and secure integrations, creating back ends optimised for speed and
+                    reliability. Whether you need a custom API, RESTful web services, or a dynamic web application, our
+                    Express.js Development Service ensures your infrastructure is scalable, efficient, and perfectly
+                    aligned with your business goals, enhancing your overall digital presence.</p>
                 <a href="<?php echo BASE_URL; ?>contact-us" class="btn btn-primary">Get Started</a>
             </div>
             <!-- Right Column -->
             <div class="col-md-5 d-flex justify-content-center">
-                <img src="./image/sds/Python-Developmen.webp" alt="Python Development Service"
+                <img src="./image/bed/expeess-development.webp" alt="Express JS Development service"
                     class="img-fluid rounded  ">
             </div>
         </div>
@@ -238,7 +275,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="form-container">
                         <h2 style="color: black;">Get in Touch</h2>
 
-                        <form class="inquiry-form" method="POST" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
+                        <form class="inquiry-form" method="POST"
+                            action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
                             <input type="hidden" name="form_type" value="top_form">
                             <div class="form-group">
                                 <input type="text" name="name" placeholder="Your Name" required>
@@ -262,15 +300,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="content-text-block">
                         <h2 class="about-subheading-comservices">About Us</h2>
                         <h2 class="content-title heading-md text-black">
-                            Efficient Code, Powerful Solutions
+                            Efficient Routing, Optimised Performance
                         </h2>
                         <p>
-                            At RFZ Digital, we offer specialised Python development services that deliver solid and
-                            scalable solutions tailored to your business needs. Our expert team of Python developers
-                            utilises Python’s versatility to create high quality web applications, automation tools, and
-                            data analytics solutions. Committed to quality and innovation, RFZ Digital ensures that your
-                            projects are completed on time and aligned with your goals, driving growth and efficiency.
-                            Learn More
+                            At RFZ Digital, we offer expert Express JS development services to build high-performance
+                            web applications and APIs quickly and efficiently. Leveraging the power of this minimalist
+                            Node.js framework, our skilled developers create robust server-side solutions that are
+                            scalable and easy to maintain. We focus on delivering clean and organized code, utilizing
+                            Express’s features to streamline the development process and enhance application
+                            functionality. Whether developing a RESTful API, a complex web application or integrating
+                            middleware solutions, our Express JS development services are designed to meet your specific
+                            needs and exceed your expectations.
                         </p>
 
                     </div>
@@ -297,7 +337,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="col-xxl-8 col-lg-9 col-md-9 col-sm-12 col-xs-11">
                     <div class="section-heading">
                         <h2 class="section-heading__title heading-md heading-md--general-sans text-l5-secondary">
-                            Build Scalable SaaS Solutions to Drive Business Growth with Expert Development Services</h2>
+                            Build High-Performance Web Applications with Expert Express JS Development Services</h2>
                     </div>
                 </div>
             </div>
@@ -310,9 +350,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <img src="./image/home-1/feature-1.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">📈</div>  -->
-                            <h5>Efficient and Scalable Python Development Services</h5> <!-- Heading -->
-                            <p>Our Python development services deliver robust, scalable solutions for web applications,
-                                data analysis, and automation, tailored to meet your business needs.
+                            <h5>Custom Express.js Development for Fast and Scalable Web Apps</h5> <!-- Heading -->
+                            <p>Our Express.js development services deliver fast, scalable, and secure web applications,
+                                streamlining server-side development with efficient routing and seamless integration for
+                                enhanced performance.
                             </p>
                         </div>
                     </div>
@@ -324,9 +365,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <img src="./image/home-5/feature-2.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">🌐</div>  -->
-                            <h5>Custom Python Solutions for High-Performance Applications</h5> <!-- Heading -->
-                            <p>We specialise in Python development, creating efficient, secure applications that enhance
-                                productivity, streamline workflows, and support your digital transformation goals.</p>
+                            <h5>Expert Express.js Development for Robust Backend Solutions</h5> <!-- Heading -->
+                            <p>We specialise in Express.js development, creating high-performance backend systems with
+                                rapid response times, ensuring scalable and secure web applications with minimal
+                                latency.
+                            </p>
                         </div>
                     </div>
 
@@ -337,9 +380,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <img src="./image/home-5/feature-3.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">💼</div>  -->
-                            <h5>Expert Python Development for Advanced Business Solutions</h5> <!-- Heading -->
-                            <p>Our Python developers build customised applications, leveraging Python's versatility to
-                                deliver reliable, high-performance solutions for data-driven and web-based projects.</p>
+                            <h5>Efficient Express.js Development for Real-Time Applications</h5>
+                            <!-- Heading -->
+                            <p>Our Express.js development services build fast, scalable, and reliable web applications,
+                                providing optimal performance, simplified routing, and real-time data handling for
+                                modern user experiences.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -457,165 +503,142 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="accordion-item">
                         <button class="accordion-button " type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item" aria-expanded="true" aria-controls="home-1-faq-item">
-                            What is Python development?
+                            What is Express.js?
                         </button>
                         <div id="home-1-faq-item" class="accordion-collapse collapse show" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                Python development refers to building software applications, websites, data analysis
-                                tools, and more using Python. Python is known for its simplicity, readability, and
-                                versatility. It is popular for web development, machine learning, data science,
-                                automation, and artificial intelligence projects.
+                                Express.js is a fast, minimal, and flexible Node.js web application framework. It
+                                simplifies the process of building robust web and mobile applications, providing a set
+                                of tools to manage routing, middleware, and HTTP requests. Express.js is built on top of
+                                Node.js. It allows developers to create web servers and APIs efficiently.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-2" aria-expanded="false" aria-controls="home-1-faq-item-2">
-                            What are the advantages of using Python for development?
+                            Why should I choose Express.js for my project?
                         </button>
                         <div id="home-1-faq-item-2" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                Python offers several benefits for developers, including:
+                                Express.js offers numerous advantages:
                                 <ul>
-                                    <li>Ease of Use: Python’s syntax is simple and easy to learn, making it ideal for
-                                        both beginners and experienced developers.</li>
-                                    <li>Extensive Libraries: Python has a rich ecosystem of libraries and frameworks,
-                                        such as Django, Flask, Pandas, and NumPy, that make development faster and more
-                                        efficient.</li>
-                                    <li>Cross-Platform Compatibility: Python can run on different platforms (Windows,
-                                        macOS, Linux), making it highly versatile.</li>
-                                    <li>Integration: Python easily integrates with other languages and technologies,
-                                        which is helpful for complex systems.</li>
+                                    <li>Minimalistic and Lightweight: Provides a minimal and unopinionated framework,
+                                        making it easy to customise based on project needs.</li>
+                                    <li>Robust Routing: It offers powerful and flexible routing capabilities, enabling
+                                        the creation of complex URLs and request handling.</li>
+                                    <li>Middleware Support: Easily integrates with middleware to handle requests and
+                                        responses, such as user authentication and data validation.</li>
+                                    <li>Scalability: Perfect for building scalable applications and APIs for small
+                                        startups or large enterprises.</li>
 
                                 </ul>
-                                Community Support: Python has a large and active community with plenty of resources,
-                                documentation, and third-party tools.
+                                Integration with Other Technologies: Express.js integrates with databases, front-end
+                                frameworks, and third-party APIs.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-3" aria-expanded="false" aria-controls="home-1-faq-item-3">
-                            What types of applications can be developed with Python?
+                            What types of applications can be built with Express.js?
                         </button>
                         <div id="home-1-faq-item-3" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                Python can be used to develop a wide range of applications, including:
+                                Express.js is ideal for building various types of applications, including:
                                 <ul>
-                                    <li>Web Development: Websites and web applications using frameworks like Django and
-                                        Flask.</li>
-                                    <li>Data Science and Analytics: Data analysis, visualisation, and machine learning
-                                        with libraries like Pandas, NumPy, and Matplotlib.</li>
-                                    <li>Automation: Scripting and automating repetitive tasks or workflows.</li>
-                                    <li>Artificial Intelligence and Machine Learning: Developing AI models and
-                                        algorithms using TensorFlow, Keras, and Scikit-learn.</li>
-                                    <li>Desktop Applications: Graphical user interface (GUI) applications using Tkinter
-                                        or PyQt.</li>
-
+                                    <li>Web Applications: Interactive websites with dynamic content and features.</li>
+                                    <li>RESTful APIs: Backend services that interact with front-end applications to
+                                        exchange data.</li>
+                                    <li>Single-Page Applications (SPAs): Web applications where content dynamically
+                                        loads without refreshing the page.</li>
+                                    <li>Microservices: Scalable backend services for distributed applications.</li>
+                                    <li>Real-time Applications: Chat apps, notifications, and collaborative tools that
+                                        require real-time data exchange.</li>
                                 </ul>
-                                Game Development: Creating simple games using frameworks like Pygame.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-4" aria-expanded="false" aria-controls="home-1-faq-item-4">
-                            How long does it take to develop a Python-based application?
+                            How does Express.js differ from Node.js?
                         </button>
                         <div id="home-1-faq-item-4" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                The development timeline for a Python-based application depends on factors such as
-                                complexity, scope, and functionality. Simple applications or scripts can be developed in
-                                a few weeks, while more complex systems, such as AI-powered applications or large-scale
-                                web platforms, may take several months. After assessing your project requirements, we
-                                can provide a more accurate timeline.
+                                While Node.js is a JavaScript runtime for building server-side applications, Express.js
+                                is a web application framework built on top of Node.js. Express.js simplifies building
+                                web servers and APIs by offering pre-built methods for routing, handling HTTP requests,
+                                and integrating middleware. Node.js is more barebones, while Express.js enhances Node.js
+                                with additional functionality.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-5" aria-expanded="false" aria-controls="home-1-faq-item-5">
-                            Is Python suitable for enterprise-level applications?
+                            What are the benefits of using Express.js over other frameworks like Django or Ruby on
+                            Rails?
                         </button>
                         <div id="home-1-faq-item-5" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                Yes, Python is highly scalable and can be used for enterprise-level applications. Its
-                                rich set of libraries and frameworks, such as Django and Flask for web development, make
-                                it suitable for building secure, robust, and scalable enterprise applications. Python’s
-                                ability to integrate with other technologies and its strong community support further
-                                enhance its suitability for large-scale projects.
+                                Express.js has distinct advantages:
+                                <ul>
+                                    <li>Flexibility: Unlike Django (Python) or Ruby on Rails, Express.js is minimalistic
+                                        and unopinionated, meaning developers have more control over how to structure
+                                        their applications.</li>
+                                    <li>JavaScript for Both Front-end & Backend: Express.js allows you to use JavaScript
+                                        for both the server-side and client-side code, simplifying development.</li>
+                                    <li>Asynchronous Nature: Based on Node.js, Express.js supports non-blocking,
+                                        event-driven programming, which is ideal for handling multiple concurrent
+                                        requests.</li>
+                                    <li>Large Ecosystem: Express.js has a vast community and numerous plugins, thanks to
+                                        its integration with Node.js and npm (Node Package Manager).</li>
+                                </ul>
+
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-6" aria-expanded="false" aria-controls="home-1-faq-item-6">
-                            What frameworks and tools do you use for Python development?
+                            How long does it take to develop an application using Express.js?
                         </button>
                         <div id="home-1-faq-item-6" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                For Python development, we utilise a variety of frameworks and tools to enhance
-                                productivity and application quality, including:
+                                The development time depends on the complexity and requirements of the application.
+                                Simple APIs or websites can take a few weeks to develop. In contrast, more complex
+                                applications, such as e-commerce platforms or real-time applications, may take several
+                                months. We provide a detailed timeline after assessing your project’s needs and scope.
+                                <br>
+                                <b>What kind of support do you offer after developing an Express.js application?</b><br>
+                                After development, we provide comprehensive support and maintenance services, including:
                                 <ul>
-                                    <li>Web Frameworks: Django, Flask, Pyramid.</li>
-                                    <li>Machine Learning Libraries: TensorFlow, Keras, Scikit-learn, PyTorch.</li>
-                                    <li>Data Analysis Libraries: Pandas, NumPy, Matplotlib.</li>
-                                    <li>Task Automation: Celery, PyAutoGUI.</li>
-                                    <li>Testing Tools: PyTest, UnitTest, and Selenium for automated testing.</li>
+                                    <li>Bug Fixes: Addressing any issues or bugs that arise.</li>
+                                    <li>Security Updates: Keeping your application secure with the latest patches.</li>
+                                    <li>Feature Enhancements: Adding new features as your business grows.</li>
+                                    <li>Performance Monitoring: Regular monitoring to ensure the application performs
+                                        optimally.</li>
                                 </ul>
-                                Database: PostgreSQL, MySQL, SQLite, MongoDB for back-end data storage.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-7" aria-expanded="false" aria-controls="home-1-faq-item-7">
-                            How do you ensure the quality of Python applications?
+                            Can Express.js be used for both front-end and backend development?
                         </button>
                         <div id="home-1-faq-item-7" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                We ensure the quality of Python applications through a combination of:
-                                <ul>
-                                    <li>Code Reviews: Regular code reviews to maintain readability, consistency, and
-                                        best practices.</li>
-                                    <li>Unit Testing: Writing unit tests to check individual components’ functionality
-                                        and accuracy.</li>
-                                    <li>Integration Testing: Ensuring different modules of the application work well
-                                        together.</li>
-                                    <li>Continuous Integration/Continuous Deployment (CI/CD): Using CI/CD pipelines for
-                                        automated testing and deployment to ensure faster and more reliable delivery.
-                                    </li>
+                                Express.js is primarily used for backend development as a server-side framework.
+                                However, it works seamlessly with front-end frameworks (like React.js, Angular, or
+                                Vue.js) to build full-stack applications. By using Express.js with a front-end
+                                framework, you can create dynamic, full-featured applications with client-side and
+                                server-side components.
+                            </div>
+                        </div>
+                    </div>
 
-                                </ul>
-                                Performance Optimisation: Identifying and optimising bottlenecks in the application to
-                                ensure efficient performance.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#home-1-faq-item-8" aria-expanded="false" aria-controls="home-1-faq-item-8">
-                            Do you provide ongoing support and maintenance for Python applications?
-                        </button>
-                        <div id="home-1-faq-item-8" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
-                            <div class="accordion-item__body">
-                                Yes, we provide comprehensive support and maintenance for Python applications. This
-                                includes:
-                                <ul>
-                                    <li>Bug Fixes and Updates: Regular updates to fix bugs and improve functionality.
-                                    </li>
-                                    <li>Performance Monitoring: Ongoing monitoring of application performance to ensure
-                                        it runs smoothly.</li>
-                                    <li>Scalability: Making improvements to accommodate growing users or increased data
-                                        volumes.</li>
-                                    <li>Security Patches: Implementing security patches and updates to keep your
-                                        application secure.</li>
-                                </ul>
-                                Feature Enhancements: Adding new features and improving existing ones per evolving
-                                business needs.
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -624,89 +647,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </div>
 
 
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Conatct : Main Section 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-<div class="contact_main-section padding-bottom-120 padding-top-120">
-    <div class="container">
-        <div class="row row--cuatom">
-            <div class="col-xl-5 col-lg-6 col-md-8 col-sm-11">
-                <div class="contact_main-content contact-content-space">
-                    <div class="content">
-                        <div class="content-text-block">
-                            <h2 class="heading-md">Fill out this form, We ‘ll quickly get back to you </h2>
-                            <p>
-                                We are here to help you! Tell us how we can help and we’ll get in touch within next
-                                24hrs with expert
-                            </p>
-                            <div class="content-divider"></div>
-                        </div>
-                    </div>
-                    <div class="content_main-testimonial">
-                        <div class="testimonial-widget-4" data-aos="fade-left" data-aos-delay="NaN">
-                            <div class="testimonial-widget-4__rating">
-                                <img src="./image/icons/star-five-yellow.svg" class="testimonial-widget-4__star"
-                                    alt="image alt">
-                            </div>
-                            <p>
-                                "Snaga did an exceptional job for us.
-                                keep up the excellent digital work. Man,
-                                this thing is getting better and better as
-                                I learn more about it. I have gotten at
-                                least 50 times the value from Snaga.
-                                It is worth much more than I paid."
-                            </p>
-                            <div class="testimonial-widget-4__body">
-                                <div class="testimonial-widget-4__user-image">
-                                    <img src="./image/contact/contact-user-image.png" alt="image alt">
-                                </div>
-                                <div class="testimonial-widget-4__user-metadeta">
-                                    <h4 class="testimonial-widget-4__user">Brooklyn Simmons</h4>
-                                    <span class="testimonial-widget-4__user-position">CEO & Co-founder @ Company</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="offset-xl-1 col-lg-6 col-md-10">
-                <div class="form-box-style__form-wrapper bg-light-2">
-                    <form class="form-box-style" id="contact-form" method="POST" action="Website-Development.php">
-                        <div class="form-box-style__form-inner">
-                            <div class="form-box-style__form-input">
-                                <h3 class="form-box-style-title">Your name</h3>
-                                <input class="form-control bg-white" name="name" type="text"
-                                    placeholder="Enter your full name">
-                            </div>
-                            <div class="form-box-style__form-input">
-                                <h3 class="form-box-style-title">Email address</h3>
-                                <input class="form-control bg-white" name="email" type="text"
-                                    placeholder="Enter your email">
-                            </div>
-                            <div class="form-box-style__form-input">
-                                <h3 class="form-box-style-title">Phone Number</h3>
-                                <input id="phone" class="form-control bg-white" name="phone" type="tel"
-                                    placeholder="Enter your phone number" required>
-                            </div>
-                            <div class="form-box-style__form-input">
-                                <h3 class="form-box-style-title">Write your message</h3>
-                                <textarea class="form-control bg-white textarea" name="message"
-                                    placeholder="Write us your question here..."></textarea>
-                            </div>
-                            <div class="form-box-style__form-input-button">
-                                <button type="submit" class="btn-masco rounded-pill w-100">Submit</button>
-                            </div>
-                            <?php echo $message; ?>
-                        </div>
-                    </form>
 
-                </div>
+<!-- Contact Us Section -->
+<?php require_once 'includes/contact-us-section.php'; ?>
 
-            </div>
-        </div>
-    </div>
-</div>
-
+<!-- Contact us Section -->
 
 
 

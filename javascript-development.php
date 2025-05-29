@@ -23,19 +23,29 @@
 </style>
 <?php
 $noindex = true;
-// Include database connection and PHPMailer files
-require 'PHPMailer/src/Exception.php';
-require 'PHPMailer/src/PHPMailer.php';
-require 'PHPMailer/src/SMTP.php';
-include 'includes/header.php';
 
-// Use PHPMailer namespace
+include 'includes/header.php';
+include_once 'includes/mail-config.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+
 $message = ""; // Feedback message for the form
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+// Load the user email template
+$templateFilePathUser = 'user-email-template.php';
+ob_start();
+include $templateFilePathUser;
+$userEmailTemplate = ob_get_clean();
+
+// Load the admin email template
+$templateFilePathAdmin = 'user-admin-email-template.php';
+ob_start();
+include $templateFilePathAdmin;
+$adminEmailTemplate = ob_get_clean();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST['form_type'] == "top_form") {
     // Sanitize and validate input data
     function sanitize_input($data)
     {
@@ -43,11 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     $name = sanitize_input($_POST['name']);
-    $email = sanitize_input($_POST['email']);
+    $email = filter_var(sanitize_input($_POST['email']), FILTER_VALIDATE_EMAIL);
     $phone = sanitize_input($_POST['phone']);
     $messageContent = sanitize_input($_POST['message']); // Avoid conflict with $message variable
 
-    // Check if all fields are filled
+    // Check if all fields are filled and email is valid
     if (!empty($name) && !empty($email) && !empty($phone) && !empty($messageContent)) {
         // Database insertion logic
         try {
@@ -61,12 +71,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if ($stmt->execute()) {
                 // PHPMailer Setup
-                $adminEmail = 'info@rfzdigital.co.uk'; // Replace with admin email
-                $adminPassword = 'h1qzjO(&t$ci'; // Replace with admin password
-
-                $mail = new PHPMailer(true);
-
+                $adminEmail = 'yasirhassan@rfzdigital.co.uk'; // Replace with admin email
+                $adminPassword = 'ZuHjZ6H7PQES'; // Replace with secure credentials
+                // Capture the form submission URL
+                $page_url = $_SERVER['HTTP_REFERER'];
+                // === SEND EMAIL TO ADMIN ===
                 try {
+                    $mail = new PHPMailer(true);
+
                     // Server settings
                     $mail->isSMTP();
                     $mail->Host = 'premium55.web-hosting.com'; // Replace with your SMTP server
@@ -76,51 +88,73 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
                     $mail->Port = 465;
 
-                    // Admin email settings
-                    $mail->setFrom($adminEmail, 'Website Contact Form');
-                    $mail->addAddress($adminEmail); // Send to admin
-                    $mail->addReplyTo($email, $name); // Reply-to user
+                    // Debugging (Enable for troubleshooting)
+                    // $mail->SMTPDebug = 2;
+
+                    // Common Settings
+                    $mail->isHTML(true);
+                    $mail->setFrom($adminEmail, 'RFZ Digital');
+                    $mail->addAddress($adminEmail); // Admin's email
+                    $mail->addReplyTo($email, $name); // User's email for reply
+
+                    // Replace placeholders in the admin template
+                    $adminEmailContent = str_replace(
+                        ['{{name}}', '{{email}}', '{{phone}}', '{{message}}', '{{page_url}}'],
+                        [$name, $email, $phone, $messageContent, $page_url],
+                        $adminEmailTemplate
+                    );
 
                     // Admin email content
                     $mail->isHTML(true);
                     $mail->Subject = 'New Contact Form Submission';
-                    $mail->Body = "
-                        <h3>New Contact Form Submission</h3>
-                        <p><strong>Name:</strong> $name</p>
-                        <p><strong>Email:</strong> $email</p>
-                        <p><strong>Phone:</strong> $phone</p>
-                        <p><strong>Message:</strong><br>$messageContent</p>
-                    ";
+                    $mail->Body = $adminEmailContent;
                     $mail->send(); // Send admin email
 
-                    // User confirmation email
-                    $mail->clearAddresses(); // Clear admin email address
-                    $mail->addAddress($email); // Send to user
-                    $mail->Subject = 'Thank You for Contacting Us';
-                    $mail->Body = "
-                        <h3>Thank you for contacting us!</h3>
-                        <p>Dear $name,</p>
-                        <p>Thank you for your message. We have received your form submission and will get back to you shortly.</p>
-                        <p><strong>Your Message:</strong><br>$messageContent</p>
-                        <p>Best regards,</p>
-                        <p>Support Team</p>
-                    ";
-                    $mail->send(); // Send user email
-
-                    $message = "<div class='success-message'>Form submitted successfully!</div>";
                 } catch (Exception $e) {
-                    error_log("Mail Error: " . $e->getMessage());
-                    $message = "<div class='error-message'>Form submitted, but email could not be sent. Error: {$mail->ErrorInfo}</div>";
+                    error_log("Admin Mail Error: " . $mail->ErrorInfo);
+                }
+
+                // === SEND CONFIRMATION EMAIL TO USER ===
+                try {
+                    $userMail = new PHPMailer(true);
+                    $userMail->isSMTP();
+                    $userMail->Host = 'premium55.web-hosting.com';
+                    $userMail->SMTPAuth = true;
+                    $userMail->Username = $adminEmail;
+                    $userMail->Password = $adminPassword;
+                    $userMail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+                    $userMail->Port = 465;
+
+                    $userMail->isHTML(true);
+                    $userMail->setFrom($adminEmail, 'RFZ Digital');
+                    $userMail->addAddress($email); // Send to User
+                    $userMail->addReplyTo($adminEmail, 'RFZ Digital');
+
+                    $userEmailContent = str_replace(
+                        ['{{name}}', '{{message}}'],
+                        [$name, $messageContent],
+                        $userEmailTemplate
+                    );
+
+                    // Email Content
+                    $userMail->Subject = 'Thank You for Contacting Us';
+                    $userMail->Body = $userEmailContent;
+
+                    $userMail->send(); // Send to User
+                    $message = "<div class='success-message'>Form submitted successfully! A confirmation email has been sent to your inbox.</div>";
+                } catch (Exception $e) {
+                    error_log("User Mail Error: " . $userMail->ErrorInfo);
+                    $message = "<div class='error-message'>Form submitted, but email could not be sent. Please try again later.</div>";
                 }
             } else {
                 $message = "<div class='error-message'>Failed to submit the form. Please try again.</div>";
             }
         } catch (PDOException $e) {
             error_log("Database Error: " . $e->getMessage());
-            $message = "<div class='error-message'>An error occurred while submitting the form to the database.</div>";
+            $message = "<div class='error-message'>An error occurred while saving your details. Please try again later.</div>";
         }
     } else {
-        $message = "<div class='error-message'>Please fill in all the fields.</div>";
+        $message = "<div class='error-message'>Please fill in all fields with valid information.</div>";
     }
 }
 ?>
@@ -133,8 +167,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         padding-bottom: 0px;
         background: linear-gradient(to right,
                 white 30%,
-                #ffebde 75%,
-                #ffab68 100%);
+                #d0cdfb 75%,
+                #3874eb 100%);
 
     }
 
@@ -197,23 +231,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="row align-items-center">
             <!-- Left Column -->
             <div class="col-md-7">
-                <h6 class="text-uppercase" style="color: #EC7D63;">Python Development Service</h6>
-                <h2 class="mb-3 com-services">Delivering Robust Python Development Services That Create Efficient,
-                    Scalable
-                    <span style="color:#1463FF; white-space:normal;">Solutions for Your Business Needs</span>
+                <h6 class="text-uppercase" style="color: #EC7D63;">JavaScript Development service</h6>
+                <h2 class="mb-3 com-services">Delivering Dynamic and Interactive Web Solutions with Expert
+                    <span style="color:#1463FF; white-space:normal;">
+                        JavaScript Development That Elevates User Engagement
+                    </span>
                 </h2>
-                <p class="mb-4 ">Leverage the power and versatility of Python with our expert Python Development
-                    Service. Our team specialises in creating scalable, efficient, and custom applications using Python,
-                    one of the most popular programming languages for web development, data analysis, and automation.
-                    From building robust web applications and APIs to implementing machine learning models and data
-                    processing solutions, we deliver Python-based solutions that meet your business needs. With a focus
-                    on clean code, performance optimisation, and security, we ensure your Python application is
-                    reliable, fast.</p>
+                <p class="mb-4 ">Enhance your web applications with our expert JavaScript Development Service, which
+                    specialises in creating dynamic, interactive, high-performance user experiences. JavaScript is the
+                    backbone of modern web development, enabling rich front-end functionality, seamless user
+                    interactions, and enhanced performance. Our team of skilled developers use the latest JavaScript
+                    frameworks and libraries, such as React, Angular, Vue.js, and Node.js, to build responsive,
+                    scalable, and secure web applications tailored to your business needs. </p>
                 <a href="<?php echo BASE_URL; ?>contact-us" class="btn btn-primary">Get Started</a>
             </div>
             <!-- Right Column -->
             <div class="col-md-5 d-flex justify-content-center">
-                <img src="./image/sds/Python-Developmen.webp" alt="Python Development Service"
+                <img src="./image/fed/JavaScript-Development.webp" alt="JavaScript Development service"
                     class="img-fluid rounded  ">
             </div>
         </div>
@@ -238,7 +272,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="form-container">
                         <h2 style="color: black;">Get in Touch</h2>
 
-                        <form class="inquiry-form" method="POST" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
+                        <form class="inquiry-form" method="POST"
+                            action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
                             <input type="hidden" name="form_type" value="top_form">
                             <div class="form-group">
                                 <input type="text" name="name" placeholder="Your Name" required>
@@ -262,15 +297,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="content-text-block">
                         <h2 class="about-subheading-comservices">About Us</h2>
                         <h2 class="content-title heading-md text-black">
-                            Efficient Code, Powerful Solutions
+                            Interactive Websites, Dynamic Functionality
                         </h2>
                         <p>
-                            At RFZ Digital, we offer specialised Python development services that deliver solid and
-                            scalable solutions tailored to your business needs. Our expert team of Python developers
-                            utilises Python’s versatility to create high quality web applications, automation tools, and
-                            data analytics solutions. Committed to quality and innovation, RFZ Digital ensures that your
-                            projects are completed on time and aligned with your goals, driving growth and efficiency.
-                            Learn More
+                            At RFZ Digital, we harness the full potential of JavaScript to deliver robust and
+                            interactive web solutions that elevate user engagement. Our team of experienced JavaScript
+                            developers specializes in developing custom JavaScript applications, whether it’s enhancing
+                            front-end functionality or building robust back-end systems. We leverage modern libraries
+                            and frameworks to create seamless, dynamic experiences that keep users returning. From
+                            responsive web applications to complex integrations, we ensure your project benefits from
+                            the best performance, security, and scalability practices. Partner with us for your
+                            JavaScript development needs, and let’s create solutions that transform your ideas into
+                            reality.
                         </p>
 
                     </div>
@@ -297,7 +335,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="col-xxl-8 col-lg-9 col-md-9 col-sm-12 col-xs-11">
                     <div class="section-heading">
                         <h2 class="section-heading__title heading-md heading-md--general-sans text-l5-secondary">
-                            Build Scalable SaaS Solutions to Drive Business Growth with Expert Development Services</h2>
+                            Create Interactive, High-Performance Web Solutions with Expert JavaScript Development
+                            Services</h2>
                     </div>
                 </div>
             </div>
@@ -310,9 +349,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <img src="./image/home-1/feature-1.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">📈</div>  -->
-                            <h5>Efficient and Scalable Python Development Services</h5> <!-- Heading -->
-                            <p>Our Python development services deliver robust, scalable solutions for web applications,
-                                data analysis, and automation, tailored to meet your business needs.
+                            <h5>Expert JavaScript Development for Dynamic Web Applications</h5> <!-- Heading -->
+                            <p>Our JavaScript development services create interactive, high-performance web
+                                applications, ensuring seamless user experiences, fast load times, and responsive
+                                functionality across all devices.
                             </p>
                         </div>
                     </div>
@@ -324,9 +364,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <img src="./image/home-5/feature-2.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">🌐</div>  -->
-                            <h5>Custom Python Solutions for High-Performance Applications</h5> <!-- Heading -->
-                            <p>We specialise in Python development, creating efficient, secure applications that enhance
-                                productivity, streamline workflows, and support your digital transformation goals.</p>
+                            <h5>Custom JavaScript Development for Scalable Web Solutions</h5> <!-- Heading -->
+                            <p>We specialise in custom JavaScript development to build scalable, dynamic websites,
+                                offering enhanced interactivity, smooth navigation, and improved performance for better
+                                user engagement.
+                            </p>
                         </div>
                     </div>
 
@@ -337,9 +379,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <img src="./image/home-5/feature-3.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">💼</div>  -->
-                            <h5>Expert Python Development for Advanced Business Solutions</h5> <!-- Heading -->
-                            <p>Our Python developers build customised applications, leveraging Python's versatility to
-                                deliver reliable, high-performance solutions for data-driven and web-based projects.</p>
+                            <h5>Comprehensive JavaScript Development for Modern Web Experiences</h5>
+                            <!-- Heading -->
+                            <p>Our JavaScript development services deliver cutting-edge solutions for modern web
+                                applications, optimising speed, interactivity, and responsiveness to elevate the overall
+                                user experience.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -457,165 +502,146 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="accordion-item">
                         <button class="accordion-button " type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item" aria-expanded="true" aria-controls="home-1-faq-item">
-                            What is Python development?
+                            What is JavaScript development?
                         </button>
                         <div id="home-1-faq-item" class="accordion-collapse collapse show" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                Python development refers to building software applications, websites, data analysis
-                                tools, and more using Python. Python is known for its simplicity, readability, and
-                                versatility. It is popular for web development, machine learning, data science,
-                                automation, and artificial intelligence projects.
+                                JavaScript development involves using the JavaScript programming language to create
+                                interactive and dynamic web applications. It’s essential for adding behavior to
+                                websites, including features such as forms, animations, and real-time updates.
+                                JavaScript is widely used for client-side (browser) and server-side (backend)
+                                development.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-2" aria-expanded="false" aria-controls="home-1-faq-item-2">
-                            What are the advantages of using Python for development?
+                            What are the key benefits of JavaScript development for websites?
                         </button>
                         <div id="home-1-faq-item-2" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                Python offers several benefits for developers, including:
+                                JavaScript enhances the functionality and user experience of websites. Some key benefits
+                                include:
                                 <ul>
-                                    <li>Ease of Use: Python’s syntax is simple and easy to learn, making it ideal for
-                                        both beginners and experienced developers.</li>
-                                    <li>Extensive Libraries: Python has a rich ecosystem of libraries and frameworks,
-                                        such as Django, Flask, Pandas, and NumPy, that make development faster and more
-                                        efficient.</li>
-                                    <li>Cross-Platform Compatibility: Python can run on different platforms (Windows,
-                                        macOS, Linux), making it highly versatile.</li>
-                                    <li>Integration: Python easily integrates with other languages and technologies,
-                                        which is helpful for complex systems.</li>
+                                    <li>Interactivity: Adding features like forms, drop-downs, pop-ups, and real-time
+                                        data updates.</li>
+                                    <li>Dynamic Content: Websites can load content dynamically without needing a page
+                                        reload.</li>
+                                    <li>Cross-browser Compatibility: JavaScript works seamlessly across all major
+                                        browsers.</li>
+                                    <li>Asynchronous Data Handling: JavaScript allows for asynchronous communication,
+                                        improving load times and reducing lag.</li>
 
                                 </ul>
-                                Community Support: Python has a large and active community with plenty of resources,
-                                documentation, and third-party tools.
+
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-3" aria-expanded="false" aria-controls="home-1-faq-item-3">
-                            What types of applications can be developed with Python?
+                            How does JavaScript integrate with other technologies?
                         </button>
                         <div id="home-1-faq-item-3" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                Python can be used to develop a wide range of applications, including:
+                                JavaScript can be integrated with various technologies:
                                 <ul>
-                                    <li>Web Development: Websites and web applications using frameworks like Django and
-                                        Flask.</li>
-                                    <li>Data Science and Analytics: Data analysis, visualisation, and machine learning
-                                        with libraries like Pandas, NumPy, and Matplotlib.</li>
-                                    <li>Automation: Scripting and automating repetitive tasks or workflows.</li>
-                                    <li>Artificial Intelligence and Machine Learning: Developing AI models and
-                                        algorithms using TensorFlow, Keras, and Scikit-learn.</li>
-                                    <li>Desktop Applications: Graphical user interface (GUI) applications using Tkinter
-                                        or PyQt.</li>
-
+                                    <li>HTML: Defines the structure of web pages.</li>
+                                    <li>CSS: Controls the style and layout of web pages.</li>
+                                    <li>Backend technologies: With Node.js, JavaScript can also handle server-side
+                                        logic, databases, and APIs.</li>
+                                    <li>Front-end frameworks: React, Angular, and Vue.js enhance JavaScript’s
+                                        capabilities to build efficient, scalable user interfaces.</li>
                                 </ul>
-                                Game Development: Creating simple games using frameworks like Pygame.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-4" aria-expanded="false" aria-controls="home-1-faq-item-4">
-                            How long does it take to develop a Python-based application?
+                            Can JavaScript be used for mobile app development?
                         </button>
                         <div id="home-1-faq-item-4" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                The development timeline for a Python-based application depends on factors such as
-                                complexity, scope, and functionality. Simple applications or scripts can be developed in
-                                a few weeks, while more complex systems, such as AI-powered applications or large-scale
-                                web platforms, may take several months. After assessing your project requirements, we
-                                can provide a more accurate timeline.
+                                Yes, JavaScript can be used for mobile app development. Frameworks like React Native
+                                allow developers to build cross-platform mobile apps using JavaScript, while Ionic and
+                                PhoneGap provide additional tools for building mobile apps. <br>
+                                <b>What are some popular JavaScript frameworks and libraries?</b> <br>
+                                Some of the most popular JavaScript frameworks and libraries include:
+                                <ul>
+                                    <li>React.js: A JavaScript library for building user interfaces, particularly
+                                        single-page applications.</li>
+                                    <li>Angular: A front-end framework that offers a complete solution for building
+                                        dynamic web apps.</li>
+                                    <li>Vue.js: A progressive framework for building UIs, known for its simplicity and
+                                        flexibility.</li>
+                                    <li>Node.js: A runtime environment that enables JavaScript to be used on the server
+                                        side for backend development.</li>
+                                    <li>Express.js: A framework for Node.js that simplifies server-side web development.
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-5" aria-expanded="false" aria-controls="home-1-faq-item-5">
-                            Is Python suitable for enterprise-level applications?
+                            How does JavaScript improve website performance?
                         </button>
                         <div id="home-1-faq-item-5" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                Yes, Python is highly scalable and can be used for enterprise-level applications. Its
-                                rich set of libraries and frameworks, such as Django and Flask for web development, make
-                                it suitable for building secure, robust, and scalable enterprise applications. Python’s
-                                ability to integrate with other technologies and its strong community support further
-                                enhance its suitability for large-scale projects.
+                                JavaScript can improve website performance by:
+                                <ul>
+                                    <li>Lazy Loading: Loading content only when needed (i.e., when it comes into view).
+                                    </li>
+                                    <li>Asynchronous Loading: Using AJAX to load data without reloading the page.</li>
+                                    <li>Client-Side Rendering: Offloading work from the server to the client, speeding
+                                        up response times.</li>
+                                    <li>Optimising Resources: JavaScript allows you to optimise images, videos, and
+                                        other resources for faster loading.</li>
+                                </ul>
+
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-6" aria-expanded="false" aria-controls="home-1-faq-item-6">
-                            What frameworks and tools do you use for Python development?
+                            Is JavaScript used for both front-end and backend development?
                         </button>
                         <div id="home-1-faq-item-6" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                For Python development, we utilise a variety of frameworks and tools to enhance
-                                productivity and application quality, including:
+                                Yes, JavaScript can be used for both front-end and backend development:
                                 <ul>
-                                    <li>Web Frameworks: Django, Flask, Pyramid.</li>
-                                    <li>Machine Learning Libraries: TensorFlow, Keras, Scikit-learn, PyTorch.</li>
-                                    <li>Data Analysis Libraries: Pandas, NumPy, Matplotlib.</li>
-                                    <li>Task Automation: Celery, PyAutoGUI.</li>
-                                    <li>Testing Tools: PyTest, UnitTest, and Selenium for automated testing.</li>
+                                    <li>Front-end: JavaScript enhances user interfaces by adding interactivity and
+                                        dynamic content.</li>
+                                    <li>Backend: With Node.js, JavaScript runs on the server side, handling requests,
+                                        interacting with databases, and serving APIs.</li>
                                 </ul>
-                                Database: PostgreSQL, MySQL, SQLite, MongoDB for back-end data storage.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-7" aria-expanded="false" aria-controls="home-1-faq-item-7">
-                            How do you ensure the quality of Python applications?
+                            What makes JavaScript suitable for large-scale web applications?
                         </button>
                         <div id="home-1-faq-item-7" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                We ensure the quality of Python applications through a combination of:
+                                JavaScript is highly suitable for large-scale web applications because:
                                 <ul>
-                                    <li>Code Reviews: Regular code reviews to maintain readability, consistency, and
-                                        best practices.</li>
-                                    <li>Unit Testing: Writing unit tests to check individual components’ functionality
-                                        and accuracy.</li>
-                                    <li>Integration Testing: Ensuring different modules of the application work well
-                                        together.</li>
-                                    <li>Continuous Integration/Continuous Deployment (CI/CD): Using CI/CD pipelines for
-                                        automated testing and deployment to ensure faster and more reliable delivery.
-                                    </li>
+                                    <li>Modular Structure: Using frameworks like React and Angular, developers can break
+                                        applications into reusable components, making the codebase manageable.</li>
+                                    <li>Scalability: With Node.js and microservices architecture, JavaScript can handle
+                                        high traffic and scale seamlessly.</li>
+                                </ul>
+                                Real-time Functionality: JavaScript enables real-time updates (e.g., chats, live feeds)
+                                without needing full page reloads.
+                            </div>
+                        </div>
+                    </div>
 
-                                </ul>
-                                Performance Optimisation: Identifying and optimising bottlenecks in the application to
-                                ensure efficient performance.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#home-1-faq-item-8" aria-expanded="false" aria-controls="home-1-faq-item-8">
-                            Do you provide ongoing support and maintenance for Python applications?
-                        </button>
-                        <div id="home-1-faq-item-8" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
-                            <div class="accordion-item__body">
-                                Yes, we provide comprehensive support and maintenance for Python applications. This
-                                includes:
-                                <ul>
-                                    <li>Bug Fixes and Updates: Regular updates to fix bugs and improve functionality.
-                                    </li>
-                                    <li>Performance Monitoring: Ongoing monitoring of application performance to ensure
-                                        it runs smoothly.</li>
-                                    <li>Scalability: Making improvements to accommodate growing users or increased data
-                                        volumes.</li>
-                                    <li>Security Patches: Implementing security patches and updates to keep your
-                                        application secure.</li>
-                                </ul>
-                                Feature Enhancements: Adding new features and improving existing ones per evolving
-                                business needs.
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -624,89 +650,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </div>
 
 
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Conatct : Main Section 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-<div class="contact_main-section padding-bottom-120 padding-top-120">
-    <div class="container">
-        <div class="row row--cuatom">
-            <div class="col-xl-5 col-lg-6 col-md-8 col-sm-11">
-                <div class="contact_main-content contact-content-space">
-                    <div class="content">
-                        <div class="content-text-block">
-                            <h2 class="heading-md">Fill out this form, We ‘ll quickly get back to you </h2>
-                            <p>
-                                We are here to help you! Tell us how we can help and we’ll get in touch within next
-                                24hrs with expert
-                            </p>
-                            <div class="content-divider"></div>
-                        </div>
-                    </div>
-                    <div class="content_main-testimonial">
-                        <div class="testimonial-widget-4" data-aos="fade-left" data-aos-delay="NaN">
-                            <div class="testimonial-widget-4__rating">
-                                <img src="./image/icons/star-five-yellow.svg" class="testimonial-widget-4__star"
-                                    alt="image alt">
-                            </div>
-                            <p>
-                                "Snaga did an exceptional job for us.
-                                keep up the excellent digital work. Man,
-                                this thing is getting better and better as
-                                I learn more about it. I have gotten at
-                                least 50 times the value from Snaga.
-                                It is worth much more than I paid."
-                            </p>
-                            <div class="testimonial-widget-4__body">
-                                <div class="testimonial-widget-4__user-image">
-                                    <img src="./image/contact/contact-user-image.png" alt="image alt">
-                                </div>
-                                <div class="testimonial-widget-4__user-metadeta">
-                                    <h4 class="testimonial-widget-4__user">Brooklyn Simmons</h4>
-                                    <span class="testimonial-widget-4__user-position">CEO & Co-founder @ Company</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="offset-xl-1 col-lg-6 col-md-10">
-                <div class="form-box-style__form-wrapper bg-light-2">
-                    <form class="form-box-style" id="contact-form" method="POST" action="Website-Development.php">
-                        <div class="form-box-style__form-inner">
-                            <div class="form-box-style__form-input">
-                                <h3 class="form-box-style-title">Your name</h3>
-                                <input class="form-control bg-white" name="name" type="text"
-                                    placeholder="Enter your full name">
-                            </div>
-                            <div class="form-box-style__form-input">
-                                <h3 class="form-box-style-title">Email address</h3>
-                                <input class="form-control bg-white" name="email" type="text"
-                                    placeholder="Enter your email">
-                            </div>
-                            <div class="form-box-style__form-input">
-                                <h3 class="form-box-style-title">Phone Number</h3>
-                                <input id="phone" class="form-control bg-white" name="phone" type="tel"
-                                    placeholder="Enter your phone number" required>
-                            </div>
-                            <div class="form-box-style__form-input">
-                                <h3 class="form-box-style-title">Write your message</h3>
-                                <textarea class="form-control bg-white textarea" name="message"
-                                    placeholder="Write us your question here..."></textarea>
-                            </div>
-                            <div class="form-box-style__form-input-button">
-                                <button type="submit" class="btn-masco rounded-pill w-100">Submit</button>
-                            </div>
-                            <?php echo $message; ?>
-                        </div>
-                    </form>
 
-                </div>
+<!-- Contact Us Section -->
+<?php require_once 'includes/contact-us-section.php'; ?>
 
-            </div>
-        </div>
-    </div>
-</div>
-
+<!-- Contact us Section -->
 
 
 
