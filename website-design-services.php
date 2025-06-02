@@ -1,25 +1,25 @@
 <style type="text/css">
-    .success-message {
-        margin-top: 15px;
-        padding: 10px;
-        color: #155724;
-        background-color: #d4edda;
-        border: 1px solid #c3e6cb;
-        border-radius: 5px;
-        text-align: center;
-        font-size: 14px;
-    }
+.success-message {
+    margin-top: 15px;
+    padding: 10px;
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+}
 
-    .error-message {
-        margin-top: 15px;
-        padding: 10px;
-        color: #721c24;
-        background-color: #f8d7da;
-        border: 1px solid #f5c6cb;
-        border-radius: 5px;
-        text-align: center;
-        font-size: 14px;
-    }
+.error-message {
+    margin-top: 15px;
+    padding: 10px;
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+}
 </style>
 <?php
 $noindex = true;
@@ -162,69 +162,69 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
 
 
 <style>
-    .custom-bg {
-        padding-top: 100px;
-        padding-bottom: 0px;
-        background: linear-gradient(to right,
-                white 30%,
-                #c9e9ff 75%,
-                #3eaffa 100%);
+.custom-bg {
+    padding-top: 100px;
+    padding-bottom: 0px;
+    background: linear-gradient(to right,
+            white 30%,
+            #bfe8ff 75%,
+            #40b1fd 100%);
 
-    }
+}
 
-    .mb-3 {
-        font-family: "Onest", Sans-serif;
-        /*font-size: 52px;
+.mb-3 {
+    font-family: "Onest", Sans-serif;
+    /*font-size: 52px;
     font-weight: 900;*/
-        color: #000000;
+    color: #000000;
 
+}
+
+.text-muted {
+    padding-bottom: 5px;
+}
+
+.img-fluid {
+    max-width: 100%;
+    max-height: 448px;
+}
+
+.mb-4 {
+    font-family: "Manrope", Sans-serif;
+    font-size: 16px;
+
+}
+
+span {
+    display: inline;
+    white-space: normal;
+}
+
+@media (min-width: 600px) {
+    .mb-3 {
+        font-size: 40px;
     }
+}
 
-    .text-muted {
-        padding-bottom: 5px;
+@media (min-width: 992px) {
+    .mb-3 {
+        font-size: 40px;
     }
+}
 
-    .img-fluid {
-        max-width: 100%;
-        max-height: 448px;
+@media (min-width: 1200px) {
+    .mb-3 {
+
+        font-weight: 900;
     }
+}
 
-    .mb-4 {
-        font-family: "Manrope", Sans-serif;
-        font-size: 16px;
+@media (min-width: 1400px) {
+    .mb-3 {
 
+        font-weight: 900;
     }
-
-    span {
-        display: inline;
-        white-space: normal;
-    }
-
-    @media (min-width: 600px) {
-        .mb-3 {
-            font-size: 40px;
-        }
-    }
-
-    @media (min-width: 992px) {
-        .mb-3 {
-            font-size: 40px;
-        }
-    }
-
-    @media (min-width: 1200px) {
-        .mb-3 {
-
-            font-weight: 900;
-        }
-    }
-
-    @media (min-width: 1400px) {
-        .mb-3 {
-
-            font-weight: 900;
-        }
-    }
+}
 </style>
 <section class="custom-bg">
     <div class="container">
@@ -232,9 +232,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
             <!-- Left Column -->
             <div class="col-md-7">
                 <h6 class="text-uppercase" style="color: #EC7D63;">Website Design Services</h6>
-                <h2 class="mb-3 com-services">We offer Website Design for Your Business – Starting at<span
+                <h2 class="mb-3 com-services">We offer Website Design for Your Business –<span
                         style="color:#1463FF; white-space:normal;">
-                        $699
+                        Starting at $699
                     </span>
                 </h2>
                 <p class="mb-4 ">With a good website, you can land a great first impression on your customers. At RFZ
@@ -246,7 +246,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
             </div>
             <!-- Right Column -->
             <div class="col-md-5 d-flex justify-content-center">
-                <img src="./image/pd/Website-Design-Services.webp" alt="Website Design Services"
+                <img src="./image/digitalservices/wdd/Website-Design-Services.webp" alt="Website Design Services"
                     class="img-fluid rounded  ">
             </div>
         </div>
@@ -330,7 +330,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
                 <div class="col-xxl-8 col-lg-9 col-md-9 col-sm-12 col-xs-11">
                     <div class="section-heading">
                         <h2 class="section-heading__title heading-md heading-md--general-sans text-l5-secondary">
-                            Crafting Beautiful Designs That Engage and Convert</h2>
+                            Crafting Beautiful Designs That Engage and Convert
+                        </h2>
                     </div>
                 </div>
             </div>
@@ -343,7 +344,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
                                 <img src="./image/home-1/feature-1.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">📈</div>  -->
-                            <h5>Stunning Designs that Make an Impact</h5> <!-- Heading -->
+                            <h5>Stunning Designs that Make an Impact</h5>
                             <p>We craft visually appealing, user-friendly designs that captivate visitors and elevate
                                 your brand.
                             </p>
@@ -357,10 +358,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
                                 <img src="./image/home-5/feature-2.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">🌐</div>  -->
-                            <h5>Transforming Ideas into Beautiful Websites</h5> <!-- Heading -->
+                            <h5>Transforming Ideas into Beautiful Websites</h5>
                             <p>Our designs bring your vision to life, ensuring a seamless, engaging experience for every
-                                user.
-                            </p>
+                                user.</p>
                         </div>
                     </div>
 
@@ -372,10 +372,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
                             </div>
                             <!-- <div class="icon">💼</div>  -->
                             <h5>Professional Designs, Tailored to Your Business</h5>
-                            <!-- Heading -->
                             <p>We create custom website designs that reflect your brand’s style and resonate with your
-                                audience.
-                            </p>
+                                audience.</p>
                         </div>
                     </div>
                 </div>
@@ -550,6 +548,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
                             <div class="accordion-item__body">
                                 Absolutely! We can redesign your existing website with a modern, user friendly design
                                 that aligns with your brand and incorporates the latest trends and technologies.
+
                             </div>
                         </div>
                     </div>
@@ -580,10 +579,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#home-1-faq-item-7" aria-expanded="false" aria-controls="home-1-faq-item-7">
+                            data-bs-target="#home-1-faq-item-8" aria-expanded="false" aria-controls="home-1-faq-item-8">
                             How much do your website design services cost?
                         </button>
-                        <div id="home-1-faq-item-7" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
+                        <div id="home-1-faq-item-8" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
                                 Our website design pricing starts at $299 for basic designs. We offer customised
                                 packages for custom or complex designs based on your requirements.

@@ -1,25 +1,25 @@
 <style type="text/css">
-    .success-message {
-        margin-top: 15px;
-        padding: 10px;
-        color: #155724;
-        background-color: #d4edda;
-        border: 1px solid #c3e6cb;
-        border-radius: 5px;
-        text-align: center;
-        font-size: 14px;
-    }
+.success-message {
+    margin-top: 15px;
+    padding: 10px;
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+}
 
-    .error-message {
-        margin-top: 15px;
-        padding: 10px;
-        color: #721c24;
-        background-color: #f8d7da;
-        border: 1px solid #f5c6cb;
-        border-radius: 5px;
-        text-align: center;
-        font-size: 14px;
-    }
+.error-message {
+    margin-top: 15px;
+    padding: 10px;
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+}
 </style>
 <?php
 $noindex = true;
@@ -162,69 +162,69 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
 
 
 <style>
-    .custom-bg {
-        padding-top: 100px;
-        padding-bottom: 0px;
-        background: linear-gradient(to right,
-                white 30%,
-                #c7eaff 75%,
-                #43b7fd 100%);
+.custom-bg {
+    padding-top: 100px;
+    padding-bottom: 0px;
+    background: linear-gradient(to right,
+            white 30%,
+            #c7eaff 75%,
+            #43b7fd 100%);
 
-    }
+}
 
-    .mb-3 {
-        font-family: "Onest", Sans-serif;
-        /*font-size: 52px;
+.mb-3 {
+    font-family: "Onest", Sans-serif;
+    /*font-size: 52px;
     font-weight: 900;*/
-        color: #000000;
+    color: #000000;
 
+}
+
+.text-muted {
+    padding-bottom: 5px;
+}
+
+.img-fluid {
+    max-width: 100%;
+    max-height: 448px;
+}
+
+.mb-4 {
+    font-family: "Manrope", Sans-serif;
+    font-size: 16px;
+
+}
+
+span {
+    display: inline;
+    white-space: normal;
+}
+
+@media (min-width: 600px) {
+    .mb-3 {
+        font-size: 40px;
     }
+}
 
-    .text-muted {
-        padding-bottom: 5px;
+@media (min-width: 992px) {
+    .mb-3 {
+        font-size: 40px;
     }
+}
 
-    .img-fluid {
-        max-width: 100%;
-        max-height: 448px;
+@media (min-width: 1200px) {
+    .mb-3 {
+
+        font-weight: 900;
     }
+}
 
-    .mb-4 {
-        font-family: "Manrope", Sans-serif;
-        font-size: 16px;
+@media (min-width: 1400px) {
+    .mb-3 {
 
+        font-weight: 900;
     }
-
-    span {
-        display: inline;
-        white-space: normal;
-    }
-
-    @media (min-width: 600px) {
-        .mb-3 {
-            font-size: 40px;
-        }
-    }
-
-    @media (min-width: 992px) {
-        .mb-3 {
-            font-size: 40px;
-        }
-    }
-
-    @media (min-width: 1200px) {
-        .mb-3 {
-
-            font-weight: 900;
-        }
-    }
-
-    @media (min-width: 1400px) {
-        .mb-3 {
-
-            font-weight: 900;
-        }
-    }
+}
 </style>
 <section class="custom-bg">
     <div class="container">
@@ -634,10 +634,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#home-1-faq-item-7" aria-expanded="false" aria-controls="home-1-faq-item-7">
+                            data-bs-target="#home-1-faq-item-8" aria-expanded="false" aria-controls="home-1-faq-item-8">
                             How do you ensure continuous quality in an agile environment?
                         </button>
-                        <div id="home-1-faq-item-7" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
+                        <div id="home-1-faq-item-8" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
                                 In an Agile environment, we ensure continuous quality by:
                                 <ul>
