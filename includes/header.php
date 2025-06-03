@@ -2,7 +2,7 @@
 ob_start(); // Start output buffering to prevent premature output
 // Start session if not already started
 if (session_status() == PHP_SESSION_NONE) {
-  session_start();
+    session_start();
 }
 
 // Get visitor details
@@ -21,40 +21,40 @@ $noindex = isset($noindex) ? $noindex : false; // Agar $noindex pehle se set hai
 
 // Set default meta title and description
 if (!isset($meta_title)) {
-  $meta_title = 'RFZ Digital';
+    $meta_title = 'RFZ Digital';
 }
 if (!isset($meta_description)) {
-  $meta_description = 'Default description.';
+    $meta_description = 'Default description.';
 }
 if (!isset($canonical_url)) {
-  $canonical_url = 'http://localhost/rfzdigital2.0/';  // Default canonical URL
+    $canonical_url = 'http://localhost/rfzdigital2.0/';  // Default canonical URL
 }
 
 // Check if it's a blog detail page based on slug
 if (isset($_GET['slug'])) { // Slug is passed in URL
-  $slug = trim($_GET['slug']); // Sanitize slug
+    $slug = trim($_GET['slug']); // Sanitize slug
 
-  // Fetch meta title and description from the database using slug
-  $stmt = $pdo->prepare("SELECT meta_title, meta_description, noindex, canonical_url FROM blog_posts WHERE slug = ?");
-  $stmt->execute([$slug]);
-  $blog = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Fetch meta title and description from the database using slug
+    $stmt = $pdo->prepare("SELECT meta_title, meta_description, noindex, canonical_url FROM blog_posts WHERE slug = ?");
+    $stmt->execute([$slug]);
+    $blog = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  if ($blog) {
-    if (!empty($blog['meta_title'])) {
-      $meta_title = $blog['meta_title']; // Override with blog meta title
-    }
-    if (!empty($blog['meta_description'])) {
-      $meta_description = $blog['meta_description']; // Override with blog meta description
-    }
-    if (!empty($blog['canonical_url'])) {
-      $canonical_url = $blog['canonical_url']; // Override with blog canonical URL
-    }
+    if ($blog) {
+        if (!empty($blog['meta_title'])) {
+            $meta_title = $blog['meta_title']; // Override with blog meta title
+        }
+        if (!empty($blog['meta_description'])) {
+            $meta_description = $blog['meta_description']; // Override with blog meta description
+        }
+        if (!empty($blog['canonical_url'])) {
+            $canonical_url = $blog['canonical_url']; // Override with blog canonical URL
+        }
 
-    // Set noindex for blog pages based on database
-    if ($blog['noindex'] == 1) {
-      $noindex = true;
+        // Set noindex for blog pages based on database
+        if ($blog['noindex'] == 1) {
+            $noindex = true;
+        }
     }
-  }
 }
 
 ?>
@@ -102,33 +102,33 @@ if (isset($_GET['slug'])) { // Slug is passed in URL
 
     <link rel="preload" href="../fonts/Lexend-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin="anonymous">
     <style>
-    @font-face {
-        font-family: 'Lexend';
-        src: url('fonts/Lexend-VariableFont_wght.ttf') format('truetype');
-        font-weight: 100 900;
-        font-style: normal;
-        font-display: block;
-    }
+        @font-face {
+            font-family: 'Lexend';
+            src: url('fonts/Lexend-VariableFont_wght.ttf') format('truetype');
+            font-weight: 100 900;
+            font-style: normal;
+            font-display: block;
+        }
     </style>
 
     <?php
-  // Automatically detect protocol (http/https)
-  $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-  $host = $_SERVER['HTTP_HOST'];
+    // Automatically detect protocol (http/https)
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+    $host = $_SERVER['HTTP_HOST'];
 
-  // Check if on localhost or live server
-  if ($host == 'localhost') {
-    // For local server
-    $projectFolder = '/rfzdigital2.0/'; // Local folder
-  } else {
-    // For live server (assuming it's in the root or specific folder)
-    $projectFolder = '/';  // Use '/' if it's in the root directory
-    // If it's inside a folder, adjust accordingly:
-    // $projectFolder = '/rfzdigital.co.uk/';
-  }
+    // Check if on localhost or live server
+    if ($host == 'localhost') {
+        // For local server
+        $projectFolder = '/rfzdigital2.0/'; // Local folder
+    } else {
+        // For live server (assuming it's in the root or specific folder)
+        $projectFolder = '/';  // Use '/' if it's in the root directory
+        // If it's inside a folder, adjust accordingly:
+        // $projectFolder = '/rfzdigital.co.uk/';
+    }
 
-  $baseURL = $protocol . $host . $projectFolder;
-  ?>
+    $baseURL = $protocol . $host . $projectFolder;
+    ?>
 
     <base href="<?php echo $baseURL; ?>">
 
@@ -162,14 +162,14 @@ if (isset($_GET['slug'])) { // Slug is passed in URL
         href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
         rel="stylesheet">
     <style>
-    @import url('https://fonts.cdnfonts.com/css/clash-display');
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@500;600;700;800;900&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Cabin:wght@500;600;700&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
-    @import url('https://fonts.cdnfonts.com/css/clash-display');
+        @import url('https://fonts.cdnfonts.com/css/clash-display');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cabin:wght@500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+        @import url('https://fonts.cdnfonts.com/css/clash-display');
     </style>
 
     <!-- Inside the head -->
@@ -190,134 +190,12 @@ if (isset($_GET['slug'])) { // Slug is passed in URL
         content="RFZ Digital offers expert website design, development, and digital marketing services in the UK & Ireland. We help businesses grow online and get leads." />
     <meta name="twitter:image" content="https://rfzdigital.co.uk/image/RFZ-Digital-Co-UK-logo.png" />
     <meta name="twitter:site" content="@rfzdigital" />
-    <!-- New Code  -->
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZGDHCTPLKZ"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
 
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
-
-    gtag('config', 'G-ZGDHCTPLKZ');
-    </script>
-    <script type="text/javascript">
-    (function(c, l, a, r, i, t, y) {
-        c[a] = c[a] || function() {
-            (c[a].q = c[a].q || []).push(arguments)
-        };
-        t = l.createElement(r);
-        t.async = 1;
-        t.src = "https://www.clarity.ms/tag/" + i;
-        y = l.getElementsByTagName(r)[0];
-        y.parentNode.insertBefore(t, y);
-    })(window, document, "clarity", "script", "prr7afithc");
-    </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "RFZ Digital UK",
-        "url": "https://rfzdigital.co.uk/",
-        "logo": "https://rfzdigital.co.uk/image/RFZ-Digital-UK-logo%20.png"
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org/",
-        "@type": "WebSite",
-        "name": "RFZ Digital UK",
-        "url": "https://rfzdigital.co.uk/",
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": "{search_term_string}",
-            "query-input": "required name=search_term_string"
-        }
-    }
-    </script>
-    <!-- Google Recaptcha -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZGDHCTPLKZ"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
-
-    gtag('config', 'G-ZGDHCTPLKZ');
-    </script>
-
-    <!-- Google Tag Manager -->
-    <script>
-    (function(w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({
-            'gtm.start': new Date().getTime(),
-            event: 'gtm.js'
-        });
-        var f = d.getElementsByTagName(s)[0],
-            j = d.createElement(s),
-            dl = l != 'dataLayer' ? '&l=' + l : '';
-        j.async = true;
-        j.src =
-            'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-        f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-NQ3T6PFG');
-    </script>
-    <!-- End Google Tag Manager -->
-
-
-    <!-- New for Cookies -->
-    <!-- Google Tag Manager -->
-    <script>
-    (function(w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({
-            'gtm.start': new Date().getTime(),
-            event: 'gtm.js'
-        });
-        var f = d.getElementsByTagName(s)[0],
-            j = d.createElement(s),
-            dl = l != 'dataLayer' ? '&l=' + l : '';
-        j.async = true;
-        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-        f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-NQ3T6PFG');
-    </script>
-    <!-- End Google Tag Manager -->
-
-
-    <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-
-    gtag('consent', 'default', {
-        'ad_storage': 'denied',
-        'analytics_storage': 'denied',
-        'functionality_storage': 'granted',
-        'security_storage': 'granted',
-        'personalization_storage': 'denied',
-        'wait_for_update': 500
-    });
-    </script>
 
 </head>
 
 <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NQ3T6PFG" height="0" width="0"
-            style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
+
     <!--~~~~~~~~~~~~~~~~~~~~~~~~
      Top Bar
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
