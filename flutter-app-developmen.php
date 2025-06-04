@@ -197,23 +197,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="row align-items-center">
             <!-- Left Column -->
             <div class="col-md-7">
-                <h6 class="text-uppercase" style="color: #EC7D63;">iOS App Development</h6>
-                <h2 class="mb-3 com-services">Developing High-Quality iOS App That Enhance User Experience and
-                    <span style="color:#1463FF; white-space:normal;">Strengthen Your Business on Apple Devices.</span>
+                <h6 class="text-uppercase" style="color: #3197fb;">Flutter App Development
+                </h6>
+                <h2 class="mb-3 com-services">Delivering High-Quality Flutter Apps for Consistent Performance
+                    <span style="color:#3197fb; white-space:normal;">and Beautiful Cross-Platform Experiences.</span>
                 </h2>
-                <p class="mb-4 ">Create exceptional mobile experiences with our expert iOS App Development service.
-                    Specialising in custom iOS applications for iPhone and iPad, we design and develop high-performance
-                    iOS apps that are intuitive, user-friendly, and optimised for Apple’s ecosystem. Our team leverages
-                    the latest iOS technologies, including Swift and Objective-C, to build secure, scalable apps
-                    tailored to your business needs. Whether you’re looking to develop a consumer-facing app, an
-                    enterprise solution, or an innovative product, we ensure your iOS app is designed for seamless
-                    functionality, performance, and security. With a focus on user experience and Apple’s design
-                    guidelines.</p>
+                <p class="mb-4 ">Build beautiful, high-performance, cross-platform mobile applications with our expert Flutter App Development service. Flutter, Google’s open-source framework, enables the creation of natively compiled mobile, web, and desktop applications from a single codebase, ensuring faster development and reduced costs. Our team specialises in using Flutter to develop visually stunning, responsive, and user-friendly apps that perform seamlessly on iOS and Android devices. With a focus on delivering fast loading times, smooth animations, and a consistent user experience, we ensure your Flutter app meets the highest quality standards. Whether launching a new product or enhancing an existing one, our Flutter App Development service helps you reach a wider audience with robust, cost-effective mobile solutions.</p>
                 <a href="<?php echo BASE_URL; ?>contact-us" class="btn btn-primary">Get Started</a>
             </div>
             <!-- Right Column -->
             <div class="col-md-5 d-flex justify-content-center">
-                <img src="./image/sds/iOS-App-Development-1-2048x1626.webp" alt="Ai Application Development"
+                <img src="./image/sds/Flutter-App-Development-2048x1626.webp" alt="Ai Application Development"
                     class="img-fluid rounded  ">
             </div>
         </div>
@@ -262,16 +256,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="content-text-block">
                         <h2 class="about-subheading-comservices">About Us</h2>
                         <h2 class="content-title heading-md text-black">
-                            Elegant Apps. Seamless Performance
+                           Fast Development. Beautiful Apps
 
                         </h2>
                         <p>
-                            At RFZ Digital, we specialise in iOS app development services that transform innovative
-                            ideas into user-friendly applications. Our dedicated team of iOS experts leverages the
-                            latest technologies to create high-performance apps tailored to your needs. Committed to
-                            excellence.
-                        </p>
-                        <p> RFZ Digital ensures every app meets the highest iOS standards, delivering seamless experiences that engage users and drive business success.</p>
+                           At RFZ Digital, we offer top-notch Flutter app development services, utilising the framework’s unique capabilities to build appealing, high-performance applications. Our talented team of Flutter developers crafts intuitive, cross-platform solutions that deliver a native-like experience on both iOS and Android. With a strong emphasis on customisation and speed, RFZ Digital empowers your business to stand out and engage users effectively in today’s digital landscape.
+Learn More
+
+</p>
                     </div>
                 </div>
             </div>
@@ -296,7 +288,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="col-xxl-8 col-lg-9 col-md-9 col-sm-12 col-xs-11">
                     <div class="section-heading">
                         <h2 class="section-heading__title heading-md heading-md--general-sans text-l5-secondary">
-                            Enhance User Experience with Custom iOS App Development Services</h2>
+                            Create Fast, Cross-Platform Mobile Apps with Professional Flutter Development Services
+                        </h2>
                     </div>
                 </div>
             </div>
@@ -309,9 +302,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <img src="./image/home-1/feature-1.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">📈</div>  -->
-                            <h5>Custom iOS App Development for Innovative Mobile Solutions
-</h5> <!-- Heading -->
-                            <p>Our iOS app development services create user-friendly, high-performance applications tailored to your business needs, delivering seamless experiences across all Apple devices.
+                            <h5>Custom Flutter App Development for Cross-Platform Solutions
+
+                            </h5> <!-- Heading -->
+                            <p>Our Flutter app development services deliver fast, scalable, and high-performance mobile applications that run seamlessly on both iOS and Android, reducing costs and development time.
 
 
                             </p>
@@ -325,10 +319,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <img src="./image/home-5/feature-2.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">🌐</div>  -->
-                            <h5>Expert iOS App Development to Elevate Your Business</h5> <!-- Heading -->
-                            <p>We design and develop custom iOS apps that engage users, enhance brand presence, and provide innovative solutions for your business on iPhone, iPad, and other Apple devices
+                            <h5>Expert Flutter App Development for Innovative Mobile Experiences
 
-</p>
+                            </h5> <!-- Heading -->
+                            <p>We create intuitive, visually appealing Flutter apps that provide a consistent, native-like experience across multiple platforms, helping you reach a broader audience and improve user engagement.
+
+
+                            </p>
                         </div>
                     </div>
 
@@ -339,9 +336,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <img src="./image/home-5/feature-3.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">💼</div>  -->
-                            <h5>Build Powerful iOS Apps with Our Professional Development Services
-</h5> <!-- Heading -->
-                            <p>Our expert iOS developers deliver scalable, reliable, and secure mobile applications that drive user engagement, improve functionality, and meet the specific needs of your business.</p>
+                            <h5>Flutter App Development for Speed, Performance, and Flexibility
+
+
+
+                            </h5> <!-- Heading -->
+                            <p>Our Flutter developers build custom mobile applications that offer exceptional speed, seamless integration, and flexibility, ensuring optimal performance on both Android and iOS devices.
+
+
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -448,138 +451,156 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="accordion-item">
                         <button class="accordion-button " type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item" aria-expanded="true" aria-controls="home-1-faq-item">
-                            What is iOS app development?
+                           What is Flutter app development?
                         </button>
                         <div id="home-1-faq-item" class="accordion-collapse collapse show" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                iOS app development creates software applications specifically for Apple’s iOS operating system. These apps are designed to run on Apple devices such as iPhones, iPads, and iPod Touches. iOS apps are built using programming languages like Swift or Objective-C and are deployed through the Apple App Store.
-                            </div>
+                               Flutter is an open-source UI software development kit (SDK) created by Google to build natively compiled mobile, web, and desktop applications from a single codebase. Flutter uses the Dart programming language and offers a rich set of pre-designed widgets and tools to build high-performance, cross-platform apps. </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-2" aria-expanded="false" aria-controls="home-1-faq-item-2">
-                           Why should I choose iOS for app development?
+                           Why should I choose Flutter for app development?
                         </button>
                         <div id="home-1-faq-item-2" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                              Choosing iOS for app development offers several advantages:
-                                <ul>
-                                    <li>High-Quality User Experience: iOS provides a seamless and intuitive interface that delivers superior user experience.
-</li>
-                                    <li>Access to a Wealthy Audience: iOS users tend to have higher disposable incomes, which can make them more likely to pay for apps or in-app purchases.
-</li>
-                                    <li>App Store Exposure: The Apple App Store is a well-established platform with a large, loyal customer base.
-</li>
-                                    <li>Security: iOS offers strong security measures, reducing vulnerabilities and offering peace of mind for both developers and users.
-</li>
-                                    
+                                <p>Flutter offers several key benefits:
+                                </p>
+<ul>
+                                    <li>Cross-Platform Development: Write a single codebase for both iOS and Android, saving development time and costs.</li>
+                                    <li>Native-Like Performance: Flutter provides near-native performance by compiling native code.
+                                    </li>
+                                    <li>Hot Reload: Developers can instantly see changes in the app during development without losing the app’s current state. </li>
+                                    <li>Rich UI: Flutter has a rich set of pre-designed customisable widgets, allowing developers to create beautiful, highly responsive apps. </li>
+Growing Community: Flutter has a fast-growing community and support from Google, ensuring regular updates and improvements.
+
+
+
                                 </ul>
-                          
+
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-3" aria-expanded="false" aria-controls="home-1-faq-item-3">
-                            What programming languages are used for iOS app development?
+                            What programming languages are used in Flutter app development?
                         </button>
                         <div id="home-1-faq-item-3" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                              iOS apps are primarily developed using the following programming languages:
-                                <ul>
-                                    <li>Swift: The modern, open-source programming language created by Apple for building iOS applications. Swift is preferred for its speed, safety features, and ease of use.</li>
-                                    <li>Objective-C: The older programming language used for iOS development, though most developers now prefer Swift. It is still supported for legacy apps.</li>
-                                    <li>Model Development: Selecting and training machine learning models based on your
-                                        needs.</li>
-                                    
-                                </ul>
-                 
+                               Flutter uses Dart as its programming language. Dart is an object-oriented, class-based language that is easy to learn and allows for high performance. Flutter apps are primarily written in Dart, with some platform-specific code (e.g., for device features), sometimes written in native languages like Java, Kotlin (for Android), Swift, and Objective-C (for iOS).
+
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-4" aria-expanded="false" aria-controls="home-1-faq-item-4">
-                            What are the key features of iOS apps?
+                            Is Flutter a better choice than React Native?
                         </button>
                         <div id="home-1-faq-item-4" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                               Some key features that iOS apps can offer include:
-                                <ul>
-                                    <li>Seamless Integration with Apple Ecosystem: iOS apps can integrate with other Apple devices and services, such as iCloud, Apple Pay, Siri, and Apple Watch.</li>
-                                    <li>Push Notifications: iOS supports sending real-time alerts to users, keeping them engaged with your app.</li>
-                                    <li>App Store Optimisation (ASO): iOS apps can be optimised for better visibility on the App Store, which can increase downloads and user engagement.</li>
-                                    
+                                <p>Both Flutter and React Native are popular choices for cross-platform development, but there are key differences:</p>
+<ul>
+                                    <li>Performance: Flutter generally performs better because it directly compiles native code, whereas React Native uses a JavaScript bridge to communicate with native modules.</li>
+                                    <li>UI Customization: Flutter provides more flexibility with its pre-designed widgets and can offer a more customised and consistent UI across platforms.
+
+                                    </li>
+                                    <li>Learning Curve: React Native has a larger community and more available resources due to its longer presence. However, Flutter is gaining popularity quickly and offers an easier learning curve for developers familiar with object-oriented programming.
+</li>
+                                
+Choosing between the two depends on your app’s specific needs, complexity, and the developer’s skillset.
+
+
+
+
                                 </ul>
-                              In-App Purchases: iOS apps can include in-app purchases for selling digital goods, subscriptions, or premium features.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-5" aria-expanded="false" aria-controls="home-1-faq-item-5">
-                           How long does it take to develop an iOS app?
+                           How long does it take to develop a Flutter app?
                         </button>
                         <div id="home-1-faq-item-5" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                The time to develop an iOS app depends on the complexity and features required. For a basic app, development can take about 2 to 4 months. For more complex apps with advanced features like real-time data processing, third-party integrations, or custom animations, the development timeline can extend to 6 months or more. The timeline also depends on factors such as design, development resources, and testing phases.
+                               <ul>
+                                    <li>Simple Apps: Apps with basic functionality can take 1 to 2 months to develop.
+</li>
+                                    <li>Medium Complexity Apps: Apps with moderate features such as social media integration, location services, and notifications typically take 2 to 4 months.
+
+                                    </li>
+                                 Complex Apps: Advanced apps with real-time features, large databases, or third-party integrations may take 4 to 6 months or longer.
+                                </ul>
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-6" aria-expanded="false" aria-controls="home-1-faq-item-6">
-                           What is the cost of iOS app development?
+                           How much does Flutter app development cost?
                         </button>
                         <div id="home-1-faq-item-6" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                The cost of iOS app development can vary widely based on:
-                                <ul>
-                                    <li>App Complexity: Simple apps will cost less, while complex apps with custom functionalities, third-party integrations, or advanced graphics will be more expensive.</li>
-                                    <li>Design Requirements: Custom UI/UX designs may increase costs.
+                                The cost of Flutter app development varies based on:
+<ul>
+                                    <li>App Complexity: Simple apps are more affordable, while complex apps with custom features or integrations will cost more.
+
+</li>
+                                    <li>Design and UI Customisation: Unique or highly customised UI/UX design may increase costs.
+
+
                                     </li>
-                                    <li>Development Time: A longer development process increases the cost.</li>
-                                    <li>Location: Development costs differ based on the region. US and European developers tend to charge higher rates than those in other regions.</li>
+                              <li>  Development Team Location: The hourly rate for Flutter developers varies by location. Developers in North America or Western Europe may charge more than those in other regions.
+</li>
+Development can start from $10,000 to $20,000 for a simple Flutter app. More complex applications could cost $30,000 to $100,000 or more.
+
+
                                 </ul>
-                               A simple iOS app can cost anywhere from $5,000 to $15,000, while more complex apps can cost $50,000 or more.
+
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-7" aria-expanded="false" aria-controls="home-1-faq-item-7">
-                            How do you ensure my iOS app will work across all devices?
+                           Can Flutter apps be used for both iOS and Android?
                         </button>
                         <div id="home-1-faq-item-7" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                               We ensure your iOS app is optimised for various devices (iPhone, iPad, and iPod Touch) by:
-
-Responsive Design: We use auto-layout features and flexible design patterns to ensure your app looks great on different screen sizes and orientations.
-Device Testing: We extensively test different iOS devices and versions to ensure your app functions smoothly.
-Cross-Version Compatibility: Our team ensures that your app is compatible with the latest iOS and older versions with a significant user base.
+                               Yes, Flutter allows developers to write a single codebase that works on iOS and Android platforms. This means you don’t need to develop separate apps for each platform, saving time and resources. Flutter compiles the code to native ARM code for both iOS and Android, ensuring optimal performance on both platforms.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-8" aria-expanded="false" aria-controls="home-1-faq-item-8">
-                           Do you provide support and updates after the app is launched?
+                           Do you offer post-launch support for Flutter apps?
                         </button>
                         <div id="home-1-faq-item-8" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                               Yes, we offer comprehensive post-launch support for iOS apps, including: <ul>
-                                    <li>Bug Fixes and Maintenance: We monitor the app for issues and provide quick fixes.
+                               Yes, we provide full post-launch support, including:
+<ul>
+                                    <li>Bug Fixes: We monitor the app for any issues and resolve them quickly.
+
+
 </li>
-                                    <li>App Updates: We help with regular updates to ensure compatibility with new iOS versions and to add new features as required.
-</li>
-                                    <li>Performance Optimisation: We analyse the app’s performance and make improvements to ensure smooth operation and better user engagement.
+                                    <li>Performance Optimisation: We ensure the app performs optimally and can enhance its speed based on user feedback.
+
+
 
                                     </li>
-                                   
-                                </ul>
-                                User Feedback Integration: We incorporate feedback from your users to improve and refine the app for future updates.
+                              <li>  App Updates: Regular updates are provided to ensure the app remains compatible with the latest operating system versions and introduces new features.
 
+</li>
+Feature Enhancements: We work with you to add new features and improve the app’s overall user experience based on user feedback and evolving business needs.
+
+
+
+
+                                </ul>
 
                             </div>
                         </div>
@@ -600,10 +621,15 @@ Cross-Version Compatibility: Our team ensures that your app is compatible with t
                 <div class="contact_main-content contact-content-space">
                     <div class="content">
                         <div class="content-text-block">
-                            <h2 class="heading-md">Fill out this form, We ‘ll quickly get back to you </h2>
+                            <h2 class="heading-md">Let's elevate your business with Cutting-Edge Digital Solutions
+                            </h2>
                             <p>
-                                We are here to help you! Tell us how we can help and we’ll get in touch within next
-                                24hrs with expert
+                                Our digital and technology experts team is ready to help you achieve your business
+                                goals. Whether you need a website update, online advertising support, or improved
+                                visibility on search engines like Google, RFZ Digital is dedicated to providing the
+                                expertise you need to succeed.
+
+
                             </p>
                             <div class="content-divider"></div>
                         </div>

@@ -197,23 +197,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="row align-items-center">
             <!-- Left Column -->
             <div class="col-md-7">
-                <h6 class="text-uppercase" style="color: #EC7D63;">iOS App Development</h6>
-                <h2 class="mb-3 com-services">Developing High-Quality iOS App That Enhance User Experience and
-                    <span style="color:#1463FF; white-space:normal;">Strengthen Your Business on Apple Devices.</span>
+                <h6 class="text-uppercase" style="color: #EC7D63;">React Native App Development
+                </h6>
+                <h2 class="mb-3 com-services">Developing High-Performance React Native Apps for Seamless Cross-Platform
+                    <span style="color:#EC7D63; white-space:normal;">Experiences and Accelerated Business Growth.</span>
                 </h2>
-                <p class="mb-4 ">Create exceptional mobile experiences with our expert iOS App Development service.
-                    Specialising in custom iOS applications for iPhone and iPad, we design and develop high-performance
-                    iOS apps that are intuitive, user-friendly, and optimised for Apple’s ecosystem. Our team leverages
-                    the latest iOS technologies, including Swift and Objective-C, to build secure, scalable apps
-                    tailored to your business needs. Whether you’re looking to develop a consumer-facing app, an
-                    enterprise solution, or an innovative product, we ensure your iOS app is designed for seamless
-                    functionality, performance, and security. With a focus on user experience and Apple’s design
-                    guidelines.</p>
+                <p class="mb-4 ">Develop cross-platform mobile applications with our expert React Native App Development
+                    service. React Native enables the creation of high-performance, native-like mobile apps for iOS and
+                    Android, all from a single codebase. Our team leverages the power of React Native to build fast,
+                    efficient, and user-friendly apps that deliver seamless performance across multiple devices. Whether
+                    you’re looking to launch a consumer-facing app, enterprise solution, or innovative product, we focus
+                    on optimising your app for speed, security, and a superior user experience. With React Native App
+                    Development, you get the best of both worlds: cost-effective development and the ability to reach a
+                    broad audience across Android and iOS platforms.</p>
                 <a href="<?php echo BASE_URL; ?>contact-us" class="btn btn-primary">Get Started</a>
             </div>
             <!-- Right Column -->
             <div class="col-md-5 d-flex justify-content-center">
-                <img src="./image/sds/iOS-App-Development-1-2048x1626.webp" alt="Ai Application Development"
+                <img src="./image/sds/React-Native-App-Development-2048x1626.webp" alt="Ai Application Development"
                     class="img-fluid rounded  ">
             </div>
         </div>
@@ -262,16 +263,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="content-text-block">
                         <h2 class="about-subheading-comservices">About Us</h2>
                         <h2 class="content-title heading-md text-black">
-                            Elegant Apps. Seamless Performance
+                            Cross-Platform Solutions. Native Performance
 
                         </h2>
                         <p>
-                            At RFZ Digital, we specialise in iOS app development services that transform innovative
-                            ideas into user-friendly applications. Our dedicated team of iOS experts leverages the
-                            latest technologies to create high-performance apps tailored to your needs. Committed to
-                            excellence.
-                        </p>
-                        <p> RFZ Digital ensures every app meets the highest iOS standards, delivering seamless experiences that engage users and drive business success.</p>
+                            At RFZ Digital, we specialise in React Native app development services, crafting
+                            high-performance applications that seamlessly blend functionality and design. Our
+                            experienced team utilises the power of React Native to deliver cross-platform solutions,
+                            ensuring your app reaches a wider audience. </p>
+                        <p> Committed to innovation, RFZ Digital prioritises user experience, providing tailored
+                            development that meets your unique business goals.</p>
                     </div>
                 </div>
             </div>
@@ -296,7 +297,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="col-xxl-8 col-lg-9 col-md-9 col-sm-12 col-xs-11">
                     <div class="section-heading">
                         <h2 class="section-heading__title heading-md heading-md--general-sans text-l5-secondary">
-                            Enhance User Experience with Custom iOS App Development Services</h2>
+                            Build High-Performance Cross-Platform Apps with Expert React Native Development
+                        </h2>
                     </div>
                 </div>
             </div>
@@ -309,9 +311,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <img src="./image/home-1/feature-1.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">📈</div>  -->
-                            <h5>Custom iOS App Development for Innovative Mobile Solutions
-</h5> <!-- Heading -->
-                            <p>Our iOS app development services create user-friendly, high-performance applications tailored to your business needs, delivering seamless experiences across all Apple devices.
+                            <h5>Cross-Platform React Native App Development for Seamless User Experience
+
+                            </h5> <!-- Heading -->
+                            <p>Our React Native app development services deliver high-quality, cross-platform mobile
+                                applications that ensure a seamless user experience across iOS and Android devices.
 
 
                             </p>
@@ -325,10 +329,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <img src="./image/home-5/feature-2.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">🌐</div>  -->
-                            <h5>Expert iOS App Development to Elevate Your Business</h5> <!-- Heading -->
-                            <p>We design and develop custom iOS apps that engage users, enhance brand presence, and provide innovative solutions for your business on iPhone, iPad, and other Apple devices
+                            <h5>Custom React Native App Development to Accelerate Your Business
 
-</p>
+                            </h5> <!-- Heading -->
+                            <p>We specialise in React Native app development, creating fast, scalable, and reliable
+                                mobile applications that work across both Android and iOS, reducing development time and
+                                cost while enhancing performance.
+
+
+
+
+
+                            </p>
                         </div>
                     </div>
 
@@ -339,9 +351,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <img src="./image/home-5/feature-3.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">💼</div>  -->
-                            <h5>Build Powerful iOS Apps with Our Professional Development Services
-</h5> <!-- Heading -->
-                            <p>Our expert iOS developers deliver scalable, reliable, and secure mobile applications that drive user engagement, improve functionality, and meet the specific needs of your business.</p>
+                            <h5>Expert React Native App Development for Robust Mobile Solutions
+
+
+
+                            </h5> <!-- Heading -->
+                            <p>Our team of React Native developers builds feature-rich, high-performance apps that
+                                provide native-like experiences on multiple platforms, helping you expand your reach and
+                                grow your business.
+
+
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -448,137 +468,109 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="accordion-item">
                         <button class="accordion-button " type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item" aria-expanded="true" aria-controls="home-1-faq-item">
-                            What is iOS app development?
+                            What is React Native?
                         </button>
                         <div id="home-1-faq-item" class="accordion-collapse collapse show" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                iOS app development creates software applications specifically for Apple’s iOS operating system. These apps are designed to run on Apple devices such as iPhones, iPads, and iPod Touches. iOS apps are built using programming languages like Swift or Objective-C and are deployed through the Apple App Store.
-                            </div>
+                                React Native is an open-source framework developed by Facebook that allows developers to
+                                build mobile applications for iOS and Android using a single codebase. It uses
+                                JavaScript and React, enabling faster development and seamless performance across
+                                platforms. </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-2" aria-expanded="false" aria-controls="home-1-faq-item-2">
-                           Why should I choose iOS for app development?
+                            Why should I choose React Native for my mobile app development?
                         </button>
                         <div id="home-1-faq-item-2" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                              Choosing iOS for app development offers several advantages:
-                                <ul>
-                                    <li>High-Quality User Experience: iOS provides a seamless and intuitive interface that delivers superior user experience.
-</li>
-                                    <li>Access to a Wealthy Audience: iOS users tend to have higher disposable incomes, which can make them more likely to pay for apps or in-app purchases.
-</li>
-                                    <li>App Store Exposure: The Apple App Store is a well-established platform with a large, loyal customer base.
-</li>
-                                    <li>Security: iOS offers strong security measures, reducing vulnerabilities and offering peace of mind for both developers and users.
-</li>
-                                    
-                                </ul>
-                          
+                                <p>React Native offers cross-platform compatibility, faster development cycles,
+                                    cost-effectiveness, and a native-like user experience. It’s an ideal choice for
+                                    businesses looking to build high-performance apps while saving time and resources.
+                                </p>
+
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-3" aria-expanded="false" aria-controls="home-1-faq-item-3">
-                            What programming languages are used for iOS app development?
+                            How is React Native different from native app development?
                         </button>
                         <div id="home-1-faq-item-3" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                              iOS apps are primarily developed using the following programming languages:
-                                <ul>
-                                    <li>Swift: The modern, open-source programming language created by Apple for building iOS applications. Swift is preferred for its speed, safety features, and ease of use.</li>
-                                    <li>Objective-C: The older programming language used for iOS development, though most developers now prefer Swift. It is still supported for legacy apps.</li>
-                                    <li>Model Development: Selecting and training machine learning models based on your
-                                        needs.</li>
-                                    
-                                </ul>
-                 
+                                React Native uses a single codebase for both iOS and Android, whereas native development
+                                requires separate codebases for each platform. This reduces development time and costs.
+                                Additionally, React Native apps provide near-native performance with reusable
+                                components.
+
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-4" aria-expanded="false" aria-controls="home-1-faq-item-4">
-                            What are the key features of iOS apps?
+                            Can React Native apps perform as well as native apps?
                         </button>
                         <div id="home-1-faq-item-4" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                               Some key features that iOS apps can offer include:
-                                <ul>
-                                    <li>Seamless Integration with Apple Ecosystem: iOS apps can integrate with other Apple devices and services, such as iCloud, Apple Pay, Siri, and Apple Watch.</li>
-                                    <li>Push Notifications: iOS supports sending real-time alerts to users, keeping them engaged with your app.</li>
-                                    <li>App Store Optimisation (ASO): iOS apps can be optimised for better visibility on the App Store, which can increase downloads and user engagement.</li>
-                                    
-                                </ul>
-                              In-App Purchases: iOS apps can include in-app purchases for selling digital goods, subscriptions, or premium features.
+                                <p>Yes, React Native apps offer performance close to native apps by leveraging native
+                                    components and APIs. It is suitable for most applications, though apps with heavy
+                                    animations or advanced graphics may benefit from native development.</p>
+
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-5" aria-expanded="false" aria-controls="home-1-faq-item-5">
-                           How long does it take to develop an iOS app?
+                            How much does it cost to develop a React Native app?
                         </button>
                         <div id="home-1-faq-item-5" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                The time to develop an iOS app depends on the complexity and features required. For a basic app, development can take about 2 to 4 months. For more complex apps with advanced features like real-time data processing, third-party integrations, or custom animations, the development timeline can extend to 6 months or more. The timeline also depends on factors such as design, development resources, and testing phases.
+                                The cost of developing a React Native app depends on factors like app complexity,
+                                features, design requirements, and development timelines. Contact us for a free quote
+                                tailored to your project needs.
+                                </ul>
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-6" aria-expanded="false" aria-controls="home-1-faq-item-6">
-                           What is the cost of iOS app development?
+                            Will my React Native app be compatible with both iOS and Android?
                         </button>
                         <div id="home-1-faq-item-6" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                The cost of iOS app development can vary widely based on:
-                                <ul>
-                                    <li>App Complexity: Simple apps will cost less, while complex apps with custom functionalities, third-party integrations, or advanced graphics will be more expensive.</li>
-                                    <li>Design Requirements: Custom UI/UX designs may increase costs.
-                                    </li>
-                                    <li>Development Time: A longer development process increases the cost.</li>
-                                    <li>Location: Development costs differ based on the region. US and European developers tend to charge higher rates than those in other regions.</li>
-                                </ul>
-                               A simple iOS app can cost anywhere from $5,000 to $15,000, while more complex apps can cost $50,000 or more.
+                                Yes, React Native apps are designed to work seamlessly on both iOS and Android
+                                platforms. It uses a single codebase, ensuring consistent functionality and user
+                                experience across devices.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-7" aria-expanded="false" aria-controls="home-1-faq-item-7">
-                            How do you ensure my iOS app will work across all devices?
+                            How long does it take to develop a React Native app?
                         </button>
                         <div id="home-1-faq-item-7" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                               We ensure your iOS app is optimised for various devices (iPhone, iPad, and iPod Touch) by:
-
-Responsive Design: We use auto-layout features and flexible design patterns to ensure your app looks great on different screen sizes and orientations.
-Device Testing: We extensively test different iOS devices and versions to ensure your app functions smoothly.
-Cross-Version Compatibility: Our team ensures that your app is compatible with the latest iOS and older versions with a significant user base.
+                                Development time varies depending on the app’s complexity and features. On average, a
+                                React Native app can take 4–12 weeks to complete. We provide detailed timelines after
+                                analyzing your project requirements.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-8" aria-expanded="false" aria-controls="home-1-faq-item-8">
-                           Do you provide support and updates after the app is launched?
+                            Do you provide maintenance and support after the app is launched?
                         </button>
                         <div id="home-1-faq-item-8" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                               Yes, we offer comprehensive post-launch support for iOS apps, including: <ul>
-                                    <li>Bug Fixes and Maintenance: We monitor the app for issues and provide quick fixes.
-</li>
-                                    <li>App Updates: We help with regular updates to ensure compatibility with new iOS versions and to add new features as required.
-</li>
-                                    <li>Performance Optimisation: We analyse the app’s performance and make improvements to ensure smooth operation and better user engagement.
-
-                                    </li>
-                                   
-                                </ul>
-                                User Feedback Integration: We incorporate feedback from your users to improve and refine the app for future updates.
+                                Absolutely! We offer ongoing maintenance and support services to ensure your app remains
+                                updated, secure, and optimized for performance after launch.
 
 
                             </div>
@@ -600,10 +592,15 @@ Cross-Version Compatibility: Our team ensures that your app is compatible with t
                 <div class="contact_main-content contact-content-space">
                     <div class="content">
                         <div class="content-text-block">
-                            <h2 class="heading-md">Fill out this form, We ‘ll quickly get back to you </h2>
+                            <h2 class="heading-md">Let's elevate your business with Cutting-Edge Digital Solutions
+                            </h2>
                             <p>
-                                We are here to help you! Tell us how we can help and we’ll get in touch within next
-                                24hrs with expert
+                                Our digital and technology experts team is ready to help you achieve your business
+                                goals. Whether you need a website update, online advertising support, or improved
+                                visibility on search engines like Google, RFZ Digital is dedicated to providing the
+                                expertise you need to succeed.
+
+
                             </p>
                             <div class="content-divider"></div>
                         </div>

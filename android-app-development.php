@@ -197,23 +197,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="row align-items-center">
             <!-- Left Column -->
             <div class="col-md-7">
-                <h6 class="text-uppercase" style="color: #EC7D63;">iOS App Development</h6>
-                <h2 class="mb-3 com-services">Developing High-Quality iOS App That Enhance User Experience and
-                    <span style="color:#1463FF; white-space:normal;">Strengthen Your Business on Apple Devices.</span>
+                <h6 class="text-uppercase" style="color: #EC7D63;">Android App Development</h6>
+                <h2 class="mb-3 com-services">Developing Android Apps That Engage Users, Drive Growth,
+                    <span style="color:#EC7D63; white-space:normal;">and Elevate Your Business on Android Operating
+                        System.</span>
                 </h2>
-                <p class="mb-4 ">Create exceptional mobile experiences with our expert iOS App Development service.
-                    Specialising in custom iOS applications for iPhone and iPad, we design and develop high-performance
-                    iOS apps that are intuitive, user-friendly, and optimised for Apple’s ecosystem. Our team leverages
-                    the latest iOS technologies, including Swift and Objective-C, to build secure, scalable apps
-                    tailored to your business needs. Whether you’re looking to develop a consumer-facing app, an
-                    enterprise solution, or an innovative product, we ensure your iOS app is designed for seamless
-                    functionality, performance, and security. With a focus on user experience and Apple’s design
-                    guidelines.</p>
+                <p class="mb-4 ">Unlock the potential of the Android ecosystem with our professional Android App
+                    Development service. We specialise in creating custom, high-performance mobile applications for
+                    Android devices tailored to meet your specific business needs. Our experienced team uses the latest
+                    technologies, including Kotlin and Java, to build secure, scalable, and user-friendly Android apps
+                    that deliver seamless performance across various devices. Whether you need a consumer app, an
+                    enterprise solution, or an innovative product, we focus on providing an exceptional user experience,
+                    optimising speed and functionality. With our Android App Development service, we help you reach a
+                    global audience.</p>
                 <a href="<?php echo BASE_URL; ?>contact-us" class="btn btn-primary">Get Started</a>
             </div>
             <!-- Right Column -->
             <div class="col-md-5 d-flex justify-content-center">
-                <img src="./image/sds/iOS-App-Development-1-2048x1626.webp" alt="Ai Application Development"
+                <img src="./image/sds/Android-App-Development.webp" alt="Ai Application Development"
                     class="img-fluid rounded  ">
             </div>
         </div>
@@ -262,16 +263,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="content-text-block">
                         <h2 class="about-subheading-comservices">About Us</h2>
                         <h2 class="content-title heading-md text-black">
-                            Elegant Apps. Seamless Performance
+                            Custom Apps. Enhanced User Experience
 
                         </h2>
                         <p>
-                            At RFZ Digital, we specialise in iOS app development services that transform innovative
-                            ideas into user-friendly applications. Our dedicated team of iOS experts leverages the
-                            latest technologies to create high-performance apps tailored to your needs. Committed to
-                            excellence.
+                            At RFZ Digital, we excel in Android app development services, turning your concepts into dynamic applications that engage users. Our skilled team of Android experts utilises cutting-edge technologies to deliver high-quality, customised apps tailored to your business needs. 
                         </p>
-                        <p> RFZ Digital ensures every app meets the highest iOS standards, delivering seamless experiences that engage users and drive business success.</p>
+                        <p>  With a focus on innovation and performance, RFZ Digital ensures that every app stands out in the competitive Android marketplace, driving growth and user satisfaction.</p>
                     </div>
                 </div>
             </div>
@@ -296,7 +294,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="col-xxl-8 col-lg-9 col-md-9 col-sm-12 col-xs-11">
                     <div class="section-heading">
                         <h2 class="section-heading__title heading-md heading-md--general-sans text-l5-secondary">
-                            Enhance User Experience with Custom iOS App Development Services</h2>
+                            Reach a Wider Audience with Custom Android App Development Services</h2>
                     </div>
                 </div>
             </div>
@@ -309,9 +307,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <img src="./image/home-1/feature-1.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">📈</div>  -->
-                            <h5>Custom iOS App Development for Innovative Mobile Solutions
-</h5> <!-- Heading -->
-                            <p>Our iOS app development services create user-friendly, high-performance applications tailored to your business needs, delivering seamless experiences across all Apple devices.
+                            <h5>Custom Android App Development for Innovative Mobile Solutions
+                            </h5> <!-- Heading -->
+                            <p>Our Android app development services create high-performance, user-friendly applications tailored to your business needs, ensuring seamless functionality across a wide range of Android devices
 
 
                             </p>
@@ -325,10 +323,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <img src="./image/home-5/feature-2.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">🌐</div>  -->
-                            <h5>Expert iOS App Development to Elevate Your Business</h5> <!-- Heading -->
-                            <p>We design and develop custom iOS apps that engage users, enhance brand presence, and provide innovative solutions for your business on iPhone, iPad, and other Apple devices
+                            <h5>Expert Android App Development to Boost User Engagement
+</h5> <!-- Heading -->
+                            <p>We design and develop custom Android apps that drive user interaction, improve brand presence, and deliver innovative mobile solutions for your business.
 
-</p>
+
+
+                            </p>
                         </div>
                     </div>
 
@@ -339,9 +340,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <img src="./image/home-5/feature-3.png" alt="feature icon">
                             </div>
                             <!-- <div class="icon">💼</div>  -->
-                            <h5>Build Powerful iOS Apps with Our Professional Development Services
-</h5> <!-- Heading -->
-                            <p>Our expert iOS developers deliver scalable, reliable, and secure mobile applications that drive user engagement, improve functionality, and meet the specific needs of your business.</p>
+                            <h5>Scalable Android App Development for Business Growth
+
+                            </h5> <!-- Heading -->
+                            <p>Our Android development team creates reliable, secure, and scalable applications that enhance user experiences and deliver measurable results for your business.
+
+</p>
                         </div>
                     </div>
                 </div>
@@ -448,137 +452,187 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="accordion-item">
                         <button class="accordion-button " type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item" aria-expanded="true" aria-controls="home-1-faq-item">
-                            What is iOS app development?
+                           What is Android app development?
                         </button>
                         <div id="home-1-faq-item" class="accordion-collapse collapse show" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                iOS app development creates software applications specifically for Apple’s iOS operating system. These apps are designed to run on Apple devices such as iPhones, iPads, and iPod Touches. iOS apps are built using programming languages like Swift or Objective-C and are deployed through the Apple App Store.
+                                Android app development creates software applications for devices running the Android operating system. Android apps are typically built using Java or Kotlin and are available for download on the Google Play Store. Android apps can be designed for smartphones, tablets, wearables, and other devices within the Android ecosystem.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-2" aria-expanded="false" aria-controls="home-1-faq-item-2">
-                           Why should I choose iOS for app development?
+                           Why should I choose Android for app development?
                         </button>
                         <div id="home-1-faq-item-2" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                              Choosing iOS for app development offers several advantages:
+                                Choosing Android for app development offers several benefits:
+
+
                                 <ul>
-                                    <li>High-Quality User Experience: iOS provides a seamless and intuitive interface that delivers superior user experience.
-</li>
-                                    <li>Access to a Wealthy Audience: iOS users tend to have higher disposable incomes, which can make them more likely to pay for apps or in-app purchases.
-</li>
-                                    <li>App Store Exposure: The Apple App Store is a well-established platform with a large, loyal customer base.
-</li>
-                                    <li>Security: iOS offers strong security measures, reducing vulnerabilities and offering peace of mind for both developers and users.
-</li>
-                                    
+                                    <li>Large Market Share: Android has the largest user base globally, with billions of active devices, providing a massive audience for your app.
+
+                                    </li>
+                                    <li>Open Source: Android is an open-source platform, which gives developers more freedom to customise apps and integrate third-party services.
+
+                                    </li>
+                                    <li>Google Play Store: With millions of users regularly browsing the Play Store, it offers excellent exposure for your app.
+
+                                    </li>
+                                    <li>Flexibility: Android allows developers to create apps with rich functionality and support for various device types, from smartphones to smart TVs.
+
+
+                                    </li>
+
                                 </ul>
-                          
+
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-3" aria-expanded="false" aria-controls="home-1-faq-item-3">
-                            What programming languages are used for iOS app development?
+                            What programming languages are used for Android app development?
                         </button>
                         <div id="home-1-faq-item-3" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                              iOS apps are primarily developed using the following programming languages:
+                              Android apps are primarily built using:
+
+
                                 <ul>
-                                    <li>Swift: The modern, open-source programming language created by Apple for building iOS applications. Swift is preferred for its speed, safety features, and ease of use.</li>
-                                    <li>Objective-C: The older programming language used for iOS development, though most developers now prefer Swift. It is still supported for legacy apps.</li>
-                                    <li>Model Development: Selecting and training machine learning models based on your
-                                        needs.</li>
-                                    
+                                    <li>Java: The traditional language for Android development, widely used for creating apps and supported by Android’s SDK (Software Development Kit).</li>
+                                    <li>Kotlin: A more modern and preferred programming language for Android development. Kotlin is fully supported by Google, offers better performance, and has more concise syntax than Java.</li>
+                                   
+
                                 </ul>
-                 
+
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-4" aria-expanded="false" aria-controls="home-1-faq-item-4">
-                            What are the key features of iOS apps?
+                           What are the key features of Android apps?
                         </button>
                         <div id="home-1-faq-item-4" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                               Some key features that iOS apps can offer include:
+                               Android apps can offer many features, including:
+
+
                                 <ul>
-                                    <li>Seamless Integration with Apple Ecosystem: iOS apps can integrate with other Apple devices and services, such as iCloud, Apple Pay, Siri, and Apple Watch.</li>
-                                    <li>Push Notifications: iOS supports sending real-time alerts to users, keeping them engaged with your app.</li>
-                                    <li>App Store Optimisation (ASO): iOS apps can be optimised for better visibility on the App Store, which can increase downloads and user engagement.</li>
-                                    
+                                    <li>Push Notifications: Android apps support push notifications to keep users engaged and informed.
+
+                                    </li>
+                                    <li>Multitasking and Background Services: Android allows apps to perform tasks in the background, ensuring users can continue using their devices without interruption.
+</li>
+                                    <li>Google Services Integration: Android apps can integrate with Google services like Google Maps, Google Pay, and Google Analytics.
+</li>
+
                                 </ul>
-                              In-App Purchases: iOS apps can include in-app purchases for selling digital goods, subscriptions, or premium features.
+                               Customisable UI: Developers can create highly customisable user interfaces to ensure a smooth user experience across various devices.
+
+
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-5" aria-expanded="false" aria-controls="home-1-faq-item-5">
-                           How long does it take to develop an iOS app?
+                           How long does it take to develop an Android app?
                         </button>
                         <div id="home-1-faq-item-5" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                The time to develop an iOS app depends on the complexity and features required. For a basic app, development can take about 2 to 4 months. For more complex apps with advanced features like real-time data processing, third-party integrations, or custom animations, the development timeline can extend to 6 months or more. The timeline also depends on factors such as design, development resources, and testing phases.
+                               The time to develop an Android app depends on the app’s complexity:
+                               <ul>
+                                    <li>Simple Apps: Basic apps with minimal functionality can take 2 to 3 months to develop.
+
+
+                                    </li>
+                                    <li>Medium Complexity Apps: Apps with more features or integrations typically take 3 to 6 months.
+
+</li>
+                                    <li>Complex Apps: Apps requiring complex features such as real-time data, GPS, or advanced integrations can take 6 months or more.
+
+
+</li>
+
+                                </ul>
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-6" aria-expanded="false" aria-controls="home-1-faq-item-6">
-                           What is the cost of iOS app development?
+                          How much does Android app development cost?
                         </button>
                         <div id="home-1-faq-item-6" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                                The cost of iOS app development can vary widely based on:
+                               How much does Android app development cost?
                                 <ul>
-                                    <li>App Complexity: Simple apps will cost less, while complex apps with custom functionalities, third-party integrations, or advanced graphics will be more expensive.</li>
-                                    <li>Design Requirements: Custom UI/UX designs may increase costs.
+                                    <li>App Complexity: A simple app will cost less to develop, while a complex app with advanced features or custom integrations will cost more.
+</li>
+                                    <li>Design Requirements: Custom design or high-end graphics may increase the cost.
+
                                     </li>
-                                    <li>Development Time: A longer development process increases the cost.</li>
-                                    <li>Location: Development costs differ based on the region. US and European developers tend to charge higher rates than those in other regions.</li>
+                                    <li>Developer Rates: Rates vary depending on the developer’s location and expertise. Developers in North America and Western Europe tend to charge more than those in other regions.
+</li>
+                                    <li>Maintenance and Updates: Post-launch support and app updates may add to the overall cost.
+</li>
                                 </ul>
-                               A simple iOS app can cost anywhere from $5,000 to $15,000, while more complex apps can cost $50,000 or more.
+                               A simple Android app can cost anywhere from $5,000 to $15,000, while complex apps can range from $20,000 to $100,000 or more.
+
+
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-7" aria-expanded="false" aria-controls="home-1-faq-item-7">
-                            How do you ensure my iOS app will work across all devices?
+                           How do you ensure my Android app will work on all devices?
                         </button>
                         <div id="home-1-faq-item-7" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                               We ensure your iOS app is optimised for various devices (iPhone, iPad, and iPod Touch) by:
+                                We ensure your Android app works across all devices by:
 
-Responsive Design: We use auto-layout features and flexible design patterns to ensure your app looks great on different screen sizes and orientations.
-Device Testing: We extensively test different iOS devices and versions to ensure your app functions smoothly.
-Cross-Version Compatibility: Our team ensures that your app is compatible with the latest iOS and older versions with a significant user base.
+ <ul>
+                                    <li>Responsive Design: Android apps are designed to work across different screen sizes and resolutions, ensuring a consistent user experience on smartphones, tablets, and wearables.
+
+</li>
+                                    <li>Device Testing: We test the app on a variety of Android devices, including different brands and operating system versions, to ensure compatibility.
+
+
+                                    </li>
+                                   Backwards Compatibility: Our developers ensure that the app works on the latest Android versions while supporting older versions with a significant user base.
+
+
+                                </ul>
+
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#home-1-faq-item-8" aria-expanded="false" aria-controls="home-1-faq-item-8">
-                           Do you provide support and updates after the app is launched?
+                          Do you offer post-launch support for Android apps?
                         </button>
                         <div id="home-1-faq-item-8" class="accordion-collapse collapse" data-bs-parent="#home-1-faq">
                             <div class="accordion-item__body">
-                               Yes, we offer comprehensive post-launch support for iOS apps, including: <ul>
-                                    <li>Bug Fixes and Maintenance: We monitor the app for issues and provide quick fixes.
-</li>
-                                    <li>App Updates: We help with regular updates to ensure compatibility with new iOS versions and to add new features as required.
-</li>
-                                    <li>Performance Optimisation: We analyse the app’s performance and make improvements to ensure smooth operation and better user engagement.
+                               Yes, we provide extensive post-launch support, including:<ul>
+                                    <li>Bug Fixes: We monitor the app for any issues and promptly resolve bugs or performance issues.
+                                    </li>
+                                    <li>App Updates: We ensure the app stays up to date with new Android OS releases and add new features based on user feedback.
 
                                     </li>
-                                   
+                                    <li>Performance Monitoring: We track app performance, optimise speed, and resolve usability issues.
+
+
+                                    </li>
+
                                 </ul>
-                                User Feedback Integration: We incorporate feedback from your users to improve and refine the app for future updates.
+                               User Feedback: We actively collect and integrate feedback to improve app features and overall experience.
+
+
 
 
                             </div>
@@ -600,10 +654,12 @@ Cross-Version Compatibility: Our team ensures that your app is compatible with t
                 <div class="contact_main-content contact-content-space">
                     <div class="content">
                         <div class="content-text-block">
-                            <h2 class="heading-md">Fill out this form, We ‘ll quickly get back to you </h2>
+                            <h2 class="heading-md">Let's elevate your business with Cutting-Edge Digital Solutions
+ </h2>
                             <p>
-                                We are here to help you! Tell us how we can help and we’ll get in touch within next
-                                24hrs with expert
+                               Our digital and technology experts team is ready to help you achieve your business goals. Whether you need a website update, online advertising support, or improved visibility on search engines like Google, RFZ Digital is dedicated to providing the expertise you need to succeed.
+
+
                             </p>
                             <div class="content-divider"></div>
                         </div>
