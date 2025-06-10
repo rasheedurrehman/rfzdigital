@@ -1,0 +1,751 @@
+<style type="text/css">
+    .success-message {
+        margin-top: 15px;
+        padding: 10px;
+        color: #155724;
+        background-color: #d4edda;
+        border: 1px solid #c3e6cb;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .error-message {
+        margin-top: 15px;
+        padding: 10px;
+        color: #721c24;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 14px;
+    }
+</style>
+<?php
+$noindex = true;
+// Include database connection and PHPMailer files
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+include 'includes/header.php';
+
+// Use PHPMailer namespace
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+$message = ""; // Feedback message for the form
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Sanitize and validate input data
+    function sanitize_input($data)
+    {
+        return htmlspecialchars(trim($data));
+    }
+
+    $name = sanitize_input($_POST['name']);
+    $email = sanitize_input($_POST['email']);
+    $phone = sanitize_input($_POST['phone']);
+    $messageContent = sanitize_input($_POST['message']); // Avoid conflict with $message variable
+
+    // Check if all fields are filled
+    if (!empty($name) && !empty($email) && !empty($phone) && !empty($messageContent)) {
+        // Database insertion logic
+        try {
+            $sql = "INSERT INTO contact_form (name, email, phone, message) VALUES (:name, :email, :phone, :message)";
+            $stmt = $pdo->prepare($sql);
+
+            $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->bindParam(':phone', $phone, PDO::PARAM_STR);
+            $stmt->bindParam(':message', $messageContent, PDO::PARAM_STR);
+
+            if ($stmt->execute()) {
+                // PHPMailer Setup
+                $adminEmail = 'info@rfzdigital.co.uk'; // Replace with admin email
+                $adminPassword = 'h1qzjO(&t$ci'; // Replace with admin password
+
+                $mail = new PHPMailer(true);
+
+                try {
+                    // Server settings
+                    $mail->isSMTP();
+                    $mail->Host = 'premium55.web-hosting.com'; // Replace with your SMTP server
+                    $mail->SMTPAuth = true;
+                    $mail->Username = $adminEmail;
+                    $mail->Password = $adminPassword;
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+                    $mail->Port = 465;
+
+                    // Admin email settings
+                    $mail->setFrom($adminEmail, 'Website Contact Form');
+                    $mail->addAddress($adminEmail); // Send to admin
+                    $mail->addReplyTo($email, $name); // Reply-to user
+
+                    // Admin email content
+                    $mail->isHTML(true);
+                    $mail->Subject = 'New Contact Form Submission';
+                    $mail->Body = "
+                        <h3>New Contact Form Submission</h3>
+                        <p><strong>Name:</strong> $name</p>
+                        <p><strong>Email:</strong> $email</p>
+                        <p><strong>Phone:</strong> $phone</p>
+                        <p><strong>Message:</strong><br>$messageContent</p>
+                    ";
+                    $mail->send(); // Send admin email
+
+                    // User confirmation email
+                    $mail->clearAddresses(); // Clear admin email address
+                    $mail->addAddress($email); // Send to user
+                    $mail->Subject = 'Thank You for Contacting Us';
+                    $mail->Body = "
+                        <h3>Thank you for contacting us!</h3>
+                        <p>Dear $name,</p>
+                        <p>Thank you for your message. We have received your form submission and will get back to you shortly.</p>
+                        <p><strong>Your Message:</strong><br>$messageContent</p>
+                        <p>Best regards,</p>
+                        <p>Support Team</p>
+                    ";
+                    $mail->send(); // Send user email
+
+                    $message = "<div class='success-message'>Form submitted successfully!</div>";
+                } catch (Exception $e) {
+                    error_log("Mail Error: " . $e->getMessage());
+                    $message = "<div class='error-message'>Form submitted, but email could not be sent. Error: {$mail->ErrorInfo}</div>";
+                }
+            } else {
+                $message = "<div class='error-message'>Failed to submit the form. Please try again.</div>";
+            }
+        } catch (PDOException $e) {
+            error_log("Database Error: " . $e->getMessage());
+            $message = "<div class='error-message'>An error occurred while submitting the form to the database.</div>";
+        }
+    } else {
+        $message = "<div class='error-message'>Please fill in all the fields.</div>";
+    }
+}
+?>
+
+
+
+<style>
+    .custom-bg {
+        padding-top: 100px;
+        padding-bottom: 0px;
+        background: linear-gradient(to right,
+                white 30%,
+                #7AFFF7 75%,
+                #46b5fd 100%);
+
+    }
+
+    .mb-3 {
+        font-family: "Onest", Sans-serif;
+        /*font-size: 52px;
+    font-weight: 900;*/
+        color: #000000;
+
+    }
+
+    .text-muted {
+        padding-bottom: 5px;
+    }
+
+    .img-fluid {
+        max-width: 100%;
+        max-height: 448px;
+    }
+
+    .mb-4 {
+        font-family: "Manrope", Sans-serif;
+        font-size: 16px;
+
+    }
+
+    span {
+        display: inline;
+        white-space: normal;
+    }
+
+    @media (min-width: 600px) {
+        .mb-3 {
+            font-size: 40px;
+        }
+    }
+
+    @media (min-width: 992px) {
+        .mb-3 {
+            font-size: 40px;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .mb-3 {
+
+            font-weight: 900;
+        }
+    }
+
+    @media (min-width: 1400px) {
+        .mb-3 {
+
+            font-weight: 900;
+        }
+    }
+</style>
+<section class="custom-bg">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Left Column -->
+            <div class="col-md-7">
+                <h6 class="text-uppercase" style="color: #3197fb;">Social Media Post Design Service
+
+
+                </h6>
+                <h2 class="mb-3 com-services">Enhancing Your Business Social Media Presence
+                    <span style="color:#3197fb; white-space:normal;">with Eye-Catching Post Designs That Drive sales.</span>
+                </h2>
+                <p class="mb-4 ">Enhance your social media presence with our professional Social Media Post Design Service. We create visually captivating and brand-consistent posts tailored to engage your audience across platforms like Instagram, Facebook, LinkedIn, and Twitter. Our team focuses on designing eye-catching graphics that resonate with your target audience, ensuring your content stands out in crowded feeds. From promotional posts to event announcements and inspirational quotes, we deliver designs that drive engagement, increase followers, and boost brand visibility. With our Social Media Post Design Service, we help you build a consistent, professional brand image while maximising the impact of every post.</p>
+                <a href="<?php echo BASE_URL; ?>contact-us" class="btn btn-primary">Get Started</a>
+            </div>
+            <!-- Right Column -->
+            <div class="col-md-5 d-flex justify-content-center">
+                <img src="./image/sds/Social-Media-Post-Design-Servies.webp" alt="Ai Application Development"
+                    class="img-fluid rounded  ">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~
+    Home 1 : Brand Section
+~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<?php include 'includes/logo-slider.php'; ?>
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Home 1  : Content Section 1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+<div class="home-1_content-section-2 padding-bottom-120">
+    <div class="container">
+        <div class="row row--custom change-order ">
+            <div class="col-xl-5 col-lg-5 col-auto" data-aos-duration="1000" data-aos="fade-right">
+                <div class="inquiry-form-section">
+                    <div class="form-container">
+                        <h2 style="color: black;">Get in Touch</h2>
+
+                        <form class="inquiry-form" method="POST" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
+                            <input type="hidden" name="form_type" value="top_form">
+                            <div class="form-group">
+                                <input type="text" name="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" name="email" placeholder="Your Email" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" name="phone" placeholder="Your Phone Number" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea placeholder="Your Message" name="message" rows="4" required></textarea>
+                            </div>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="offset-xl-0 col-xl-6 col-lg-7 col-md-11" data-aos-duration="1000" data-aos="fade-left">
+                <div class="content">
+                    <div class="content-text-block">
+                        <h2 class="about-subheading-comservices">About Us</h2>
+                        <h2 class="content-title heading-md text-black">
+                           Engaging Designs. Amplified Reach</h2>
+                        <p>
+                            At RFZ Digital, we offer comprehensive social media post design services that elevate your business’s online presence efficiently. Our skilled design team creates compelling and engaging posts tailored to each social media platform, ensuring your content stands out in crowded feeds. By combining creativity with strategic messaging, RFZ Digital helps you effectively communicate your brand’s story, boost engagement, and foster community connections across all social media channels.
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Home 5  : Feature Section
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Home 5  : Feature Section Custom
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+<div class="home-5_feature-section padding-bottom-120 section-4-new">
+    <div class="container my-0 ">
+        <div class="home-5_feature-section-wrapper">
+            <!-- Section Heading -->
+            <div class="row justify-content-center text-center">
+                <div class="col-xxl-8 col-lg-9 col-md-9 col-sm-12 col-xs-11">
+                    <div class="section-heading">
+                        <h2 class="section-heading__title heading-md heading-md--general-sans text-l5-secondary">
+                          Boost Engagement with Creative and Impactful Social Media Post Designs
+
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row row1">
+                <div class="row g-4">
+                    <!-- Box 1 -->
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                        <div class="service-page-custom-box">
+                            <div class="feature-widget-2__icon">
+                                <img src="./image/home-1/feature-1.png" alt="feature icon">
+                            </div>
+                            <!-- <div class="icon">📈</div>  -->
+                            <h5>Engage Your Audience with Professional Social Media Post Design
+
+
+                            </h5> <!-- Heading -->
+                            <p>Our social media post design services create eye-catching, branded visuals that captivate your audience, enhance engagement, and increase your online presence.
+
+
+
+
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Box 2 -->
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="service-page-custom-box">
+                            <div class="feature-widget-2__icon">
+                                <img src="./image/home-5/feature-2.png" alt="feature icon">
+                            </div>
+                            <!-- <div class="icon">🌐</div>  -->
+                            <h5>Custom Social Media Post Designs for Maximum Impact
+
+
+                            </h5> <!-- Heading -->
+                            <p>We design custom social media graphics that reflect your brand’s style, helping your posts stand out, attract more followers, and boost interactions on every platform.
+
+
+
+
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Box 3 -->
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                        <div class="service-page-custom-box">
+                            <div class="feature-widget-2__icon">
+                                <img src="./image/home-5/feature-3.png" alt="feature icon">
+                            </div>
+                            <!-- <div class="icon">💼</div>  -->
+                            <h5>Boost Engagement with Creative Social Media Post Designs</h5> <!-- Heading -->
+                            <p>Our creative social media post designs make your content visually appealing and shareable, enhancing your brand’s visibility and drawing attention across social channels.
+
+</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~
+    Home 1 : Portfolio Slider Start
+~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<?php include 'includes/portfolio-slider.php'; ?>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Home 5  : Process Section
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<div class="home-5_process-section bg-offwhite-3 process-section">
+    <div class="container">
+        <div class="home-5_process-devider">
+            <div class="row justify-content-center text-center">
+                <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-10">
+                    <div class="section-heading">
+                        <h2 class="section-heading__title fw-600 heading-md heading-md--general-sans text-l5-secondary">
+                            We follow a Professional and efficient website design and development process</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row process-widget-row">
+                <div class="col-md-6 col-lg-4">
+                    <div class="process-widget">
+                        <div class="process-widget__count">
+                            <span>1</span>
+                        </div>
+                        <div class="process-widget__body">
+                            <h3 class="process-widget__title">Discovery Call</h3>
+                            <p>Analyzing your business needs and audience to create a tailored web design strategy that
+                                drives results.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="process-widget">
+                        <div class="process-widget__count">
+                            <span>2</span>
+                        </div>
+                        <div class="process-widget__body">
+                            <h3 class="process-widget__title">Design & Development</h3>
+                            <p>Building a stunning, responsive website with top-notch functionality and seamless
+                                navigation for a better user experience.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="process-widget">
+                        <div class="process-widget__count">
+                            <span>3</span>
+                        </div>
+                        <div class="process-widget__body">
+                            <h3 class="process-widget__title">Testing & Deployment</h3>
+                            <p>Optimising your website for speed and performance, ensuring it's fully functional before
+                                going live.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Home 3  : Testimonial Section 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!-- testimonialSection -->
+<?php include 'includes/testimonial2.php'; ?>
+<!-- testimonial us Section -->
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~
+    Home 1 : social-apps Section
+~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<?php include 'includes/social-apps-logo-slider.php'; ?>
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Home 1  : FAQ Section 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<div class="home-1_faq-section section-padding-120">
+    <div class="home-1_faq-shape-1">
+        <img src="./image/home-1/faq-shape-1.svg" alt="image alt">
+    </div>
+    <div class="home-1_faq-shape-2">
+        <img src="./image/home-1/faq-shape-2.svg" alt="image alt">
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xxl-6 col-lg-8 col-md-9">
+                <div class="section-heading section-heading text-center">
+                    <h2 class="section-heading__title heading-md text-black">Frequently Asked Questions </h2>
+                </div>
+            </div>
+        </div>
+        <div class="row row--custom faq-comservices">
+            <div class="col-lg-10">
+                <div class="accordion-style-1" id="home-1-faq">
+                    <div class="accordion-item">
+                        <button class="accordion-button " type="button" data-bs-toggle="collapse"
+                            data-bs-target="#home-1-faq-item" aria-expanded="true" aria-controls="home-1-faq-item">
+                            What is social media post design?
+                        </button>
+                        <div id="home-1-faq-item" class="accordion-collapse collapse show" data-bs-parent="#home-1-faq">
+                            <div class="accordion-item__body">
+                               Social media post design involves creating visually engaging graphics, images, and content tailored for platforms like Instagram, Facebook, LinkedIn, and Twitter. The goal is to craft posts that are aesthetically pleasing and effective in communicating your message and engaging your audience. These designs can include promotional content, infographics, event announcements, quotes, and more.</div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#home-1-faq-item-2" aria-expanded="false"
+                                aria-controls="home-1-faq-item-2">
+                               Why should I invest in professional social media post design?
+                            </button>
+                            <div id="home-1-faq-item-2" class="accordion-collapse collapse"
+                                data-bs-parent="#home-1-faq">
+                                <div class="accordion-item__body">
+                                    <p>Professional social media post design ensures your content stands out in a crowded digital landscape. Custom designs help attract attention, reflect your brand’s personality, and drive engagement. Consistent, high-quality visuals can increase your brand’s recognition and build trust with your audience, boosting conversions and audience interaction.
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#home-1-faq-item-3" aria-expanded="false"
+                                aria-controls="home-1-faq-item-3">
+                                What types of social media posts do you design?
+                            </button>
+                            <div id="home-1-faq-item-3" class="accordion-collapse collapse"
+                                data-bs-parent="#home-1-faq">
+                                <div class="accordion-item__body">
+                                   We design a variety of social media posts, including: <ul>
+
+                                        <li>Promotional Posts: Advertise new products, services, or special offers.
+
+                                        </li>
+                                        <li>Event Announcements: Showcase upcoming events or sales.
+
+
+
+                                        </li>
+                                        <li>Infographics: Share valuable data and information in a visual format.
+
+
+                                        </li>
+                                        <li>Inspirational Quotes: Create shareable, motivational posts.
+
+                                        </li>
+                                        <li>Seasonal Posts: Tailored designs for holidays, seasons, or special occasions.
+
+                                        </li>
+                                         <li>Story Templates: Engaging and eye-catching story templates on platforms like Instagram or Facebook.
+                                        </li>
+                                        <li>Engagement Posts: Posts designed to encourage likes, shares, and comments.
+
+
+
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#home-1-faq-item-4" aria-expanded="false"
+                                aria-controls="home-1-faq-item-4">
+                                What is the process for creating a social media post design?
+                            </button>
+                            <div id="home-1-faq-item-4" class="accordion-collapse collapse"
+                                data-bs-parent="#home-1-faq">
+                                <div class="accordion-item__body">
+                                    <p>The process typically involves:</p>
+                                    <ul>
+                                        <li>Consultation: We discuss your objectives, target audience, and content goals.
+
+                                        </li>
+                                        <li>Design Brief: You provide any branding guidelines, content, and ideas you have for the posts.
+
+
+                                        </li>
+                                        <li>Design Creation: Our team designs several post concepts based on your input.
+
+
+                                        </li>
+                                        <li>Feedback & Revisions: You provide feedback on the design, and we make necessary adjustments.
+
+
+                                        </li>
+                                        <li>Finalisation: Once you’re satisfied with the design, we deliver the files in the required formats.
+
+
+                                        </li>
+                                        <li>Delivery: We send you the final designs in formats suitable for the platform (JPEG, PNG, etc.).
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#home-1-faq-item-5" aria-expanded="false"
+                                aria-controls="home-1-faq-item-5">
+                              How long does it take to design a social media post?
+                            </button>
+                            <div id="home-1-faq-item-5" class="accordion-collapse collapse"
+                                data-bs-parent="#home-1-faq">
+                                <div class="accordion-item__body">
+                                    <p>The time it takes to design a social media post depends on the complexity and type of post. Typically, a simple post takes 1-2 days to create. In contrast, more complex graphics, like infographics or promotional designs, may take longer. We can discuss your timeline requirements to ensure we meet your deadlines.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#home-1-faq-item-6" aria-expanded="false"
+                                aria-controls="home-1-faq-item-6">
+                               Can I provide my own content or messaging for the post?
+                            </button>
+                            <div id="home-1-faq-item-6" class="accordion-collapse collapse"
+                                data-bs-parent="#home-1-faq">
+                                <div class="accordion-item__body">
+                                    <p>Yes! We encourage you to share your own content, such as text, images, and any specific messaging you want to communicate. We can also provide content suggestions or copywriting if needed. We aim to ensure the design accurately reflects your brand’s voice and messaging while capturing your audience’s attention.</p>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="accordion-item">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#home-1-faq-item-8" aria-expanded="false"
+                                aria-controls="home-1-faq-item-8">
+What platforms can you design posts for?
+                            </button>
+                            <div id="home-1-faq-item-8" class="accordion-collapse collapse"
+                                data-bs-parent="#home-1-faq">
+                                <div class="accordion-item__body">
+                                   We create social media post designs for all major platforms, including:
+
+
+                                    <ul>
+                                        <li>Instagram (Feed and Stories)  </li>
+                                        <li>Facebook (Feed and Stories)
+                                        </li>
+                                        <li> LinkedIn (Posts and Cover Images)   </li>
+                                        <li> Twitter (Feed)</li>
+                                        <li> Pinterest (Pins)
+ </li>
+                                        <li> TikTok (Videos and Thumbnails)
+ </li>
+ <li> YouTube (Thumbnails and Channel Art)
+
+ </li>
+ <p>Each design is tailored to the specific platform’s dimensions and requirements to ensure it looks great wherever it’s posted.
+
+</p>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+
+                           <div class="accordion-item">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#home-1-faq-item-6" aria-expanded="false"
+                                aria-controls="home-1-faq-item-6">
+                               How much do social media post design services cost?
+                            </button>
+                            <div id="home-1-faq-item-6" class="accordion-collapse collapse"
+                                data-bs-parent="#home-1-faq">
+                                <div class="accordion-item__body">
+                                    <p>The cost of social media post design depends on the number of posts, the complexity of the design, and the time required. We offer flexible pricing to suit different budgets, from single-post designs to monthly packages with multiple posts. For an accurate quote, we recommend discussing your needs with us so we can tailor the service to your requirements.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Conatct : Main Section 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <div class="contact_main-section padding-bottom-120 padding-top-120">
+        <div class="container">
+            <div class="row row--cuatom">
+                <div class="col-xl-5 col-lg-6 col-md-8 col-sm-11">
+                    <div class="contact_main-content contact-content-space">
+                        <div class="content">
+                            <div class="content-text-block">
+                                <h2 class="heading-md">Let's elevate your business with Cutting-Edge Digital Solutions
+                                </h2>
+                                <p>
+                                    Our digital and technology experts team is ready to help you achieve your business
+                                    goals. Whether you need a website update, online advertising support, or improved
+                                    visibility on search engines like Google, RFZ Digital is dedicated to providing the
+                                    expertise you need to succeed.
+
+
+                                </p>
+                                <div class="content-divider"></div>
+                            </div>
+                        </div>
+                        <div class="content_main-testimonial">
+                            <div class="testimonial-widget-4" data-aos="fade-left" data-aos-delay="NaN">
+                                <div class="testimonial-widget-4__rating">
+                                    <img src="./image/icons/star-five-yellow.svg" class="testimonial-widget-4__star"
+                                        alt="image alt">
+                                </div>
+                                <p>
+                                    "Snaga did an exceptional job for us.
+                                    keep up the excellent digital work. Man,
+                                    this thing is getting better and better as
+                                    I learn more about it. I have gotten at
+                                    least 50 times the value from Snaga.
+                                    It is worth much more than I paid."
+                                </p>
+                                <div class="testimonial-widget-4__body">
+                                    <div class="testimonial-widget-4__user-image">
+                                        <img src="./image/contact/contact-user-image.png" alt="image alt">
+                                    </div>
+                                    <div class="testimonial-widget-4__user-metadeta">
+                                        <h4 class="testimonial-widget-4__user">Brooklyn Simmons</h4>
+                                        <span class="testimonial-widget-4__user-position">CEO & Co-founder @
+                                            Company</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="offset-xl-1 col-lg-6 col-md-10">
+                    <div class="form-box-style__form-wrapper bg-light-2">
+                        <form class="form-box-style" id="contact-form" method="POST" action="Website-Development.php">
+                            <div class="form-box-style__form-inner">
+                                <div class="form-box-style__form-input">
+                                    <h3 class="form-box-style-title">Your name</h3>
+                                    <input class="form-control bg-white" name="name" type="text"
+                                        placeholder="Enter your full name">
+                                </div>
+                                <div class="form-box-style__form-input">
+                                    <h3 class="form-box-style-title">Email address</h3>
+                                    <input class="form-control bg-white" name="email" type="text"
+                                        placeholder="Enter your email">
+                                </div>
+                                <div class="form-box-style__form-input">
+                                    <h3 class="form-box-style-title">Phone Number</h3>
+                                    <input id="phone" class="form-control bg-white" name="phone" type="tel"
+                                        placeholder="Enter your phone number" required>
+                                </div>
+                                <div class="form-box-style__form-input">
+                                    <h3 class="form-box-style-title">Write your message</h3>
+                                    <textarea class="form-control bg-white textarea" name="message"
+                                        placeholder="Write us your question here..."></textarea>
+                                </div>
+                                <div class="form-box-style__form-input-button">
+                                    <button type="submit" class="btn-masco rounded-pill w-100">Submit</button>
+                                </div>
+                                <?php echo $message; ?>
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact Us Section -->
+    <?php include 'includes/marquee.php'; ?>
+    <!-- Contact us Section -->
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Home 8  : Before Footer CTA Section 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <div class="cta-home-5 padding-top-100 footer-cta-new">
+        <div class="container">
+            <div class="cta-home-5-wrapper">
+                <div class="row row--custom">
+                    <div class="col-xxl-6 col-xl-7 col-lg-8 col-md-10 col-12">
+                        <div class="cta-text-block">
+                            <h2 class="heading-md heading-md--general-sans text-l5-secondary">Are you ready to increase
+                                your
+                                SEO ranking?</h2>
+                        </div>
+                    </div>
+                    <div class="col-xl-auto col-lg-4 col-md-5 col-xs-8 col-12">
+                        <div class="cta-home-5-button">
+                            <a href="#" class="btn-masco btn-secondary-l05 btn-fill--up">
+                                <span>Let's start the project</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php include 'includes/footer.php'; ?>
