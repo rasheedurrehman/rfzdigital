@@ -45,48 +45,77 @@
            </ul>
          </div>
        </div>
-       <div class=" col-lg-7 col-xl-6 col-xxl-7 offset-xl-1">
+       <div class=" col-lg-8 col-xl-6 col-xxl-7 offset-xl-1">
          <div class="row row--list-block">
            <div class="col-auto col-md-4 col-lg-auto col-xl-auto col-xxl-auto">
-             <h2 class="footer-title">Our Services</h2>
+             <h2 class="footer-title">Quick Link</h2>
              <ul class="footer-list">
 
                <li>
-                 <a href="<?php echo BASE_URL; ?>website-design">Web Design</a>
+                 <a href="<?php echo BASE_URL; ?>digital-services">Digital Services</a>
                </li>
                <li>
-                 <a href="<?php echo BASE_URL; ?>seo">SEO</a>
+                 <a href="<?php echo BASE_URL; ?>service/technology">Technology</a>
                </li>
                <li>
-                 <a href="<?php echo BASE_URL; ?>social-media-marketing">Social Media Marketing</a>
+                 <a href="<?php echo BASE_URL; ?>blog">Blogs</a>
                </li>
                <li>
-                 <a href="<?php echo BASE_URL; ?>graphic-design">Graphic Design</a>
-               </li>
-               <li>
-                 <a href="<?php echo BASE_URL; ?>blog">Blog</a>
-               </li>
-
-             </ul>
-           </div>
-           <div class="col-auto col-md-4 col-lg-auto col-xl-auto col-xxl-auto">
-             <h2 class="footer-title">Resources</h2>
-             <ul class="footer-list">
-               <li>
-                 <a href="<?php echo BASE_URL; ?>privacy-policy">Privacy Policy</a>
-               </li>
-               <li>
-                 <a href="<?php echo BASE_URL; ?>terms-conditions"> Terms & Conditions</a>
+                 <a href="<?php echo BASE_URL; ?>about-us">About Us</a>
                </li>
                <li>
                  <a href="<?php echo BASE_URL; ?>contact-us">Contact Us</a>
                </li>
-
              </ul>
            </div>
            <div class="col-auto col-md-4 col-lg-auto col-xl-auto col-xxl-auto">
-
+             <h2 class="footer-title">Digital Services</h2>
+             <ul class="footer-list">
+               <li>
+                 <a href="<?php echo BASE_URL; ?>services/website-design-and-development">Web Design &
+                   Development</a>
+               </li>
+               <li>
+                 <a href="<?php echo BASE_URL; ?>services/digital-marketing"> Digital Marketing
+                   Service</a>
+               </li>
+               <li>
+                 <a href="<?php echo BASE_URL; ?>services/content-writing">Content Writing</a>
+               </li>
+               <li>
+                 <a href="<?php echo BASE_URL; ?>services/social-media-management">Social Media
+                   Management</a>
+               </li>
+               <li>
+                 <a href="<?php echo BASE_URL; ?>services/seo-services">SEO Services</a>
+               </li>
+             </ul>
            </div>
+           <div class="col-auto col-md-4 col-lg-auto col-xl-auto col-xxl-auto">
+             <h2 class="footer-title">Technology Services</h2>
+             <ul class="footer-list">
+               <li>
+                 <a href="<?php echo BASE_URL; ?>services/software-development-services">Software
+                   Development</a>
+               </li>
+               <li>
+                 <a href="<?php echo BASE_URL; ?>services/pay-per-click-marketing"> Pay Per Click
+                   Marketing</a>
+               </li>
+               <li>
+                 <a href="<?php echo BASE_URL; ?>services/graphic-design-services">Graphics Design
+                   Services</a>
+               </li>
+               <li>
+                 <a href="<?php echo BASE_URL; ?>services/games-development">Games Development
+                   service</a>
+               </li>
+               <li>
+                 <a href="<?php echo BASE_URL; ?>services/cloud-services">Cloud Services</a>
+               </li>
+             </ul>
+           </div>
+
 
          </div>
        </div>
@@ -94,8 +123,16 @@
    </div>
    <div class="copyright-block">
      <div class="container">
-       <div class="copyright-inner text-center  copyright-border">
-         <p>© Copyright 2025, All Rights Reserved by RFZ Digital</p>
+       <div class="copyright-inner text-center copyright-border">
+         <div style="display: flex; justify-content: space-between; align-items: center;">
+           <div>
+             <a href="<?php echo BASE_URL; ?>privacy-policy">Privacy Policy</a>
+           </div>
+           <p>© Copyright 2025, All Rights Reserved by RFZ Digital</p>
+           <div>
+             <a href="<?php echo BASE_URL; ?>terms-conditions">Terms & Conditions</a>
+           </div>
+         </div>
        </div>
      </div>
    </div>

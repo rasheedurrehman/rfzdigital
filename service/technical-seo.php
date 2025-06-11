@@ -1,162 +1,6 @@
-<style type="text/css">
-    .success-message {
-        margin-top: 15px;
-        padding: 10px;
-        color: #155724;
-        background-color: #d4edda;
-        border: 1px solid #c3e6cb;
-        border-radius: 5px;
-        text-align: center;
-        font-size: 14px;
-    }
-
-    .error-message {
-        margin-top: 15px;
-        padding: 10px;
-        color: #721c24;
-        background-color: #f8d7da;
-        border: 1px solid #f5c6cb;
-        border-radius: 5px;
-        text-align: center;
-        font-size: 14px;
-    }
-</style>
 <?php
 $noindex = true;
-
-include 'includes/header.php';
-include_once 'includes/mail-config.php';
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-
-$message = ""; // Feedback message for the form
-
-// Load the user email template
-$templateFilePathUser = 'user-email-template.php';
-ob_start();
-include $templateFilePathUser;
-$userEmailTemplate = ob_get_clean();
-
-// Load the admin email template
-$templateFilePathAdmin = 'user-admin-email-template.php';
-ob_start();
-include $templateFilePathAdmin;
-$adminEmailTemplate = ob_get_clean();
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST['form_type'] == "top_form") {
-    // Sanitize and validate input data
-    function sanitize_input($data)
-    {
-        return htmlspecialchars(trim($data));
-    }
-
-    $name = sanitize_input($_POST['name']);
-    $email = filter_var(sanitize_input($_POST['email']), FILTER_VALIDATE_EMAIL);
-    $phone = sanitize_input($_POST['phone']);
-    $messageContent = sanitize_input($_POST['message']); // Avoid conflict with $message variable
-
-    // Check if all fields are filled and email is valid
-    if (!empty($name) && !empty($email) && !empty($phone) && !empty($messageContent)) {
-        // Database insertion logic
-        try {
-            $sql = "INSERT INTO contact_form (name, email, phone, message) VALUES (:name, :email, :phone, :message)";
-            $stmt = $pdo->prepare($sql);
-
-            $stmt->bindParam(':name', $name, PDO::PARAM_STR);
-            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-            $stmt->bindParam(':phone', $phone, PDO::PARAM_STR);
-            $stmt->bindParam(':message', $messageContent, PDO::PARAM_STR);
-
-            if ($stmt->execute()) {
-                // PHPMailer Setup
-                $adminEmail = 'yasirhassan@rfzdigital.co.uk'; // Replace with admin email
-                $adminPassword = 'ZuHjZ6H7PQES'; // Replace with secure credentials
-                // Capture the form submission URL
-                $page_url = $_SERVER['HTTP_REFERER'];
-                // === SEND EMAIL TO ADMIN ===
-                try {
-                    $mail = new PHPMailer(true);
-
-                    // Server settings
-                    $mail->isSMTP();
-                    $mail->Host = 'premium55.web-hosting.com'; // Replace with your SMTP server
-                    $mail->SMTPAuth = true;
-                    $mail->Username = $adminEmail;
-                    $mail->Password = $adminPassword;
-                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-                    $mail->Port = 465;
-
-                    // Debugging (Enable for troubleshooting)
-                    // $mail->SMTPDebug = 2;
-
-                    // Common Settings
-                    $mail->isHTML(true);
-                    $mail->setFrom($adminEmail, 'RFZ Digital');
-                    $mail->addAddress($adminEmail); // Admin's email
-                    $mail->addReplyTo($email, $name); // User's email for reply
-
-                    // Replace placeholders in the admin template
-                    $adminEmailContent = str_replace(
-                        ['{{name}}', '{{email}}', '{{phone}}', '{{message}}', '{{page_url}}'],
-                        [$name, $email, $phone, $messageContent, $page_url],
-                        $adminEmailTemplate
-                    );
-
-                    // Admin email content
-                    $mail->isHTML(true);
-                    $mail->Subject = 'New Contact Form Submission';
-                    $mail->Body = $adminEmailContent;
-                    $mail->send(); // Send admin email
-
-                } catch (Exception $e) {
-                    error_log("Admin Mail Error: " . $mail->ErrorInfo);
-                }
-
-                // === SEND CONFIRMATION EMAIL TO USER ===
-                try {
-                    $userMail = new PHPMailer(true);
-                    $userMail->isSMTP();
-                    $userMail->Host = 'premium55.web-hosting.com';
-                    $userMail->SMTPAuth = true;
-                    $userMail->Username = $adminEmail;
-                    $userMail->Password = $adminPassword;
-                    $userMail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-                    $userMail->Port = 465;
-
-                    $userMail->isHTML(true);
-                    $userMail->setFrom($adminEmail, 'RFZ Digital');
-                    $userMail->addAddress($email); // Send to User
-                    $userMail->addReplyTo($adminEmail, 'RFZ Digital');
-
-                    $userEmailContent = str_replace(
-                        ['{{name}}', '{{message}}'],
-                        [$name, $messageContent],
-                        $userEmailTemplate
-                    );
-
-                    // Email Content
-                    $userMail->Subject = 'Thank You for Contacting Us';
-                    $userMail->Body = $userEmailContent;
-
-                    $userMail->send(); // Send to User
-                    $message = "<div class='success-message'>Form submitted successfully! A confirmation email has been sent to your inbox.</div>";
-                } catch (Exception $e) {
-                    error_log("User Mail Error: " . $userMail->ErrorInfo);
-                    $message = "<div class='error-message'>Form submitted, but email could not be sent. Please try again later.</div>";
-                }
-            } else {
-                $message = "<div class='error-message'>Failed to submit the form. Please try again.</div>";
-            }
-        } catch (PDOException $e) {
-            error_log("Database Error: " . $e->getMessage());
-            $message = "<div class='error-message'>An error occurred while saving your details. Please try again later.</div>";
-        }
-    } else {
-        $message = "<div class='error-message'>Please fill in all fields with valid information.</div>";
-    }
-}
+include '../includes/header.php';
 ?>
 
 
@@ -260,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~
     Home 1 : Brand Section
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-<?php include 'includes/logo-slider.php'; ?>
+<?php include '../includes/logo-slider.php'; ?>
 
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -271,8 +115,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
     <div class="container">
         <div class="row row--custom change-order ">
             <div class="col-xl-5 col-lg-5 col-auto" data-aos-duration="1000" data-aos="fade-right">
-                <iframe src="https://contact-form-three-silk.vercel.app/embed?siteId=passgenlab" width="100%"
-                    height="600" frameBorder="0"></iframe>
+                <div class="inquiry-form-section">
+                    <div class="form-container">
+                        <h2 style="color: black;">Get in Touch</h2>
+                        <div class="inquiry-form">
+                            <iframe src="https://contact-form-three-silk.vercel.app/embed?siteId=RFZDigital_com"
+                                width="100%" height="570" frameBorder="0"></iframe>
+                        </div>
+
+                    </div>
+                </div>
             </div>
             <div class="offset-xl-0 col-xl-6 col-lg-7 col-md-11" data-aos-duration="1000" data-aos="fade-left">
                 <div class="content">
@@ -372,7 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~
     Home 1 : Portfolio Slider Start
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-<?php include 'includes/portfolio-slider.php'; ?>
+<?php include '../includes/portfolio-slider.php'; ?>
 
 
 
@@ -442,14 +294,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
     Home 3  : Testimonial Section 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 <!-- testimonialSection -->
-<?php include 'includes/testimonial2.php'; ?>
+<?php include '../includes/testimonial2.php'; ?>
 <!-- testimonial us Section -->
 
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~
     Home 1 : social-apps Section
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-<?php include 'includes/social-apps-logo-slider.php'; ?>
+<?php include '../includes/social-apps-logo-slider.php'; ?>
 
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -597,15 +449,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
 
 
 <!-- Contact Us Section -->
-<?php require_once 'includes/contact-us-section.php'; ?>
+<?php require_once '../includes/contact-us-section.php'; ?>
 
 <!-- Contact us Section -->
 
 
 
-<!-- Contact Us Section -->
-<?php include 'includes/marquee.php'; ?>
-<!-- Contact us Section -->
+
+<?php include '../includes/marquee.php'; ?>
+
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Home 8  : Before Footer CTA Section 
@@ -635,4 +487,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form_type']) && $_POST
 
 
 
-<?php include 'includes/footer.php'; ?>
+<?php include '../includes/footer.php'; ?>
