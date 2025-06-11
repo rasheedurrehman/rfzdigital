@@ -12,8 +12,11 @@ if (session_status() == PHP_SESSION_NONE) {
 
 
 
-require 'config.php';
-require 'rfzwebdb.php';
+// This will work for both root and service directory files
+$rootDir = dirname(__DIR__); // Gets the parent directory of 'includes'
+require_once $rootDir . '/config.php';
+require_once $rootDir . '/rfzwebdb.php';
+
 
 // Default indexing behavior (index by default)
 $noindex = isset($noindex) ? $noindex : false; // Agar $noindex pehle se set hai to wahi rahega
